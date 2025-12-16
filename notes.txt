@@ -43,6 +43,7 @@ git add .
 git commit -m "message"
 git push
 
+today    i deleted   env  due to    gitignore issue  
 
 
 
