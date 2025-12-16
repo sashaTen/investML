@@ -30,7 +30,7 @@ create    view /  url  and   main  url
 
 git init
 git path to  github repo
-git rm -r --cached .venv
+git rm -r --cached .venv / if  you  pushed the env to the github
 git add / commit / push 
 
 
