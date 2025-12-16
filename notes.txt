@@ -1,0 +1,54 @@
+cd project
+source .venv/bin/activate   # or Windows activate
+# work
+pip freeze > requirements.txt   # only if deps changed
+git add .
+git commit -m "message"
+git push
+
+
+
+
+git status
+
+
+day 1    :   
+python -m venv .venv
+
+.venv\Scripts\activate
+
+your project files should be in the same parent folder as .venv.
+
+pip install django
+pip freeze > requirements.txt
+
+django-admin startproject config .
+
+
+create    view /  url  and   main  url
+
+
+git init
+git path to  github repo
+git rm -r --cached .venv
+git add / commit / push 
+
+
+daily    practice :
+cd project
+source .venv/bin/activate   # or Windows activate
+# work
+pip freeze > requirements.txt   # only if deps changed
+git add .
+git commit -m "message"
+git push
+
+
+
+
+
+
+
+
+
+
