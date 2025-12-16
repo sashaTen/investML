@@ -44,7 +44,9 @@ git commit -m "message"
 git push
 
 today    i deleted   env  due to    gitignore issue  
-
+because  of  powershell  encoding  and etc    the  system   did   not see the gitignore
+however  you should   to  check  root  -cause   .   the biggest  issue  was  that   git  did not see 
+so the fix   is   to  make it   vsisible 
 
 
 
