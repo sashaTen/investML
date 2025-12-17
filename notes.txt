@@ -81,4 +81,37 @@ downloaded   the  stock data
 created    ml_model.python
 
 
+below   global  things   have to  be   level  up    as 
+the global    variables  not in the  functions because  they 
+are initialized   every   time the   function called  so   it  is 
+bad for the perfomance 
 
+"""lemma = WordNetLemmatizer()
+stopwordSet = set(stopwords.words("english"))"""
+
+i  also put    prepreccess and  the train  aside 
+so   i  can    call the  preprocess  while the train   
+is not called   saved    since   it  is re-trained 
+every  time  run  server  
+
+
+
+"""cv = joblib.load("count_vectorizer.pkl")
+pca = joblib.load("pca.pkl")
+model = joblib.load("logreg_model.pkl")"""
+those  are  also need to  be  in global so  every http req 
+does not  call  it   
+
+
+
+when   inference   you   
+apply  "transform"  
+and  not    "fit"   since   you  dont  train
+and only  need the  transform
+"""cv.transform(data)
+pca.transform(data)"""
+
+
+'''ALWAYS  IN THE END  OF THE CODE  WRITING 
+IF   IT'S  functionS  ASK AND CORRECT  FROM  PERCEPTIVE 
+OF PERFOMANCE'''
