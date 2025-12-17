@@ -76,4 +76,9 @@ Set-Content -Encoding Ascii .gitignore ".venv`n**/.venv/"
 
 
 
+day 2  :
+downloaded   the  stock data 
+created    ml_model.python
+
+
 
