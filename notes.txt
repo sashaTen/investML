@@ -1,3 +1,10 @@
+RE-READ   EVERY  DAY  AND   REMEMBER  THERE  RULES 
+FOR   EVERY  SECCION   LIKE    ACTIVATION  AND DEACTIVATION OF THE   .VENV  AS WELL 
+AS  FINISHING  THE  requirements    AND  CHECKING THE   PERFOMANCE  AND 
+ANALYSING  AND    FIXING  CODE   ACCORDING   THE   REPRODUCIBILITY AND PERFOMANCE 
+
+
+
 cd project
 source .venv/bin/activate   # or Windows activate
 # work
@@ -76,7 +83,7 @@ Set-Content -Encoding Ascii .gitignore ".venv`n**/.venv/"
 
 
 
-day 2  :
+*** day 2  : *****
 downloaded   the  stock data 
 created    ml_model.python
 
@@ -115,3 +122,20 @@ pca.transform(data)"""
 '''ALWAYS  IN THE END  OF THE CODE  WRITING 
 IF   IT'S  functionS  ASK AND CORRECT  FROM  PERCEPTIVE 
 OF PERFOMANCE'''
+
+
+
+
+*****day 3   ********:
+now prediction   is   in the prediction   page 
+and the index   page  is   just the  home page 
+never    forget  to   activate the .venv 
+
+
+
+create   class  in models  like  tickers  for ex 
+then make migrations 
+migrate 
+admin register   
+
+

@@ -1,3 +1,5 @@
+#   python manage.py runserver
+
 from django.shortcuts import render
 import joblib
 from django.http import HttpResponse
@@ -10,7 +12,14 @@ model = joblib.load("logreg_model.pkl")
 
 def index(request):
     
-   
+    return HttpResponse(f"index page")
+
+
+
+
+
+def    predict(request):
+
     clean_text = preprocess_text("bad bad market")
     X = cv.transform([clean_text]).toarray()
     X = pca.transform(X)
@@ -22,4 +31,3 @@ def index(request):
 
 
 
-#   python manage.py runserver
