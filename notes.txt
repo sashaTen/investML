@@ -139,3 +139,14 @@ migrate
 admin register   
 
 
+
+
+
+*********day   4* **********
+
+added the    template   for the   main   page  
+main   page   greets  the   users    and  explains   the  
+functionalities   of the app 
+
+
+
