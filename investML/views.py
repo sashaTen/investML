@@ -12,7 +12,7 @@ model = joblib.load("logreg_model.pkl")
 
 def index(request):
     
-    return HttpResponse(f"index page")
+    return render(request, 'homepage.html')
 
 
 
