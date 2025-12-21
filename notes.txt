@@ -152,4 +152,38 @@ functionalities   of the app
 ******   day 5    management   of   users *********
 
 
+A session is how Django remembers who you are between page requests.
+
+
+user   creation  is  very  simple  in    django .   
+{{  }}-   is for   variables   display  
+
+{%  %}    for  "if"    or   "for"   is is  the logic in templates
+
+{{user}}   -    by   this you  load the logged in   user 
+
+you create   sign up   by  creatin  the template for  form  
+and view  which  if  GET displays the form 
+and if from  this page  you  get POST the   django saves this form to the users model 
+""""  if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect(reverse("dashboard"))  """"
+
+
+
+Work With Django Auth
+it is automated authentication system and an authorization system
+in global url path("accounts/", include("django.contrib.auth.urls"))
+names  of the  urls  are  "login" and "logout"
+
+The "login" URL finds the LoginView.
+The LoginView looks for a template in registration/ named login.html.  
+
+so  basically you just create the auth url -> template and that's it 
+since  the  model , seccion and  LoginView is done by django 
+in the settingns  write LOGIN_REDIRECT_URL = "dashboard"
+
 
