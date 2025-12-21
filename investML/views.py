@@ -14,7 +14,8 @@ def index(request):
     
     return render(request, 'homepage.html')
 
-
+def dashboard(request):
+    return render(request, "users.html")
 
 
 
