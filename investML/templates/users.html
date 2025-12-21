@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     Hello, {{ user.username|default:"Guest" }}!
+    <a href="{% url 'index' %}">home page </a>
      {% if user.is_authenticated %}
         {% include "logout.html" %}
     {% else %}
