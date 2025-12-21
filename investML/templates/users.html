@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Management Intro</title>
-</head>
-<body>
-    <h1>Welcome!</h1>
-    {% block content %}
-    {% endblock content %}
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+    Hello, {{ user.username|default:"Guest" }}!
+     {% if user.is_authenticated %}
+        {% include "logout.html" %}
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'sign_up' %}">Sign up</a>
+    {% endif %}
+{% endblock content %}
