@@ -4,6 +4,15 @@ AS  FINISHING  THE  requirements    AND  CHECKING THE   PERFOMANCE  AND
 ANALYSING  AND    FIXING  CODE   ACCORDING   THE   REPRODUCIBILITY AND PERFOMANCE 
 
 
+****    FURTHER OPTIMIZATION  ARE : 
+.. 1 USER  management LIKE PASSWORD RESET AND CHANGE AND ETC: 
+https://realpython.com/django-user-management/#enable-logging-out
+
+..2 database   design 
+..3 database for ml predictions time and tickers 
+
+
+
 
 cd project
 source .venv/bin/activate   # or Windows activate
@@ -185,5 +194,33 @@ The LoginView looks for a template in registration/ named login.html.
 so  basically you just create the auth url -> template and that's it 
 since  the  model , seccion and  LoginView is done by django 
 in the settingns  write LOGIN_REDIRECT_URL = "dashboard"
+
+
+******  day 6  *******
+
+1    i created    base   portfolio   
+in there 
+ user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="portfolios"
+    )
+above is  foreignkey  for  one  portfolio one user who is  logged in 
+
+then PortfolioCreateForm was created  .   with  fields 
+this form from django that   you pass   through  view to  the  template
+if GET the page  shows  form
+if POST the page saves  the  portfolio and redirect  to  the   portfolio_list page.
+so   to run   it  well the   template portfolio gets the form and sends to  views
+the redirect  is calling  the link with name "portfolio_list" which  causes  the  view function
+called portfolio_list  and  it if logged in  aka login_required 
+finds the portfolios of the current seccion  user   and   gives   it to    template
+this is the  key  line 
+"""def portfolio_list(request):
+    portfolios = Portfolio.objects.filter(user=request.user) """
+
+if not   looged   in   while creatin   portfolio  it 
+leads   you to the login   page   and then only after login  you  
+can access the portfolio create page  .  in portfolio list you  see  all portfolios of current  user 
 
 

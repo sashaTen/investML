@@ -8,7 +8,9 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 from django.urls import reverse
-
+from .forms import PortfolioCreateForm
+from django.contrib.auth.decorators import login_required
+from .models import Portfolio
 
 cv = joblib.load("count_vectorizer.pkl")
 pca = joblib.load("pca.pkl")
@@ -50,4 +52,27 @@ def    predict(request):
 
 
 
+@login_required
+def create_portfolio(request):
+    if request.method == "POST":
+        form = PortfolioCreateForm(request.POST)
+        if form.is_valid():
+            portfolio = form.save(commit=False)
+            portfolio.user = request.user
+            portfolio.save()
+            return redirect("portfolio_list")
+    else:
+        form = PortfolioCreateForm()
+
+    return render(request, "portfolio.html", {"form": form})
+
+
+@login_required
+def portfolio_list(request):
+    portfolios = Portfolio.objects.filter(user=request.user)
+    return render(
+        request,
+        "portfolio_list.html",
+        {"portfolios": portfolios}
+    )
 

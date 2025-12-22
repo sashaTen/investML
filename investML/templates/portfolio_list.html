@@ -1,0 +1,14 @@
+<h2>My Portfolios</h2>
+
+<a href="{% url 'create_portfolio' %}">➕ Create New Portfolio</a>
+
+<ul>
+    {% for p in portfolios %}
+        <li>
+           
+            — Budget: {{ p.total_budget }}
+        </li>
+    {% empty %}
+        <li>No portfolios yet</li>
+    {% endfor %}
+</ul>
