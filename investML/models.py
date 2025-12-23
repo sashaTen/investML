@@ -1,10 +1,18 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.conf import settings
+
+
+
+
 class Tickers(models.Model):
     ticker = models.CharField(max_length=100)
-    
-    
+    prediction = models.FloatField(default=0.0)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="tickers",default=None
+    )
 
     def __str__(self):
         return self.ticker
@@ -13,7 +21,7 @@ class Tickers(models.Model):
 
 
 class   Portfolio(models.Model):
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="portfolios"
@@ -31,7 +39,6 @@ class   Portfolio(models.Model):
     def __str__(self):
         return self.name
 
-    def __str__(self):
-        return self.name
+
 
 

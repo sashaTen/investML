@@ -10,7 +10,8 @@ https://realpython.com/django-user-management/#enable-logging-out
 
 ..2 database   design 
 ..3 database for ml predictions time and tickers 
-
+..4 dynamic   oages   for   example  for  example   you  dont  create    for each product item separate  detail page  or links 
+with   info   transfer
 
 
 
@@ -224,3 +225,58 @@ leads   you to the login   page   and then only after login  you
 can access the portfolio create page  .  in portfolio list you  see  all portfolios of current  user 
 
 
+*****   day  7 ******
+Creating or updating a model → ModelForm
+Just selecting / filtering / calculating → Form
+
+
+
+ user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="tickers",default=None
+    )
+i made above  so   when  logged in users choose the stock
+the information  about  who is user  is   also  saved 
+and when   i need  to display user's  stocks  i can  
+simply filter   them 
+
+
+user = models.OneToOneField   is self  explainable 
+
+form.Form   is   read  only  vs    modelForm  is  for operations 
+
+
+next   plan   is   
+tickers =  models.ManyToManyField(Tickers, related_name='portfolios')
+add  the  tickers  to   portfolio
+
+@login_required
+def choose_tickers(request):
+    if request.method == "POST":    
+        form = TickerForm(request.POST)
+        if form.is_valid():
+            ticker_obj = form.save(commit=False)    # wait  for user auth
+            ticker_obj.user = request.user          # ticker.user field =  user auth passed to  form 
+            ticker_obj = form.save()  # saves to DB   
+            return HttpResponse(
+                f"Ticker: {ticker_obj.ticker}, Prediction: {ticker_obj.prediction}"
+            )
+    else:
+        form = TickerForm()  # 👈 VERY IMPORTANT
+
+    return render(request, "choose_tickers.html", {"form": form})  
+
+
+
+def dashboard(request):
+    if request.user.is_anonymous:
+         context = {"tickers": []}
+    else:
+        tickers = Tickers.objects.filter(user=request.user)
+        context = {"tickers": tickers}
+    return render(request, "users.html", context)
+    it is  very  important to if is_anonymous 
+    so no   ticjers   displayed   and  if    auth  then 
+    filter   and  shows   yours 
+    

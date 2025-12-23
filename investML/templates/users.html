@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+
     Hello, {{ user.username|default:"Guest" }}!
     <a href="{% url 'index' %}">home page </a>
      {% if user.is_authenticated %}
@@ -8,4 +9,16 @@
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'sign_up' %}">Sign up</a>
     {% endif %}
+     <h3>Available Tickers</h3>
+
+    <ul>
+        {% for ticker in tickers %}
+            <li>
+                <strong>{{ ticker.ticker }}</strong>
+                — Prediction: {{ ticker.prediction }}
+            </li>
+        {% empty %}
+            <li>No tickers available.</li>
+        {% endfor %}
+    </ul>
 {% endblock content %}

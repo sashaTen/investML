@@ -5,12 +5,12 @@ import joblib
 from django.http import HttpResponse
 from .ml_model import preprocess_text
 from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm 
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from .forms import PortfolioCreateForm
+from .forms import PortfolioCreateForm ,   TickerForm   
 from django.contrib.auth.decorators import login_required
-from .models import Portfolio
+from .models import Portfolio ,  Tickers
 
 cv = joblib.load("count_vectorizer.pkl")
 pca = joblib.load("pca.pkl")
@@ -36,7 +36,12 @@ def sign_up(request):
     
 
 def dashboard(request):
-    return render(request, "users.html")
+    if request.user.is_anonymous:
+         context = {"tickers": []}
+    else:
+        tickers = Tickers.objects.filter(user=request.user)
+        context = {"tickers": tickers}
+    return render(request, "users.html", context)
 
 
 
@@ -76,3 +81,20 @@ def portfolio_list(request):
         {"portfolios": portfolios}
     )
 
+
+
+@login_required
+def choose_tickers(request):
+    if request.method == "POST":    
+        form = TickerForm(request.POST)
+        if form.is_valid():
+            ticker_obj = form.save(commit=False)    # wait  for user auth
+            ticker_obj.user = request.user          # ticker.user field =  user auth passed to  form 
+            ticker_obj = form.save()  # saves to DB   
+            return HttpResponse(
+                f"Ticker: {ticker_obj.ticker}, Prediction: {ticker_obj.prediction}"
+            )
+    else:
+        form = TickerForm()  # 👈 VERY IMPORTANT
+
+    return render(request, "choose_tickers.html", {"form": form})   
