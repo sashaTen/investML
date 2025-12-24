@@ -3,7 +3,9 @@ from .models import Portfolio ,  Tickers
 class PortfolioCreateForm(forms.ModelForm):
     class Meta:
         model = Portfolio
-        fields = ["name", "total_budget", "risk_tolerance" , "tickers"]
+        fields = ["name", "total_budget", "risk_tolerance" ]
+
+
 
 
 

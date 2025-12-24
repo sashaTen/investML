@@ -280,3 +280,12 @@ def dashboard(request):
     so no   ticjers   displayed   and  if    auth  then 
     filter   and  shows   yours 
     
+
+
+    ********day  7 ********* 
+    i want the  user  to  able to   choose  the stocks   he chose 
+    not  from  all   users.    
+
+
+    toay  i  only   updates   forms    and  got  rid  of fielf  for  tickers 
+       
