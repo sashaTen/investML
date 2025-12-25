@@ -289,3 +289,17 @@ def dashboard(request):
 
     toay  i  only   updates   forms    and  got  rid  of fielf  for  tickers 
        
+
+
+
+******* day  8 ************
+try :
+            portfolio = Portfolio.objects.get(user=request.user)
+            portfolio.tickers.add(*tickers)
+        except Portfolio.DoesNotExist:
+            return redirect("create_portfolio")
+above   works   now    and  adds   tickers  to   individual  portfolio of user 
+
+
+
+
