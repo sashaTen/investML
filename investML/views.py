@@ -15,7 +15,8 @@ from .models import Portfolio ,  Tickers
 cv = joblib.load("count_vectorizer.pkl")
 pca = joblib.load("pca.pkl")
 model = joblib.load("logreg_model.pkl")
-#  python   manage.py runserver
+
+
 
 def index(request):
     
@@ -41,6 +42,11 @@ def dashboard(request):
     else:
         tickers = Tickers.objects.filter(user=request.user)
         context = {"tickers": tickers}
+        try :
+            portfolio = Portfolio.objects.get(user=request.user)
+            portfolio.tickers.add(*tickers)
+        except Portfolio.DoesNotExist:
+            return redirect("create_portfolio")
     return render(request, "users.html", context)
 
 

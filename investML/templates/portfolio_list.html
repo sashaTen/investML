@@ -5,9 +5,14 @@
 <ul>
     {% for p in portfolios %}
         <li>
-           
+           - Portfolio Name: {{ p.name }}
             — Budget: {{ p.total_budget }}
+            — Tickers: 
+            {% for t in p.tickers.all %}
+                {{ t}}
+            {% endfor %}
         </li>
+        
     {% empty %}
         <li>No portfolios yet</li>
     {% endfor %}
