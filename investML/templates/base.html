@@ -54,7 +54,7 @@
             flex-wrap: wrap;
         }
 
-        nav a {
+        nav a, nav button {
             text-decoration: none;
             color: var(--text);
             padding: 0.5rem 1rem;
@@ -62,7 +62,10 @@
             transition: all 0.25s ease;
             font-size: 0.95rem;
         }
-
+       nav button {
+           background: var(--border);
+           color: var(--primary);
+        }
         nav a:hover {
             background: var(--border);
             color: var(--primary);
@@ -130,10 +133,11 @@
     <form method="post" action="{% url 'logout' %}" style="display:inline;">
         {% csrf_token %}
         <input type="hidden" name="next" value="{% url 'dashboard' %}">
-        <button type="submit" class="nav-btn">
+        <button  type="submit" >
             Logout
         </button>
     </form>
+    <a href="{% url 'portfolio_list' %}">Portfolio List</a>
         {% else %}
             <a href="{% url 'login' %}">Login</a>
             <a href="{% url 'sign_up' %}">Sign Up</a>

@@ -303,3 +303,22 @@ above   works   now    and  adds   tickers  to   individual  portfolio of user
 
 
 
+*******day 9 ******
+logout fixed  design
+
+
+i add  the function  to   delete the   ticker 
+A button in HTML
+When clicked → it sends a POST request
+Django receives the request
+Django finds the ticker
+Django deletes it
+Django redirects back to dashboard
+via form  i send the  post  with  action="{% url 'delete_ticker' ticker.id %}" btn  
+it calls the  function with  name   delete_ticker
+then  url   calls  the  function delete_ticker
+path("delete_ticker/<int:ticker_id>/", delete_ticker, name="delete_ticker"),
+the fucntion   has   input  such  as def delete_ticker(request, ticker_id):
+so the  url   besides the request (GET/POST) gives the  ticker_id as input 
+then ticker = Tickers.objects.get(id=ticker_id, user=request.user)
+and ticker.delete   gets rid of it 

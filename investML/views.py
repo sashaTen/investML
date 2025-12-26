@@ -97,10 +97,19 @@ def choose_tickers(request):
             ticker_obj = form.save(commit=False)    # wait  for user auth
             ticker_obj.user = request.user          # ticker.user field =  user auth passed to  form 
             ticker_obj = form.save()  # saves to DB   
-            return HttpResponse(
-                f"Ticker: {ticker_obj.ticker}, Prediction: {ticker_obj.prediction}"
-            )
+            return redirect(reverse("dashboard"))
     else:
         form = TickerForm()  # 👈 VERY IMPORTANT
 
     return render(request, "choose_tickers.html", {"form": form})   
+
+
+
+def delete_ticker(request, ticker_id):
+    if request.method == "POST":
+        try:
+            ticker = Tickers.objects.get(id=ticker_id, user=request.user)
+            ticker.delete()
+        except Tickers.DoesNotExist:
+            pass
+    return redirect("dashboard")
