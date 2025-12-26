@@ -322,3 +322,5 @@ the fucntion   has   input  such  as def delete_ticker(request, ticker_id):
 so the  url   besides the request (GET/POST) gives the  ticker_id as input 
 then ticker = Tickers.objects.get(id=ticker_id, user=request.user)
 and ticker.delete   gets rid of it 
+
+
