@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index,  predict ,  dashboard , sign_up ,   create_portfolio , portfolio_list , choose_tickers , delete_ticker
+from .views import index,  predict ,  dashboard , sign_up ,   create_portfolio , portfolio_list , choose_tickers , delete_ticker , delete_portfolio
 
 urlpatterns = [
     path("", index, name="index"),
@@ -10,4 +10,5 @@ urlpatterns = [
     path("choose_tickers/", choose_tickers, name="choose_tickers"),
     path("predict/", predict, name="predict"),
     path("delete_ticker/<int:ticker_id>/", delete_ticker, name="delete_ticker"),
+    path("delete_portfolio/<int:portfolio_id>/", delete_portfolio, name="delete_portfolio"),
 ]

@@ -113,3 +113,17 @@ def delete_ticker(request, ticker_id):
         except Tickers.DoesNotExist:
             pass
     return redirect("dashboard")
+
+
+
+
+def delete_portfolio(request, portfolio_id):
+    if request.method == "POST":
+        try:
+            portfolio = Portfolio.objects.get(id=portfolio_id, user=request.user)
+            portfolio.delete()
+        except Portfolio.DoesNotExist:
+            pass
+    return redirect("portfolio_list")
+
+

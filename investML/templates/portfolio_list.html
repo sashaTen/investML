@@ -2,20 +2,43 @@
 
 {% block content %}
 
-<h2>My Portfolios</h2>
-
+<h2>My Portfolio</h2>
 
 <ul>
     {% for p in portfolios %}
-        <li>
-           - Portfolio Name: {{ p.name }}
-            — Budget: {{ p.total_budget }}
-            — Tickers: 
-            {% for t in p.tickers.all %}
-                {{ t}}
-            {% endfor %}
+        <li style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd;">
+            
+            <p><strong>User:</strong> {{ p.user.username }}</p>
+
+            <p><strong>Budget:</strong> {{ p.budget }}</p>
+
+            <p><strong>Time Horizon (years):</strong> {{ p.time_horizon_years }}</p>
+
+            <p><strong>Salary Stability:</strong> {{ p.get_salary_stability_display }}</p>
+
+            <p><strong>Average Monthly Income:</strong> {{ p.average_monthly_income }}</p>
+
+            <p><strong>Investment Percentage:</strong> {{ p.investment_percentage }}%</p>
+
+            <p><strong>Investing Experience (years):</strong> {{ p.investing_experience_years }}</p>
+
+            <p><strong>Tickers:</strong>
+                {% for t in p.tickers.all %}
+                    <span style="margin-right: 8px;">{{ t }}</span>
+                {% empty %}
+                    <em>No tickers selected</em>
+                {% endfor %}
+            </p>
+
+            <!-- DELETE BUTTON -->
+            <form method="post" action="{% url 'delete_portfolio' p.id %}">
+                {% csrf_token %}
+                <button type="submit" style="color:red;">
+                    Delete Portfolio
+                </button>
+            </form>
+
         </li>
-        
     {% empty %}
         <li>No portfolios yet</li>
     {% endfor %}

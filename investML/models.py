@@ -56,6 +56,7 @@ class  Portfolio(models.Model):
         on_delete=models.CASCADE,
         related_name="portfolios"
     )
+    budget = models.FloatField(default=0)
 
     time_horizon_years = models.PositiveIntegerField(
         help_text="How many years until you need this money"

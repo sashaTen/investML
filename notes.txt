@@ -324,3 +324,12 @@ then ticker = Tickers.objects.get(id=ticker_id, user=request.user)
 and ticker.delete   gets rid of it 
 
 
+
+
+
+************  day   10 ***********
+added  the  budget field  in the  model  and  in the  form 
+as well  as    in  portfolio_list   new   templeate  that  shows   
+all  the  details   for  the portfolio  as  well  the  delete  function    in  it 
+
+
