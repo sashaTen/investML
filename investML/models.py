@@ -82,6 +82,8 @@ class  Portfolio(models.Model):
     
     tickers =  models.ManyToManyField(Tickers, related_name='portfolios')
 
+    risk =   models.FloatField(default=0.0)
+
     def __str__(self):
         return f"{self.user.username} Risk Profile"
     MAX_TICKERS = 10
@@ -89,8 +91,47 @@ class  Portfolio(models.Model):
     def clean(self):
         if self.pk and self.tickers.count() > self.MAX_TICKERS:
             raise ValidationError("A portfolio can contain at most 10 tickers.")
+        
+    def calculate_risk_score(self):
+        score = 0
 
-    
+        # Time horizon
+        if self.time_horizon_years >= 10:
+            score += 25
+        elif self.time_horizon_years >= 5:
+            score += 15
+        else:
+            score += 5
+
+        # Salary stability (1–5)
+        score += self.salary_stability * 5
+
+        # Investment percentage
+        if self.investment_percentage >= 50:
+            score += 25
+        elif self.investment_percentage >= 30:
+            score += 15
+        else:
+            score += 5
+
+        # Experience (0–4)
+        score += self.investing_experience_years * 5
+
+        return min(score, 100)
+
+    def risk_tolerance(self):
+        score = self.calculate_risk_score()
+
+        if score < 35:
+            return 1
+        elif score < 65:
+            return 2
+        else:
+            return 3
+
+    def save(self, *args, **kwargs):
+        self.risk = self.calculate_risk_score()
+        super().save(*args, **kwargs)
 
 
 

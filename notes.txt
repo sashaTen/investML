@@ -333,3 +333,7 @@ as well  as    in  portfolio_list   new   templeate  that  shows
 all  the  details   for  the portfolio  as  well  the  delete  function    in  it 
 
 
+def save(self, *args, **kwargs) and  super   
+super  is    like   make  self function calling   
+args   are   inputs and the   kwargs  are inputs with values   like    risk =  50 
+super().save() = Django’s original save logic    on  this passed  values 
