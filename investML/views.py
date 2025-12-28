@@ -127,3 +127,8 @@ def delete_portfolio(request, portfolio_id):
     return redirect("portfolio_list")
 
 
+def   get_prediction(request, ticker_id):
+    # Preprocess the ticker symbol
+   
+
+    return HttpResponse(f"Prediction for ticker {ticker_id}: 42.0")

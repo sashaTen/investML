@@ -337,3 +337,21 @@ def save(self, *args, **kwargs) and  super
 super  is    like   make  self function calling   
 args   are   inputs and the   kwargs  are inputs with values   like    risk =  50 
 super().save() = Django’s original save logic    on  this passed  values 
+
+
+
+
+
+
+************   day  11 *************
+  <a href="{% url 'get_prediction' ticker.id %}" style="color: #38bdf8; text-decoration: none;">
+                        Want Ml prediction? Click here →
+                    </a>
+
+
+now  i   got   prediction click  in   dashboard
+as well  as  i   creted   simple   working    url  and  view  for get_prediction
+
+
+
+
