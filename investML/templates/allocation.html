@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="margin-bottom: 1rem;">📊 Asset Allocation</h2>
+
+{% if allocations %}
+
+    <table style="
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(17, 24, 39, 0.9);
+        border-radius: 12px;
+        overflow: hidden;
+    ">
+        <thead>
+            <tr style="background: rgba(31, 41, 55, 0.9);">
+                <th style="padding: 0.75rem; text-align: left;">Ticker</th>
+                <th style="padding: 0.75rem; text-align: right;">Investment Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticker, amount in allocations.items %}
+                <tr style="border-top: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 0.75rem; font-weight: 600;">
+                        {{ ticker }}
+                    </td>
+                    <td style="padding: 0.75rem; text-align: right; color: #38bdf8;">
+                        ${{ amount }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+
+    <p style="color: #9ca3af;">
+        No allocation available. Please create a portfolio and add tickers.
+    </p>
+
+{% endif %}
+
+{% endblock content %}

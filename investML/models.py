@@ -7,7 +7,7 @@ from django.conf import settings
 
 class Tickers(models.Model):
     ticker = models.CharField(max_length=100)
-    prediction = models.FloatField(default=0.0)
+    prediction = models.FloatField(default=42.0)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

@@ -11,6 +11,9 @@ from django.urls import reverse
 from .forms import PortfolioCreateForm ,   TickerForm   
 from django.contrib.auth.decorators import login_required
 from .models import Portfolio ,  Tickers
+import yfinance as yf
+import numpy as np
+
 
 cv = joblib.load("count_vectorizer.pkl")
 pca = joblib.load("pca.pkl")
@@ -139,3 +142,73 @@ def   get_prediction(request, ticker_id):
     ticker.save()
     return redirect("dashboard")
 
+
+
+
+def allocation(request):
+    user = request.user
+    try:
+        portfolio = Portfolio.objects.get(user=user)
+        allocations = allocate_portfolio(portfolio)
+        # Here you would typically save the allocations to the database or pass them to the template
+    except Portfolio.DoesNotExist:
+        allocations = {}
+    return render(request, 'allocation.html', {'allocations': allocations})
+
+
+
+
+
+
+
+
+
+def allocate_portfolio(portfolio):
+    """
+    Returns a dict: {ticker_symbol: allocation_amount}
+    """
+
+    budget = portfolio.budget
+    risk_score = portfolio.risk / 100  # normalize to 0–1
+    tickers = portfolio.tickers.all()
+
+    scores = {}
+    
+    for symbol in tickers:
+        try:
+            data = yf.download(symbol, period="1y", progress=False)
+
+            if data.empty:
+                continue  # ticker not found
+
+            prices = data["Adj Close"]
+            returns = prices.pct_change().dropna()
+
+            expected_return = returns.mean() * 252
+            volatility = returns.std() * np.sqrt(252)
+
+            if volatility == 0:
+                continue
+
+            # Risk-adjusted score (Sharpe-style, no risk-free rate)
+            score = expected_return / volatility
+
+            # Blend with user risk tolerance
+            score = risk_score * score + (1 - risk_score) * 0.5
+
+            scores[symbol] = max(score, 0)
+
+        except Exception:
+            continue  # any error → skip ticker
+
+    if not scores:
+        return {}
+
+    # Normalize weights
+    total_score = sum(scores.values())
+    allocations = {
+        symbol: round((score / total_score) * budget, 2)
+        for symbol, score in scores.items()
+    }
+
+    return allocations
