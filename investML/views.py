@@ -129,6 +129,13 @@ def delete_portfolio(request, portfolio_id):
 
 def   get_prediction(request, ticker_id):
     # Preprocess the ticker symbol
-   
+    ticker = Tickers.objects.get(id=ticker_id, user=request.user)
+    clean_text = preprocess_text("bad bad market")
+    X = cv.transform([clean_text]).toarray()
+    X = pca.transform(X)
 
-    return HttpResponse(f"Prediction for ticker {ticker_id}: 42.0")
+    prediction = model.predict(X)[0]
+    ticker.prediction = prediction
+    ticker.save()
+    return redirect("dashboard")
+
