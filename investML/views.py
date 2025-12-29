@@ -147,68 +147,19 @@ def   get_prediction(request, ticker_id):
 
 def allocation(request):
     user = request.user
-    try:
-        portfolio = Portfolio.objects.get(user=user)
-        allocations = allocate_portfolio(portfolio)
-        # Here you would typically save the allocations to the database or pass them to the template
-    except Portfolio.DoesNotExist:
-        allocations = {}
-    return render(request, 'allocation.html', {'allocations': allocations})
+    portfolio = Portfolio.objects.get(user=user)
+    allocations = []
+    average_allocation = portfolio.budget / portfolio.tickers.count() if portfolio.tickers.count() > 0 else 0
+    tickers   =   portfolio.tickers.all()
+    for  i  in  tickers:
+        allocations.append({"ticker":  get_beta(i.ticker), "allocation": average_allocation})
+    return render(request, 'allocation.html', {'allocations': allocations}) 
 
 
 
 
 
-
-
-
-
-def allocate_portfolio(portfolio):
-    """
-    Returns a dict: {ticker_symbol: allocation_amount}
-    """
-
-    budget = portfolio.budget
-    risk_score = portfolio.risk / 100  # normalize to 0–1
-    tickers = portfolio.tickers.all()
-
-    scores = {}
-    
-    for symbol in tickers:
-        try:
-            data = yf.download(symbol, period="1y", progress=False)
-
-            if data.empty:
-                continue  # ticker not found
-
-            prices = data["Adj Close"]
-            returns = prices.pct_change().dropna()
-
-            expected_return = returns.mean() * 252
-            volatility = returns.std() * np.sqrt(252)
-
-            if volatility == 0:
-                continue
-
-            # Risk-adjusted score (Sharpe-style, no risk-free rate)
-            score = expected_return / volatility
-
-            # Blend with user risk tolerance
-            score = risk_score * score + (1 - risk_score) * 0.5
-
-            scores[symbol] = max(score, 0)
-
-        except Exception:
-            continue  # any error → skip ticker
-
-    if not scores:
-        return {}
-
-    # Normalize weights
-    total_score = sum(scores.values())
-    allocations = {
-        symbol: round((score / total_score) * budget, 2)
-        for symbol, score in scores.items()
-    }
-
-    return allocations
+def get_beta(symbol):
+    ticker = yf.Ticker(symbol)
+    info = ticker.info
+    return info.get("beta")

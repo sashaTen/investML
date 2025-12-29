@@ -356,3 +356,26 @@ further    you  have  to   fix   allocation  and   fix  the   will  fall on defa
 
 
 
+
+*******day   12   ************
+
+i  got   beta   instead  of  volatility   
+too  slow to  load  and  inside  of the  loop   
+def allocation(request):
+    user = request.user
+    portfolio = Portfolio.objects.get(user=user)
+    allocations = []
+    average_allocation = portfolio.budget / portfolio.tickers.count() if portfolio.tickers.count() > 0 else 0
+    tickers   =   portfolio.tickers.all()
+    for  i  in  tickers:
+        allocations.append({"ticker":  get_beta(i.ticker), "allocation": average_allocation})
+    return render(request, 'allocation.html', {'allocations': allocations}) 
+
+
+
+def get_beta(symbol):
+    ticker = yf.Ticker(symbol)
+    info = ticker.info
+    return info.get("beta")
+
+
