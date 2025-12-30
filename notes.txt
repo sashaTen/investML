@@ -379,3 +379,26 @@ def get_beta(symbol):
     return info.get("beta")
 
 
+
+
+********* day 13   ***********
+the    link to   the allocation  in the  portfolio  list   template
+def  get_profit_margin(symbol):
+    ticker = yf.Ticker(symbol)
+    info = ticker.info
+    return info.get("profitMargins")
+got  now the   profit  margin 
+
+
+def margin_allocation_proportion(tickers, budget):
+    sum = 0 
+    for  i  in  tickers:
+        sum  +=   get_profit_margin(i.ticker)
+    return  round(budget/(sum*100),2)
+and  in the  views    allocations.append({   "ticker" :    i.ticker    , "profit_margin":  get_profit_margin(i.ticker), "allocation": round(proportion*100*get_profit_margin(i.ticker),3 ) })
+so   the  key    idea   if    margins  are  0.22 ,   0.21   ,   0.15   then  thier  sum  is  0.58 
+then x100   and 58.  then  we  delete   the   budget  on it    and  get the   proportion
+and  then    proportion X margin X 100   and  we  get the  allocation 
+
+
+

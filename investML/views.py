@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Portfolio ,  Tickers
 import yfinance as yf
 import numpy as np
-
+import random
 
 cv = joblib.load("count_vectorizer.pkl")
 pca = joblib.load("pca.pkl")
@@ -149,17 +149,67 @@ def allocation(request):
     user = request.user
     portfolio = Portfolio.objects.get(user=user)
     allocations = []
-    average_allocation = portfolio.budget / portfolio.tickers.count() if portfolio.tickers.count() > 0 else 0
+    budget = portfolio.budget
+    budget_10_percent = budget*0.1
+    ml_budget =  budget-budget_10_percent
     tickers   =   portfolio.tickers.all()
+    proportion =  margin_allocation_proportion(tickers, budget)
+    ml_proportion =  margin_allocation_proportion(tickers, ml_budget)
+    prediction_list=[]
+    for  i in tickers:
+        if   ticker_sentiment(i.ticker)  == 1:
+            prediction_list.append( i.ticker)
+
+    if prediction_list:
+       prediction_bonus = budget_10_percent / len(prediction_list)
+    else:
+       prediction_bonus = 0
+       ml_budget = budget
+   
     for  i  in  tickers:
-        allocations.append({"ticker":  get_beta(i.ticker), "allocation": average_allocation})
-    return render(request, 'allocation.html', {'allocations': allocations}) 
+        allocations.append({   "ticker" :    i.ticker    , "profit_margin":  get_profit_margin(i.ticker), "allocation": round(proportion*100*get_profit_margin(i.ticker),3 ) })
+   
+    ml_allocations = []
+
+    for i in tickers:
+        profit_margin = get_profit_margin(i.ticker)
+
+        base_allocation = ml_proportion * 100 * profit_margin
+
+        # Add bonus only if ticker is predicted to rise
+        if i.ticker in prediction_list:
+            final_allocation = base_allocation + prediction_bonus
+        else:
+            final_allocation = base_allocation
+
+        ml_allocations.append({
+            "ticker": i.ticker,
+            "profit_margin": profit_margin,
+            "allocation": round(final_allocation, 3)
+        })
+
+    return render(request, 'allocation.html', {'allocations': allocations, 'ml_allocations': ml_allocations}) 
 
 
 
 
-
-def get_beta(symbol):
+def  get_profit_margin(symbol):
     ticker = yf.Ticker(symbol)
     info = ticker.info
-    return info.get("beta")
+    return info.get("profitMargins")
+ 
+
+def margin_allocation_proportion(tickers, budget):
+    sum = 0 
+    for  i  in  tickers:
+        sum  +=   get_profit_margin(i.ticker)
+    return  round(budget/(sum*100),2)
+
+
+def  ticker_sentiment(ticker):
+    value = random.randint(0, 1)
+    return value
+
+
+
+

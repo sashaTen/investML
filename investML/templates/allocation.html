@@ -2,22 +2,52 @@
 
 {% block content %}
 
-<h2 style="margin-bottom: 1rem;">📊 Asset Allocation</h2>
+<h2 style="margin-bottom: 1.5rem;">📊 Asset Allocation</h2>
 
 {% if allocations %}
-   
-            {% for item in allocations %}
-             
-                    <td style="padding: 0.5rem;">{{ item.ticker}}</td>
-                    <td style="padding: 0.5rem; text-align: right;">
-                        {{ item.allocation }}
-                    <td style="padding: 0.5rem; text-align: right;">
-                     
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% for item in allocations %}
+        <div style="margin-bottom: 1rem; padding: 0.75rem; border-bottom: 1px solid #e5e7eb;">
+            
+            <div>
+                <strong>Ticker:</strong> {{ item.ticker }}
+            </div>
+
+            <div>
+                <strong>Profit Margin:</strong> {{ item.profit_margin }}
+            </div>
+
+            <div>
+                <strong>Money to Invest:</strong> {{ item.allocation }}
+            </div>
+
+        </div>
+    {% endfor %}
+{% else %}
+    <p style="color: #9ca3af; margin-top: 1rem;">
+        No allocation available. Please create a portfolio and add tickers.
+    </p>
+{% endif %}
+
+<hr style="margin: 2rem 0;">
+
+{% if ml_allocations %}
+    {% for item in ml_allocations %}
+        <div style="margin-bottom: 1rem; padding: 0.75rem; border-bottom: 1px solid #e5e7eb;">
+            
+            <div>
+                <strong>Ticker:</strong> {{ item.ticker }}
+            </div>
+
+            <div>
+                <strong>Profit Margin:</strong> {{ item.profit_margin }}
+            </div>
+
+            <div>
+                <strong>Money to Invest:</strong> {{ item.allocation }}
+            </div>
+
+        </div>
+    {% endfor %}
 {% else %}
     <p style="color: #9ca3af; margin-top: 1rem;">
         No allocation available. Please create a portfolio and add tickers.
@@ -25,3 +55,4 @@
 {% endif %}
 
 {% endblock content %}
+
