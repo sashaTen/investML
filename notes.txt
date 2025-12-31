@@ -402,3 +402,29 @@ and  then    proportion X margin X 100   and  we  get the  allocation
 
 
 
+********day   14 ****************
+freezed   reauierement  adter   downloaded the    dotenv  then
+from dotenv import load_dotenv
+import os
+
+load_dotenv(".venv/.env")
+
+API_KEY = os.getenv("THE_KEY")  
+
+below  is the  logic   how to     input the    tavely  into the prediction   
+def    predict(request):
+
+    clean_text = preprocess_text("bad bad market")
+    X = cv.transform([clean_text]).toarray()
+    X = pca.transform(X)
+
+    prediction = model.predict(X)[0]
+    response = tavily_client.search("Who is Leo Messi?")
+    clean_text = preprocess_text(response["results"][0]["content"])
+    X = cv.transform([clean_text]).toarray()
+    X = pca.transform(X)
+    prediction = model.predict(X)[0]
+
+
+
+    return HttpResponse(prediction)

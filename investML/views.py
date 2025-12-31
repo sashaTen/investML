@@ -12,8 +12,21 @@ from .forms import PortfolioCreateForm ,   TickerForm
 from django.contrib.auth.decorators import login_required
 from .models import Portfolio ,  Tickers
 import yfinance as yf
+from dotenv import load_dotenv
+import os
+from tavily import TavilyClient
 import numpy as np
 import random
+
+load_dotenv(".venv/.env")
+
+API_KEY = os.getenv("THE_KEY")  
+
+
+
+tavily_client = TavilyClient(api_key=API_KEY )
+
+
 
 cv = joblib.load("count_vectorizer.pkl")
 pca = joblib.load("pca.pkl")
@@ -61,8 +74,15 @@ def    predict(request):
     X = pca.transform(X)
 
     prediction = model.predict(X)[0]
+    response = tavily_client.search("Who is Leo Messi?")
+    clean_text = preprocess_text(response["results"][0]["content"])
+    X = cv.transform([clean_text]).toarray()
+    X = pca.transform(X)
+    prediction = model.predict(X)[0]
 
-    return HttpResponse(f"Prediction: {prediction}")
+
+
+    return HttpResponse(prediction)
 
 
 
