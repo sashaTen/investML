@@ -96,12 +96,12 @@ class  Portfolio(models.Model):
         score = 0
 
         # Time horizon
-        if self.time_horizon_years >= 10:
+        if self.time_horizon_years >= 4:
+            score += 35
+        elif self.time_horizon_years >= 1:
             score += 25
-        elif self.time_horizon_years >= 5:
-            score += 15
         else:
-            score += 5
+            score += 15
 
         # Salary stability (1–5)
         score += self.salary_stability * 5

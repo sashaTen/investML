@@ -1,10 +1,37 @@
-<h2>Create Portfolio</h2>
+{% extends 'base.html' %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create</button>
-</form>
+{% block content %}
+<div class="portfolio-container">
+    <div class="portfolio-card">
+
+        {% if portfolio_exists %}
+            <h2>Portfolio Already Exists</h2>
+            <p class="subtitle">
+                You already have a portfolio. You can manage or view it from the dashboard.
+            </p>
+
+            <a href="{% url 'portfolio_list' %}" class="btn-primary">
+                Go to My Portfolio
+            </a>
+
+        {% else %}
+            <h2>Create Portfolio</h2>
+            <p class="subtitle">Build and manage your investment portfolio</p>
+
+            <form method="post" class="portfolio-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn-primary">
+                    Create Portfolio
+                </button>
+            </form>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
+
 
 
 

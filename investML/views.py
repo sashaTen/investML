@@ -86,7 +86,9 @@ def    predict(request):
 
 @login_required
 def create_portfolio(request):
-    if request.method == "POST":
+    portfolio_exists = Portfolio.objects.filter(user=request.user).exists()
+
+    if request.method == "POST" and not portfolio_exists:
         form = PortfolioCreateForm(request.POST)
         if form.is_valid():
             portfolio = form.save(commit=False)
@@ -96,7 +98,11 @@ def create_portfolio(request):
     else:
         form = PortfolioCreateForm()
 
-    return render(request, "portfolio.html", {"form": form})
+    context = {
+        "form": form,
+        "portfolio_exists": portfolio_exists,
+    }
+    return render(request, "portfolio.html", context)
 
 
 @login_required
@@ -167,7 +173,7 @@ def allocation(request):
     user = request.user
     portfolio = Portfolio.objects.get(user=user)
     allocations = []
-    budget = portfolio.budget
+    budget = portfolio.budget* (portfolio.risk/100)
     budget_10_percent = budget*0.1
     ml_budget =  budget-budget_10_percent
     tickers   =   portfolio.tickers.all()
