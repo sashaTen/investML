@@ -69,11 +69,9 @@ def dashboard(request):
 
 def    predict(request):
 
-    clean_text = preprocess_text("bad bad market")
-    X = cv.transform([clean_text]).toarray()
-    X = pca.transform(X)
 
-    prediction = model.predict(X)[0]
+
+   
     response = tavily_client.search("Who is Leo Messi?")
     clean_text = preprocess_text(response["results"][0]["content"])
     X = cv.transform([clean_text]).toarray()
@@ -82,7 +80,7 @@ def    predict(request):
 
 
 
-    return HttpResponse(prediction)
+    return HttpResponse( clean_text + "      the prediction is: " + str(prediction))
 
 
 
@@ -227,8 +225,13 @@ def margin_allocation_proportion(tickers, budget):
 
 
 def  ticker_sentiment(ticker):
+    response = tavily_client.search("latest news about  " + ticker)
+    clean_text = preprocess_text(response["results"][0]["content"])
+    X = cv.transform([clean_text]).toarray()
+    X = pca.transform(X)
+    prediction = model.predict(X)[0]
     value = random.randint(0, 1)
-    return value
+    return prediction
 
 
 
