@@ -138,11 +138,10 @@ def allocation(request):
     user = request.user
     portfolio = Portfolio.objects.get(user=user)
     allocations = []
-    budget = portfolio.budget* (portfolio.risk/100)
-    budget_10_percent = budget*0.1
-    ml_budget =  budget-budget_10_percent
+    stock_budget = portfolio.budget* (portfolio.risk/100)
+    ml_budget =  stock_budget-stock_budget*0.1
     tickers   =   portfolio.tickers.all()
-    proportion =  margin_allocation_proportion(tickers, budget)
+    proportion =  margin_allocation_proportion(tickers, stock_budget)
     ml_proportion =  margin_allocation_proportion(tickers, ml_budget)
     prediction_list=[]
     for  i in tickers:
@@ -150,10 +149,10 @@ def allocation(request):
             prediction_list.append( i.ticker)
 
     if prediction_list:
-       prediction_bonus = budget_10_percent / len(prediction_list)
+       prediction_bonus = stock_budget*0.1 / len(prediction_list)
     else:
        prediction_bonus = 0
-       ml_budget = budget
+       ml_budget = stock_budget
    
     for  i  in  tickers:
         allocations.append({   "ticker" :    i.ticker    , "profit_margin":  get_profit_margin(i.ticker), "allocation": round(proportion*100*get_profit_margin(i.ticker),3 ) })
