@@ -16,17 +16,21 @@ cv = joblib.load("count_vectorizer.pkl")
 pca = joblib.load("pca.pkl")
 model = joblib.load("logreg_model.pkl")
 
-
-
-def  news_sentiment(ticker):
+def  get_ticker_news(ticker):
     response = tavily_client.search("latest news about  " + ticker)
-    clean_text = preprocess_text(response["results"][0]["content"])
+    return response["results"][0]["content"]
+
+def make_prediction(text):
+    clean_text = preprocess_text(text)
     X = cv.transform([clean_text]).toarray()
     X = pca.transform(X)
     prediction = model.predict(X)[0]
     return prediction
 
-
+def  news_sentiment(ticker):
+    news_content = get_ticker_news(ticker)
+    prediction = make_prediction(news_content)
+    return prediction
 
 
 

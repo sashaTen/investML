@@ -443,5 +443,3 @@ def    predict(request):
     6 time memory complexity 
 
 
-
-deleted the  fucntion   "predict" 
