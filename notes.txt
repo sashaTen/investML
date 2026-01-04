@@ -428,3 +428,20 @@ def    predict(request):
 
 
     return HttpResponse(prediction)
+
+
+
+
+    ********day    15   ************: 
+    tasks  for   SE for DS: 
+    1 clean code
+    2 DRY 
+    3 functional    modulairty 
+ in functions 
+    4  readability and  unnecessary   variables
+    5 standarts pep 
+    6 time memory complexity 
+
+
+
+deleted the  fucntion   "predict" 

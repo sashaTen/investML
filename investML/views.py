@@ -1,36 +1,22 @@
 #   python manage.py runserver
 
 from django.shortcuts import render
-import joblib
 from django.http import HttpResponse
-from .ml_model import preprocess_text
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm 
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from .forms import PortfolioCreateForm ,   TickerForm   
 from django.contrib.auth.decorators import login_required
+from .scripts import  news_sentiment , margin_allocation_proportion, get_profit_margin
 from .models import Portfolio ,  Tickers
-import yfinance as yf
-from dotenv import load_dotenv
-import os
-from tavily import TavilyClient
-import numpy as np
-import random
-
-load_dotenv(".venv/.env")
-
-API_KEY = os.getenv("THE_KEY")  
 
 
 
-tavily_client = TavilyClient(api_key=API_KEY )
 
 
 
-cv = joblib.load("count_vectorizer.pkl")
-pca = joblib.load("pca.pkl")
-model = joblib.load("logreg_model.pkl")
+
 
 
 
@@ -64,23 +50,6 @@ def dashboard(request):
         except Portfolio.DoesNotExist:
             return redirect("create_portfolio")
     return render(request, "users.html", context)
-
-
-
-def    predict(request):
-
-
-
-   
-    response = tavily_client.search("Who is Leo Messi?")
-    clean_text = preprocess_text(response["results"][0]["content"])
-    X = cv.transform([clean_text]).toarray()
-    X = pca.transform(X)
-    prediction = model.predict(X)[0]
-
-
-
-    return HttpResponse( clean_text + "      the prediction is: " + str(prediction))
 
 
 
@@ -157,11 +126,7 @@ def delete_portfolio(request, portfolio_id):
 def   get_prediction(request, ticker_id):
     # Preprocess the ticker symbol
     ticker = Tickers.objects.get(id=ticker_id, user=request.user)
-    clean_text = preprocess_text("bad bad market")
-    X = cv.transform([clean_text]).toarray()
-    X = pca.transform(X)
-
-    prediction = model.predict(X)[0]
+    prediction = news_sentiment(ticker.ticker)
     ticker.prediction = prediction
     ticker.save()
     return redirect("dashboard")
@@ -181,7 +146,7 @@ def allocation(request):
     ml_proportion =  margin_allocation_proportion(tickers, ml_budget)
     prediction_list=[]
     for  i in tickers:
-        if   ticker_sentiment(i.ticker)  == 1:
+        if  news_sentiment(i.ticker)  == 1:
             prediction_list.append( i.ticker)
 
     if prediction_list:
@@ -217,27 +182,12 @@ def allocation(request):
 
 
 
-def  get_profit_margin(symbol):
-    ticker = yf.Ticker(symbol)
-    info = ticker.info
-    return info.get("profitMargins")
- 
-
-def margin_allocation_proportion(tickers, budget):
-    sum = 0 
-    for  i  in  tickers:
-        sum  +=   get_profit_margin(i.ticker)
-    return  round(budget/(sum*100),2)
 
 
-def  ticker_sentiment(ticker):
-    response = tavily_client.search("latest news about  " + ticker)
-    clean_text = preprocess_text(response["results"][0]["content"])
-    X = cv.transform([clean_text]).toarray()
-    X = pca.transform(X)
-    prediction = model.predict(X)[0]
-    value = random.randint(0, 1)
-    return prediction
+
+
+
+
 
 
 
