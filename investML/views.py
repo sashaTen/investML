@@ -124,21 +124,14 @@ def delete_portfolio(request, portfolio_id):
 
 
 def   get_prediction(request, ticker_id):
-    start    = time.time()
     # Preprocess the ticker symbol
     ticker = Tickers.objects.get(id=ticker_id, user=request.user)
     if ticker.prediction > 1 :
         prediction = news_sentiment(ticker.ticker)
         ticker.prediction = prediction
         ticker.save()
-        end = time.time()
-        print("Time taken for prediction:", end - start)
-        return redirect("dashboard")
-       
+        return redirect("dashboard")   
     else:
-        prediction =  ticker.prediction
-        end = time.time()
-        print("Time taken for prediction:", end - start)
         return redirect("dashboard")
 
 
