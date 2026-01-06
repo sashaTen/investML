@@ -12,9 +12,11 @@ API_KEY = os.getenv("THE_KEY")
 
 tavily_client = TavilyClient(api_key=API_KEY )
 
-cv = joblib.load("count_vectorizer.pkl")
-pca = joblib.load("pca.pkl")
-model = joblib.load("logreg_model.pkl")
+
+"random_count_vectorizer.pkl" , "random_pca.pkl" , "random_forest_model.pkl"
+cv = joblib.load("random_count_vectorizer.pkl")
+pca = joblib.load("random_pca.pkl")
+model = joblib.load("random_forest_model.pkl")
 
 def  get_ticker_news(ticker):
     response = tavily_client.search("latest news about  " + ticker)

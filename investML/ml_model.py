@@ -12,11 +12,13 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.linear_model import LogisticRegression
 import joblib
 from sklearn.pipeline import Pipeline
+from sklearn.ensemble import RandomForestClassifier
 
 
 lemma = WordNetLemmatizer()
 stopwordSet = set(stopwords.words("english"))
-
+path  =   'C:\\Users\\HP\\Desktop\\investML\\stock_data.csv'
+target_column   =   "Sentiment"
 
 def preprocess_text(text ):
         text = re.sub("[^a-zA-Z]", " ", text)
@@ -25,20 +27,10 @@ def preprocess_text(text ):
         tokens = [lemma.lemmatize(w) for w in tokens if w not in stopwordSet]
         return " ".join(tokens)
 
-
-
-def  train_and_save_model():
-
-    data = pd.read_csv('C:\\Users\\HP\\Desktop\\investML\\stock_data.csv')
-    y = data["Sentiment"]
-
-
-    
-
-
+def split(path ,  target_column):
+    data = pd.read_csv(path)
+    y = data[target_column]
     textList = [preprocess_text(t) for t in data["Text"]]
-
-
     X_train_text, X_test_text, y_train, y_test = train_test_split(
         textList,
         y,
@@ -46,28 +38,43 @@ def  train_and_save_model():
         random_state=21,
         stratify=y
     )
+    return X_train_text, X_test_text, y_train, y_test
 
-
-
+def   preprocess(X_train_text):
     cv = CountVectorizer(max_features=5001)
-
     X_train = cv.fit_transform(X_train_text).toarray()
-    X_test = cv.transform(X_test_text).toarray()
-
-
-
     pca = PCA(n_components=256)
-
     X_train = pca.fit_transform(X_train)
-    X_test = pca.transform(X_test)
-    model = LogisticRegression(max_iter=1000)
+    return cv, pca,X_train
+
+def modelling(X_train, y_train, model):
     model.fit(X_train, y_train)
+    return model
+
+def evaluate_model(X_test_text, y_test, cv, pca, model):
+    X_test = cv.transform(X_test_text).toarray()
+    X_test = pca.transform(X_test)
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
-
     print("Accuracy:", acc)
-    joblib.dump(cv, "count_vectorizer.pkl")
-    joblib.dump(pca, "pca.pkl")
-    joblib.dump(model, "logreg_model.pkl")
+    return acc
 
+
+
+def save_model(cv, pca, model , cv_name ,    pca_name ,  model_name):
+    joblib.dump(cv, cv_name)
+    joblib.dump(pca, pca_name)
+    joblib.dump(model, model_name)
     print("Model, vectorizer, and PCA saved successfully.")
+
+
+def   random_forest_pipeline(path , target_column, cv_name ,    pca_name ,  model_name ): 
+    X_train_text, X_test_text, y_train, y_test = split(path, target_column)
+    cv, pca, X_train = preprocess(X_train_text)
+    model = RandomForestClassifier(n_estimators=100, random_state=21)
+    model = modelling(X_train, y_train, model)
+    evaluate_model(X_test_text, y_test, cv, pca, model)
+    save_model(cv, pca, model ,  cv_name ,    pca_name ,  model_name )
+
+
+#random_forest_pipeline(path , target_column ,"random_count_vectorizer.pkl" , "random_pca.pkl" , "random_forest_model.pkl")
