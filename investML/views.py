@@ -10,7 +10,7 @@ from .forms import PortfolioCreateForm ,   TickerForm
 from django.contrib.auth.decorators import login_required
 from .scripts import  news_sentiment , margin_allocation_proportion, get_profit_margin
 from .models import Portfolio ,  Tickers
-
+import time
 
 
 
@@ -124,17 +124,28 @@ def delete_portfolio(request, portfolio_id):
 
 
 def   get_prediction(request, ticker_id):
+    start    = time.time()
     # Preprocess the ticker symbol
     ticker = Tickers.objects.get(id=ticker_id, user=request.user)
-    prediction = news_sentiment(ticker.ticker)
-    ticker.prediction = prediction
-    ticker.save()
-    return redirect("dashboard")
+    if ticker.prediction > 1 :
+        prediction = news_sentiment(ticker.ticker)
+        ticker.prediction = prediction
+        ticker.save()
+        end = time.time()
+        print("Time taken for prediction:", end - start)
+        return redirect("dashboard")
+       
+    else:
+        prediction =  ticker.prediction
+        end = time.time()
+        print("Time taken for prediction:", end - start)
+        return redirect("dashboard")
 
 
 
 
 def allocation(request):
+    start =   time.time()
     user = request.user
     portfolio = Portfolio.objects.get(user=user)
     allocations = []
@@ -175,7 +186,8 @@ def allocation(request):
             "profit_margin": profit_margin,
             "allocation": round(final_allocation, 3)
         })
-
+    end =   time.time()
+    print("Time taken for allocation:", end - start)
     return render(request, 'allocation.html', {'allocations': allocations, 'ml_allocations': ml_allocations}) 
 
 
@@ -184,7 +196,7 @@ def allocation(request):
 
 
 
-
+print('hello  workd ')
 
 
 
