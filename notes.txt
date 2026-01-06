@@ -443,3 +443,40 @@ def    predict(request):
     6 time memory complexity 
 
 
+
+
+
+****day 16****
+
+in the    get_prediction
+  if ticker.prediction > 1 :
+        prediction = news_sentiment(ticker.ticker)
+        ticker.prediction = prediction
+        ticker.save()
+        return redirect("dashboard")   
+    else:
+        return redirect("dashboard")
+so  here  if the   prediction  of ticker  is    default then   only   the model  is  applied
+
+
+
+in the   allocation
+ for  i in tickers:
+        if i.prediction > 1 :
+            if news_sentiment(i.ticker)  == 1:
+               i.prediction = 1
+               i.save()
+               prediction_list.append( i.ticker)
+            else :
+               i.prediction = 0
+               i.save()
+        else:
+            prediction_list.append( i.ticker)
+
+
+if  defalut then  predict  and  save    so  the  next  time   
+it  will apply  ml   
+if  exists   then  it   just  retrieves 
+
+
+

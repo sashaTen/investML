@@ -149,7 +149,15 @@ def allocation(request):
     ml_proportion =  margin_allocation_proportion(tickers, ml_budget)
     prediction_list=[]
     for  i in tickers:
-        if  news_sentiment(i.ticker)  == 1:
+        if i.prediction > 1 :
+            if news_sentiment(i.ticker)  == 1:
+               i.prediction = 1
+               i.save()
+               prediction_list.append( i.ticker)
+            else :
+               i.prediction = 0
+               i.save()
+        else:
             prediction_list.append( i.ticker)
 
     if prediction_list:
