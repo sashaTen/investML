@@ -197,8 +197,6 @@ def allocation(request):
 
 
 
-print('hello  workd ')
-
 
 
 
