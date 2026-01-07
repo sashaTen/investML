@@ -138,7 +138,6 @@ def   get_prediction(request, ticker_id):
 
 
 def allocation(request):
-    start =   time.time()
     user = request.user
     portfolio = Portfolio.objects.get(user=user)
     allocations = []
@@ -187,8 +186,7 @@ def allocation(request):
             "profit_margin": profit_margin,
             "allocation": round(final_allocation, 3)
         })
-    end =   time.time()
-    print("Time taken for allocation:", end - start)
+   
     return render(request, 'allocation.html', {'allocations': allocations, 'ml_allocations': ml_allocations}) 
 
 

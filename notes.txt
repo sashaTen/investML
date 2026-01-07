@@ -480,3 +480,58 @@ if  exists   then  it   just  retrieves
 
 
 
+******   day   17    **********
+thought   of  redisign  the   code  with  OOP .
+OOP   can  be  used  in  model as well   as   in   working  with   DB
+some   methods    can    like    
+class   Portfolio:
+   def __init__(self ,   budget):  #  then   you  can   reuse  this budget for   long   term 
+       self.budget =   budget  
+
+   def show_budget(self   ,     budget): # you  just   want to display and the data is not  stored
+       return    budget    
+
+portfolio1   =  Portfolio()
+portfolio1.show_budget(1000)    #   is the   exmaple  of  how to  use  it .
+also    you can  use   custom   ones    like  portfolio1.time = 10
+so this  makes   it  simpler   and  no   need to  recreate   same   vars 
+
+inheretance   allows   you  to  write  less  code   
+you  must  create   from   lowest   like    from  'living_creature' -> to -> 'birds'  ->   further narrowing
+"user"   ->     'student'     ->   'phd student'
+
+When you add the __init__() function, the child class will no longer inherit the parent's __init__() function.
+To keep the inheritance of the parent's __init__()
+class Student(Person):
+  def __init__(self, fname, lname):
+    Person.__init__(self, fname, lname)
+    
+
+
+Polymorphism is often used in Class methods, where we can have multiple classes with the same method name.
+
+For example, say we have three classes: Car, Boat, and Plane, and they all have a method called move():
+
+The power is not calling the same method.
+The power is not needing to change your code when new types appear.
+Polymorphism is not avoiding function customization —
+it is moving customization into the objects instead of the function.
+
+
+encapsulation   is  created for the   safety   
+
+An inner class is a class defined inside another class. The inner class can access the properties and methods of the outer class.
+
+for   allocation   function in the  views 
+🔧 A small amount of OOP would improve clarity and scalability
+
+❌ Heavy OOP would be overengineering    
+
+
+OOP adds value when you have:
+
+Long-lived state
+
+Multiple interchangeable behaviors
+
+Objects with identity

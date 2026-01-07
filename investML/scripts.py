@@ -47,3 +47,29 @@ def margin_allocation_proportion(tickers, budget):
     for  i  in  tickers:
         sum  +=   get_profit_margin(i.ticker)
     return  round(budget/(sum*100),2)
+
+
+ 
+"""
+def allocation(request):
+    user = request.user
+    portfolio = Portfolio.objects.get(user=user)
+    allocations = []
+    stock_budget = portfolio.budget* (portfolio.risk/100)
+    tickers   =   portfolio.tickers.all()
+    proportion =  margin_allocation_proportion(tickers, stock_budget)
+    for  i  in  tickers:
+        allocations.append({   "ticker" :    i.ticker    , "profit_margin":  get_profit_margin(i.ticker), "allocation": round(proportion*100*get_profit_margin(i.ticker),3 ) })
+   
+   
+    return  allocations
+
+
+
+
+
+
+class   BaseAllocation:
+    def __init__(self, portfolio):
+        self.portfolio = portfolio
+        self.allocations = []"""
