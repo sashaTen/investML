@@ -1,6 +1,7 @@
 from tavily import TavilyClient
 import joblib
 from .ml_model import preprocess_text
+from .models import Portfolio ,  Tickers
 from dotenv import load_dotenv
 import os
 import yfinance as yf
@@ -88,6 +89,7 @@ class PortfolioAllocation:
             allocation = round(proportion * 100 * margin, 3)
 
             allocations.append({
+                "prediction" : t.prediction,
                 "ticker": t.ticker,
                 "margin": margin,
                 "allocation": allocation
@@ -97,3 +99,28 @@ class PortfolioAllocation:
 
 
 
+class MlPortfolioAllocation(PortfolioAllocation):
+    def __init__(self, portfolio):
+        super().__init__(portfolio)
+        self._update_predictions()
+        self.count = self.tickers.filter(prediction=1).count()
+        self.bonus = self.budget * 0.1 /self.count if self.count > 0 else 0
+        self.base =   self.budget
+        self.budget = self.budget * 0.9
+    def _update_predictions(self):
+        for t in self.tickers:
+            if t.prediction > 1:
+                t.prediction = news_sentiment(t.ticker)
+                t.save()
+    def allocate(self):
+        base_allocations = super().allocate()
+        if self.count > 0  :
+            
+            for allocation in base_allocations:
+                   if allocation["prediction"] == 1 :
+                    allocation["allocation"] +=  self.bonus  
+        else:
+            self.budget = self.base
+            base_allocations = super().allocate()
+        return base_allocations
+       

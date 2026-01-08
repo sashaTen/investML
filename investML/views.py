@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from .forms import PortfolioCreateForm ,   TickerForm   
 from django.contrib.auth.decorators import login_required
-from .scripts import  news_sentiment , margin_allocation_proportion, get_profit_margin ,   PortfolioAllocation
+from .scripts import  news_sentiment , margin_allocation_proportion, get_profit_margin ,   PortfolioAllocation ,   MlPortfolioAllocation
 from .models import Portfolio ,  Tickers
 import time
 
@@ -140,56 +140,12 @@ def   get_prediction(request, ticker_id):
 def allocation(request):
     user = request.user
     portfolio = Portfolio.objects.get(user=user)
-    allocations = []
-    stock_budget = portfolio.budget* (portfolio.risk/100)
-    ml_budget =  stock_budget-stock_budget*0.1
-    tickers   =   portfolio.tickers.all()
-    proportion =  margin_allocation_proportion(tickers, stock_budget)
-    ml_proportion =  margin_allocation_proportion(tickers, ml_budget)
-    portfolio    =  PortfolioAllocation(portfolio)   #
-    t_allocations  =  portfolio.allocate()   ##
-    prediction_list=[]
-    for  i in tickers:
-        if i.prediction > 1 :
-            if news_sentiment(i.ticker)  == 1:
-               i.prediction = 1
-               i.save()
-               prediction_list.append( i.ticker)
-            else :
-               i.prediction = 0
-               i.save()
-        else:
-            prediction_list.append( i.ticker)
-
-    if prediction_list:
-       prediction_bonus = stock_budget*0.1 / len(prediction_list)
-    else:
-       prediction_bonus = 0
-       ml_budget = stock_budget
-   
-    for  i  in  tickers:
-        allocations.append({   "ticker" :    i.ticker    , "profit_margin":  get_profit_margin(i.ticker), "allocation": round(proportion*100*get_profit_margin(i.ticker),3 ) })
-   
-    ml_allocations = []
-
-    for i in tickers:
-        profit_margin = get_profit_margin(i.ticker)
-
-        base_allocation = ml_proportion * 100 * profit_margin
-
-        # Add bonus only if ticker is predicted to rise
-        if i.ticker in prediction_list:
-            final_allocation = base_allocation + prediction_bonus
-        else:
-            final_allocation = base_allocation
-
-        ml_allocations.append({
-            "ticker": i.ticker,
-            "profit_margin": profit_margin,
-            "allocation": round(final_allocation, 3)
-        })
-    return render(request, 'allocation.html', {'allocations': t_allocations, 'ml_allocations': ml_allocations}) 
-
+    base_portfolio    =  PortfolioAllocation(portfolio)   #
+    t_allocations  =  base_portfolio.allocate()   ##
+    ml_portfolio  =  MlPortfolioAllocation(portfolio)   #
+    t_ml_allocations  = ml_portfolio.allocate()   ##
+       
+    return render(request, 'allocation.html', {'allocations': t_allocations, 'ml_allocations': t_ml_allocations}) 
 
 
 
