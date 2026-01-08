@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from .forms import PortfolioCreateForm ,   TickerForm   
 from django.contrib.auth.decorators import login_required
-from .scripts import  news_sentiment , margin_allocation_proportion, get_profit_margin
+from .scripts import  news_sentiment , margin_allocation_proportion, get_profit_margin ,   PortfolioAllocation
 from .models import Portfolio ,  Tickers
 import time
 
@@ -138,7 +138,6 @@ def   get_prediction(request, ticker_id):
 
 
 def allocation(request):
-    start =   time.time()
     user = request.user
     portfolio = Portfolio.objects.get(user=user)
     allocations = []
@@ -147,6 +146,8 @@ def allocation(request):
     tickers   =   portfolio.tickers.all()
     proportion =  margin_allocation_proportion(tickers, stock_budget)
     ml_proportion =  margin_allocation_proportion(tickers, ml_budget)
+    portfolio    =  PortfolioAllocation(portfolio)   #
+    t_allocations  =  portfolio.allocate()   ##
     prediction_list=[]
     for  i in tickers:
         if i.prediction > 1 :
@@ -187,9 +188,7 @@ def allocation(request):
             "profit_margin": profit_margin,
             "allocation": round(final_allocation, 3)
         })
-    end =   time.time()
-    print("Time taken for allocation:", end - start)
-    return render(request, 'allocation.html', {'allocations': allocations, 'ml_allocations': ml_allocations}) 
+    return render(request, 'allocation.html', {'allocations': t_allocations, 'ml_allocations': ml_allocations}) 
 
 
 
