@@ -10,7 +10,7 @@ urlpatterns = [
     path("choose_tickers/", choose_tickers, name="choose_tickers"),
     path("delete_ticker/<int:ticker_id>/", delete_ticker, name="delete_ticker"),
     path("delete_portfolio/<int:portfolio_id>/", delete_portfolio, name="delete_portfolio"),
-    path("get_prediction/<str:ticker_id>/", get_prediction, name="get_prediction"),
+    path("get_prediction/<str:ticker_id>/", get_prediction, name="get_prediction"), 
     path("allocation/", allocation, name="allocation"),
     
 ]

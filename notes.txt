@@ -535,3 +535,46 @@ Long-lived state
 Multiple interchangeable behaviors
 
 Objects with identity
+
+
+
+*******  day  18   *****
+if you   pass  vars  into  template  it  is  a bad  practice  since 
+you will  have  to  change   all the  urls
+
+instead   you  should    pass  the   POST   method
+like  {% csrf_token %}
+    <button type="submit"
+            style="margin-top: 1rem; padding: 0.5rem 1rem;
+                   background-color: #3b82f6; color: white;
+                   border-radius: 0.25rem;">
+        Generate ML-Based Allocation 🤖
+    </button>
+
+and in the view  function  make conditional  like 
+  if request.method == "POST":
+        ml_portfolio  =  MlPortfolioAllocation(portfolio)   #
+        t_ml_allocations  = ml_portfolio.allocate()     
+
+
+but  below  version  is   better    :  
+def allocation(request):
+    user = request.user
+    portfolio = Portfolio.objects.get(user=user)
+    if request.method == "POST":
+        ml_portfolio  =  MlPortfolioAllocation(portfolio)   #
+        request.session["ml_allocations"] = ml_portfolio.allocate()    
+    base_portfolio = PortfolioAllocation(portfolio)
+    t_allocations = base_portfolio.allocate()
+    t_ml_allocations = request.session.pop("ml_allocations", [])
+    return render(request, 'allocation.html', {'allocations': t_allocations, 'ml_allocations': t_ml_allocations}) 
+
+
+1     the  base  allocate  after   you  press   POST dont re-run 
+2     request  seccion   and   pop    are  here   to  help not to  re-run Ml
+it  is    kind  of   temp  memory associated  in  django for  user 
+
+
+..........
+also   i  changed the  class  and   now   it   uses  the   outer   functions   and  not it's  own  so   DRY is 
+applied 

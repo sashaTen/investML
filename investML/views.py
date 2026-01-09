@@ -140,11 +140,12 @@ def   get_prediction(request, ticker_id):
 def allocation(request):
     user = request.user
     portfolio = Portfolio.objects.get(user=user)
-    base_portfolio    =  PortfolioAllocation(portfolio)   #
-    t_allocations  =  base_portfolio.allocate()   ##
-    ml_portfolio  =  MlPortfolioAllocation(portfolio)   #
-    t_ml_allocations  = ml_portfolio.allocate()   ##
-       
+    if request.method == "POST":
+        ml_portfolio  =  MlPortfolioAllocation(portfolio)   #
+        request.session["ml_allocations"] = ml_portfolio.allocate()    
+    base_portfolio = PortfolioAllocation(portfolio)
+    t_allocations = base_portfolio.allocate()
+    t_ml_allocations = request.session.pop("ml_allocations", [])
     return render(request, 'allocation.html', {'allocations': t_allocations, 'ml_allocations': t_ml_allocations}) 
 
 

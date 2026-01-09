@@ -63,25 +63,18 @@ class PortfolioAllocation:
         # cache margins once
         self.margins = self._compute_margins()
 
-    def get_profit_margin(self, symbol):
-        ticker = yf.Ticker(symbol)
-        info = ticker.info
-        return info.get("profitMargins", 0)
+  
 
     def _compute_margins(self):
         margins = {}
         for t in self.tickers:
-            margins[t.ticker] = self.get_profit_margin(t.ticker)
+            margins[t.ticker] = get_profit_margin(t.ticker)
         return margins
 
-    def margin_allocation_proportion(self):
-        total_margin = sum(self.margins.values())
-        if total_margin == 0:
-            return 0
-        return round(self.budget / (total_margin * 100), 2)
+  
 
     def allocate(self):
-        proportion = self.margin_allocation_proportion()
+        proportion = margin_allocation_proportion(self.tickers, self.budget)
         allocations = []
 
         for t in self.tickers:
