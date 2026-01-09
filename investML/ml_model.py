@@ -13,7 +13,7 @@ from sklearn.linear_model import LogisticRegression
 import joblib
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
-
+from sklearn.tree import DecisionTreeClassifier
 
 lemma = WordNetLemmatizer()
 stopwordSet = set(stopwords.words("english"))
@@ -68,13 +68,13 @@ def save_model(cv, pca, model , cv_name ,    pca_name ,  model_name):
     print("Model, vectorizer, and PCA saved successfully.")
 
 
-def   random_forest_pipeline(path , target_column, cv_name ,    pca_name ,  model_name ): 
+def   pipeline(path , target_column, cv_name ,    pca_name ,  model_name , model ): 
     X_train_text, X_test_text, y_train, y_test = split(path, target_column)
     cv, pca, X_train = preprocess(X_train_text)
-    model = RandomForestClassifier(n_estimators=100, random_state=21)
     model = modelling(X_train, y_train, model)
     evaluate_model(X_test_text, y_test, cv, pca, model)
     save_model(cv, pca, model ,  cv_name ,    pca_name ,  model_name )
 
+#model = DecisionTreeClassifier(max_depth=5)
+#pipeline(path , target_column ,"tree_count_vectorizer.pkl" , "tree_pca.pkl" , "tree_model.pkl" , model )
 
-#random_forest_pipeline(path , target_column ,"random_count_vectorizer.pkl" , "random_pca.pkl" , "random_forest_model.pkl")
