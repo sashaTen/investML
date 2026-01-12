@@ -1,5 +1,5 @@
-import numpy as np 
-import pandas as pd 
+import numpy as np
+import pandas as pd
 import re
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
@@ -15,43 +15,46 @@ from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 
+
 lemma = WordNetLemmatizer()
 stopwordSet = set(stopwords.words("english"))
-path  =   'C:\\Users\\HP\\Desktop\\investML\\stock_data.csv'
-target_column   =   "Sentiment"
+path = "C:\\Users\\HP\\Desktop\\investML\\stock_data.csv"
+target_column = "Sentiment"
 
-def preprocess_text(text ):
-        text = re.sub("[^a-zA-Z]", " ", text)
-        text = text.lower()
-        tokens = word_tokenize(text, language="english")
-        tokens = [lemma.lemmatize(w) for w in tokens if w not in stopwordSet]
-        return " ".join(tokens)
 
-def split(path ,  target_column):
+def preprocess_text(text):
+    text = re.sub("[^a-zA-Z]", " ", text)
+    text = text.lower()
+    tokens = word_tokenize(text, language="english")
+    tokens = [lemma.lemmatize(w) for w in tokens if w not in stopwordSet]
+    return " ".join(tokens)
+
+
+def split(path, target_column):
     data = pd.read_csv(path)
     y = data[target_column]
     textList = [preprocess_text(t) for t in data["Text"]]
     X_train_text, X_test_text, y_train, y_test = train_test_split(
-        textList,
-        y,
-        test_size=0.2,
-        random_state=21,
-        stratify=y
+        textList, y, test_size=0.2, random_state=21, stratify=y
     )
     return X_train_text, X_test_text, y_train, y_test
 
-def   preprocess(X_train_text):
+
+def preprocess(X_train_text):
     cv = CountVectorizer(max_features=5001)
     X_train = cv.fit_transform(X_train_text).toarray()
     pca = PCA(n_components=256)
     X_train = pca.fit_transform(X_train)
-    return cv, pca,X_train
+    return cv, pca, X_train
+
 
 def modelling(X_train, y_train, model):
     model.fit(X_train, y_train)
     return model
 
+
 def evaluate_model(X_test_text, y_test, cv, pca, model):
+
     X_test = cv.transform(X_test_text).toarray()
     X_test = pca.transform(X_test)
     y_pred = model.predict(X_test)
@@ -60,21 +63,20 @@ def evaluate_model(X_test_text, y_test, cv, pca, model):
     return acc
 
 
-
-def save_model(cv, pca, model , cv_name ,    pca_name ,  model_name):
+def save_model(cv, pca, model, cv_name, pca_name, model_name):
     joblib.dump(cv, cv_name)
     joblib.dump(pca, pca_name)
     joblib.dump(model, model_name)
     print("Model, vectorizer, and PCA saved successfully.")
 
 
-def   pipeline(path , target_column, cv_name ,    pca_name ,  model_name , model ): 
+def pipeline(path, target_column, cv_name, pca_name, model_name, model):
     X_train_text, X_test_text, y_train, y_test = split(path, target_column)
     cv, pca, X_train = preprocess(X_train_text)
     model = modelling(X_train, y_train, model)
     evaluate_model(X_test_text, y_test, cv, pca, model)
-    save_model(cv, pca, model ,  cv_name ,    pca_name ,  model_name )
+    save_model(cv, pca, model, cv_name, pca_name, model_name)
 
-#model = DecisionTreeClassifier(max_depth=5)
-#pipeline(path , target_column ,"tree_count_vectorizer.pkl" , "tree_pca.pkl" , "tree_model.pkl" , model )
 
+# model = DecisionTreeClassifier(max_depth=5)
+# pipeline(path , target_column ,"tree_count_vectorizer.pkl" , "tree_pca.pkl" , "tree_model.pkl" , model )

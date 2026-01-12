@@ -3,27 +3,28 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm 
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from .forms import PortfolioCreateForm ,   TickerForm   
+from .forms import PortfolioCreateForm, TickerForm
 from django.contrib.auth.decorators import login_required
-from .scripts import  news_sentiment , margin_allocation_proportion, get_profit_margin ,   PortfolioAllocation ,   MlPortfolioAllocation
-from .models import Portfolio ,  Tickers
+from .scripts import (
+    news_sentiment,
+    margin_allocation_proportion,
+    get_profit_margin,
+    PortfolioAllocation,
+    MlPortfolioAllocation,
+)
+from .models import Portfolio, Tickers
 import time
+import logging
 
-
-
-
-
-
-
+logging.basicConfig(level=logging.INFO)
 
 
 def index(request):
-    
-    return render(request, 'homepage.html')
-
+    logging.info("Rendering homepage.")
+    return render(request, "homepage.html")
 
 
 def sign_up(request):
@@ -36,21 +37,20 @@ def sign_up(request):
     else:
         form = UserCreationForm()
     return render(request, "sign_up.html", {"form": form})
-    
+
 
 def dashboard(request):
     if request.user.is_anonymous:
-         context = {"tickers": []}
+        context = {"tickers": []}
     else:
         tickers = Tickers.objects.filter(user=request.user)
         context = {"tickers": tickers}
-        try :
+        try:
             portfolio = Portfolio.objects.get(user=request.user)
             portfolio.tickers.add(*tickers)
         except Portfolio.DoesNotExist:
             return redirect("create_portfolio")
     return render(request, "users.html", context)
-
 
 
 @login_required
@@ -77,28 +77,25 @@ def create_portfolio(request):
 @login_required
 def portfolio_list(request):
     portfolios = Portfolio.objects.filter(user=request.user)
-    return render(
-        request,
-        "portfolio_list.html",
-        {"portfolios": portfolios}
-    )
-
+    return render(request, "portfolio_list.html", {"portfolios": portfolios})
 
 
 @login_required
 def choose_tickers(request):
-    if request.method == "POST":    
+
+    if request.method == "POST":
         form = TickerForm(request.POST)
         if form.is_valid():
-            ticker_obj = form.save(commit=False)    # wait  for user auth
-            ticker_obj.user = request.user          # ticker.user field =  user auth passed to  form 
-            ticker_obj = form.save()  # saves to DB   
+            ticker_obj = form.save(commit=False)  # wait  for user auth
+            ticker_obj.user = (
+                request.user
+            )  # ticker.user field =  user auth passed to  form
+            ticker_obj = form.save()  # saves to DB
             return redirect(reverse("dashboard"))
     else:
         form = TickerForm()  # 👈 VERY IMPORTANT
 
-    return render(request, "choose_tickers.html", {"form": form})   
-
+    return render(request, "choose_tickers.html", {"form": form})
 
 
 def delete_ticker(request, ticker_id):
@@ -111,8 +108,6 @@ def delete_ticker(request, ticker_id):
     return redirect("dashboard")
 
 
-
-
 def delete_portfolio(request, portfolio_id):
     if request.method == "POST":
         try:
@@ -123,41 +118,32 @@ def delete_portfolio(request, portfolio_id):
     return redirect("portfolio_list")
 
 
-def   get_prediction(request, ticker_id):
+def get_prediction(request, ticker_id):
     # Preprocess the ticker symbol
     ticker = Tickers.objects.get(id=ticker_id, user=request.user)
-    if ticker.prediction > 1 :
+    if ticker.prediction > 1:
         prediction = news_sentiment(ticker.ticker)
         ticker.prediction = prediction
         ticker.save()
-        return redirect("dashboard")   
+        return redirect("dashboard")
     else:
         return redirect("dashboard")
-
-
 
 
 def allocation(request):
     user = request.user
     portfolio = Portfolio.objects.get(user=user)
     if request.method == "POST":
-        ml_portfolio  =  MlPortfolioAllocation(portfolio)   #
-        request.session["ml_allocations"] = ml_portfolio.allocate()    
+        ml_portfolio = MlPortfolioAllocation(portfolio)  #
+        request.session["ml_allocations"] = ml_portfolio.allocate()
     base_portfolio = PortfolioAllocation(portfolio)
     try:
         t_allocations = base_portfolio.allocate()
     except Exception as e:
         return render(request, "allocation_message.html")
     t_ml_allocations = request.session.pop("ml_allocations", [])
-    return render(request, 'allocation.html', {'allocations': t_allocations, 'ml_allocations': t_ml_allocations}) 
-
-
-
-
-
-
-
-
-
-
-
+    return render(
+        request,
+        "allocation.html",
+        {"allocations": t_allocations, "ml_allocations": t_ml_allocations},
+    )

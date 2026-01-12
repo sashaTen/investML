@@ -590,3 +590,43 @@ def   pipeline(path , target_column, cv_name ,    pca_name ,  model_name , model
 #pipeline(path , target_column ,"tree_count_vectorizer.pkl" , "tree_pca.pkl" , "tree_model.pkl" , model )  
 
 now the    pipeline   instead   of    randomforest  pipeline  is less code   since    model   is defined  outside  and  is  an input 
+............
+if   you   tried  the   allcoation    before choosing  stocks   
+you got an   error  and  now  with  try   except   you  are  redirected to 
+dashboard
+Golden rules to remember 🧠
+
+1️⃣ Don’t catch exceptions you can’t fix
+2️⃣ Catch specific, not generic
+3️⃣ Catch at edges, not everywhere
+4️⃣ Let bugs crash early in development
+5️⃣ Use logs if you catch errors
+At system boundaries (VERY IMPORTANT)
+
+These are places where failure is expected:
+
+User input
+
+HTTP requests
+
+Files
+
+Database queries
+
+External APIs
+
+ML model loading
+
+
+.................
+logging module in Python lets you record whatever message you would like.
+What’s useful to log? This will depend on your exact use case and project but could
+include:
+• A message to say that a long-running task has started or finished
+• Error messages so that you know what has gone wrong in a production system
+• Which functions called some other functions
+• The inputs and outputs of a function
+• The file path where some data has been saved
+
+.............
+installed    black  for    pep8  formating
