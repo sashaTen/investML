@@ -144,7 +144,10 @@ def allocation(request):
         ml_portfolio  =  MlPortfolioAllocation(portfolio)   #
         request.session["ml_allocations"] = ml_portfolio.allocate()    
     base_portfolio = PortfolioAllocation(portfolio)
-    t_allocations = base_portfolio.allocate()
+    try:
+        t_allocations = base_portfolio.allocate()
+    except Exception as e:
+        return render(request, "allocation_message.html")
     t_ml_allocations = request.session.pop("ml_allocations", [])
     return render(request, 'allocation.html', {'allocations': t_allocations, 'ml_allocations': t_ml_allocations}) 
 

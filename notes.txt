@@ -578,3 +578,15 @@ it  is    kind  of   temp  memory associated  in  django for  user
 ..........
 also   i  changed the  class  and   now   it   uses  the   outer   functions   and  not it's  own  so   DRY is 
 applied 
+.............
+def   pipeline(path , target_column, cv_name ,    pca_name ,  model_name , model ): 
+    X_train_text, X_test_text, y_train, y_test = split(path, target_column)
+    cv, pca, X_train = preprocess(X_train_text)
+    model = modelling(X_train, y_train, model)
+    evaluate_model(X_test_text, y_test, cv, pca, model)
+    save_model(cv, pca, model ,  cv_name ,    pca_name ,  model_name )
+
+#model = DecisionTreeClassifier(max_depth=5)
+#pipeline(path , target_column ,"tree_count_vectorizer.pkl" , "tree_pca.pkl" , "tree_model.pkl" , model )  
+
+now the    pipeline   instead   of    randomforest  pipeline  is less code   since    model   is defined  outside  and  is  an input 
