@@ -29,9 +29,12 @@ def preprocess_text(text):
     tokens = [lemma.lemmatize(w) for w in tokens if w not in stopwordSet]
     return " ".join(tokens)
 
-
-def split(path, target_column):
+def load_df(path):
     data = pd.read_csv(path)
+    return data
+
+def split(df, target_column):
+    data = df
     y = data[target_column]
     textList = [preprocess_text(t) for t in data["Text"]]
     X_train_text, X_test_text, y_train, y_test = train_test_split(
@@ -71,12 +74,13 @@ def save_model(cv, pca, model, cv_name, pca_name, model_name):
 
 
 def pipeline(path, target_column, cv_name, pca_name, model_name, model):
-    X_train_text, X_test_text, y_train, y_test = split(path, target_column)
+    df = load_df(path)
+    X_train_text, X_test_text, y_train, y_test = split(df, target_column)
     cv, pca, X_train = preprocess(X_train_text)
     model = modelling(X_train, y_train, model)
     evaluate_model(X_test_text, y_test, cv, pca, model)
     save_model(cv, pca, model, cv_name, pca_name, model_name)
 
 
-# model = DecisionTreeClassifier(max_depth=5)
-# pipeline(path , target_column ,"tree_count_vectorizer.pkl" , "tree_pca.pkl" , "tree_model.pkl" , model )
+model = LogisticRegression()
+pipeline(path , target_column ,"logistic_count_vectorizer.pkl" , "logistic_pca.pkl" , "logistic_model.pkl" , model )

@@ -644,6 +644,27 @@ as   well   you  can   mark   some tests    "unit"   some   "slow"
 some tests  are run   the  before the  launch only   so    you  mark   tests you want to run .
 
 
+Mock everything that is not the logic you want to verify    .  no real    db  calls   or the   api  calls   
+
+--   tickers  is the    object   of  portfolio
+
+    def allocate(self):
+        proportion = margin_allocation_proportion(self.tickers, self.budget)
+        allocations = []
+
+        for t in self.tickers:
+            margin = self.margins[t.ticker]
+            allocation = round(proportion * 100 * margin, 3)
+
+            allocations.append({
+                "prediction" : t.prediction,
+                "ticker": t.ticker,
+                "margin": margin,
+                "allocation": allocation
+            })
+
+        return allocations
+
 
 
 
