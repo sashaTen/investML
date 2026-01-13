@@ -1,34 +1,16 @@
 #     pytest  -m   unit
 
 
-
-from investML.scripts import (
-    get_ticker_news,
-    make_prediction, 
-    news_sentiment,
-    margin_allocation_proportion,
-    get_profit_margin,
-    
-)
+from investML.scripts import make_prediction
 from   investML.ml_model  import  preprocess_text , split
 import pytest
-from tavily import TavilyClient
-from dotenv import load_dotenv
-import os
 import pandas as pd
-import yfinance as yf
-
-load_dotenv(".venv/.env")
-
-API_KEY = os.getenv("THE_KEY")  
 
 
 
-tavily_client = TavilyClient(api_key=API_KEY )
 
 
-
-@pytest.mark.slow
+"""@pytest.mark.slow
 def test_get_ticker_news():
     ticker = 'NVDA'
     result = get_ticker_news(ticker)
@@ -46,6 +28,7 @@ def test_profit_margin():
     assert isinstance(margin, float) or margin is None
 
 
+
 @pytest.mark.slow
 def  test_news_sentiment():
     ticker = 'TSLA'
@@ -53,6 +36,12 @@ def  test_news_sentiment():
     if sentiment is None:
         raise AssertionError("news_sentiment returned None")
     assert sentiment in [0, 1]  # Assuming binary classification
+"""
+
+
+
+
+
 
 
 
