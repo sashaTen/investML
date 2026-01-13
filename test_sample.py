@@ -28,7 +28,7 @@ tavily_client = TavilyClient(api_key=API_KEY )
 
 
 
-@pytest.mark.unit
+@pytest.mark.slow
 def test_get_ticker_news():
     ticker = 'NVDA'
     result = get_ticker_news(ticker)
