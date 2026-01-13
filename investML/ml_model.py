@@ -82,5 +82,5 @@ def pipeline(path, target_column, cv_name, pca_name, model_name, model):
     save_model(cv, pca, model, cv_name, pca_name, model_name)
 
 
-model = LogisticRegression()
-pipeline(path , target_column ,"logistic_count_vectorizer.pkl" , "logistic_pca.pkl" , "logistic_model.pkl" , model )
+# model = LogisticRegression()
+# pipeline(path , target_column ,"logistic_count_vectorizer.pkl" , "logistic_pca.pkl" , "logistic_model.pkl" , model )
