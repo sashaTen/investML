@@ -1,7 +1,6 @@
 from tavily import TavilyClient
 import joblib
 from .ml_model import preprocess_text
-from .models import Portfolio ,  Tickers
 from dotenv import load_dotenv
 import os
 import yfinance as yf

@@ -630,3 +630,22 @@ include:
 
 .............
 installed    black  for    pep8  formating
+
+
+
+
+******  dya   19    *****
+ investML.scripts    those   imports   are  very   important. 
+ today  i  installed the    PyTest   library  and  checked  the  results   
+ also     i   uninstall the   pytest-django   and   use    just  plain  pytest
+
+by   markgin  @pytest.mark.ml  and   run  pytest -m  ml   you  choose    what to   run   
+as   well   you  can   mark   some tests    "unit"   some   "slow"
+some tests  are run   the  before the  launch only   so    you  mark   tests you want to run .
+
+
+
+
+
+
+
