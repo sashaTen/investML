@@ -665,8 +665,13 @@ Mock everything that is not the logic you want to verify    .  no real    db  ca
 
         return allocations
 
+...added  the tests  for the  ml data   and  also    changes the  pipeline  by  adding the  load_df  whcih   before  was   inside  of  split 
 
 
 
 
+*************later  improve.   you  make  this  after  mastery the   SE so you apply the  knowledges ********
+.. db .  for  example  if  apple   already  existed   then  delete  and   add  from  the  user 
+the  prediction  dissapears 
 
+..once  seccion  is  over the  logout  automatically. 
