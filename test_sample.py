@@ -1,7 +1,6 @@
 #     pytest  -m   unit
 
 
-from investML.scripts import make_prediction
 from   investML.ml_model  import  preprocess_text , split
 import pytest
 import pandas as pd
@@ -36,6 +35,17 @@ def  test_news_sentiment():
     if sentiment is None:
         raise AssertionError("news_sentiment returned None")
     assert sentiment in [0, 1]  # Assuming binary classification
+
+
+
+@pytest.mark.slow
+def   test_make_prediction():
+    sample_text = "The company's performance has been outstanding this quarter."
+    prediction = make_prediction(sample_text)
+    if prediction is None:
+        raise AssertionError("make_prediction returned None")
+    assert prediction in [0, 1]  # Assuming binary classification
+    
 """
 
 
@@ -99,11 +109,3 @@ def test_split_function():
     assert set(y_train.unique()) == set(df["label"].unique())
     assert set(y_test.unique()) == set(df["label"].unique())
 
-
-@pytest.mark.slow
-def   test_make_prediction():
-    sample_text = "The company's performance has been outstanding this quarter."
-    prediction = make_prediction(sample_text)
-    if prediction is None:
-        raise AssertionError("make_prediction returned None")
-    assert prediction in [0, 1]  # Assuming binary classification
