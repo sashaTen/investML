@@ -717,3 +717,5 @@ git checkout -b new_branch    by doing  this    you  create the  new  branch
 and  swithc   to it 
 
 
+
+git   checkout   "branch name"   here  how  you can   switch branches
