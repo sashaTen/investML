@@ -24,13 +24,14 @@ jobs:
           pip install pywin32
           pip install -r requirements.txt
       - name: Download NLTK data
-        run: |
-          python - <<EOF
-          import nltk
-          nltk.download("stopwords")
-          nltk.download('punkt_tab')
-          nltk.download('wordnet')
-          EOF
+       shell: bash
+       run: |
+            python <<EOF
+            import nltk
+            nltk.download("stopwords")
+            nltk.download("punkt")
+            nltk.download("wordnet")
+            EOF
       - name: Run unit tests
         run: |
           pytest -m unit
