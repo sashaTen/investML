@@ -681,3 +681,36 @@ the  prediction  dissapears
 
 
 *********day   20   ***********
+for   better   structure  created   the   folder  called   ml artifacts   
+as  well   finally   passed the  test   in  github   actions  
+
+now    the  documentations .  it speaks    ideas  ,  maintained with  code ,  
+has many  types (text files ,  readme , in code ,   mlflow . other tools )
+
+
+In machine learning projects, it’s important to document what combinations you have tried.(for  model x + hyperparams Y  is result)
+Consider recording the following:
+• The data you used to train the model
+• The training/evaluation/test split
+• The feature engineering choices you made
+• The model hyperparameters (such as the regularization in a logistic regression
+model or the learning rate for a neural network)
+• The metrics you are evaluating your model on, such as accuracy, precision, and
+recal
+
+the  basic  example  of  mlflow   :
+def pipeline(path, target_column, cv_name, pca_name, model_name, model):
+    with mlflow.start_run():
+        df = load_df(path)
+        X_train_text, X_test_text, y_train, y_test = split(df, target_column)
+        cv, pca, X_train = preprocess(X_train_text)
+        model = modelling(X_train, y_train, model)
+        accuracy = evaluate_model(X_test_text, y_test, cv, pca, model)
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.sklearn.log_model(model, "model")
+        save_model(cv, pca, model, cv_name, pca_name, model_name)
+
+
+
+
+

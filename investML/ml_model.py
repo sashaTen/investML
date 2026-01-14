@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import re
+import mlflow
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from nltk import word_tokenize, WordNetLemmatizer
@@ -81,18 +82,21 @@ def save_model(cv, pca, model, cv_name, pca_name, model_name):
 
 
 def pipeline(path, target_column, cv_name, pca_name, model_name, model):
-    df = load_df(path)
-    X_train_text, X_test_text, y_train, y_test = split(df, target_column)
-    cv, pca, X_train = preprocess(X_train_text)
-    model = modelling(X_train, y_train, model)
-    evaluate_model(X_test_text, y_test, cv, pca, model)
-    save_model(cv, pca, model, cv_name, pca_name, model_name)
+    with mlflow.start_run():
+        df = load_df(path)
+        X_train_text, X_test_text, y_train, y_test = split(df, target_column)
+        cv, pca, X_train = preprocess(X_train_text)
+        model = modelling(X_train, y_train, model)
+        accuracy = evaluate_model(X_test_text, y_test, cv, pca, model)
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.sklearn.log_model(model, "model")
+        save_model(cv, pca, model, cv_name, pca_name, model_name)
+
+"""
+model = LogisticRegression()
+pipeline(path , target_column ,"logistic_count_vectorizer.pkl" , "logistic_pca.pkl" , "logistic_model.pkl" , model )
+"""
 
 
-# model = LogisticRegression()
-# pipeline(path , target_column ,"logistic_count_vectorizer.pkl" , "logistic_pca.pkl" , "logistic_model.pkl" , model )
-
-
-
-knn_model = KNeighborsClassifier(n_neighbors=5)
-pipeline(path, target_column, "knn_count_vectorizer.pkl", "knn_pca.pkl", "knn_model.pkl", knn_model)
+#knn_model = KNeighborsClassifier(n_neighbors=5)
+#pipeline(path, target_column, "knn_count_vectorizer.pkl", "knn_pca.pkl", "knn_model.pkl", knn_model)
