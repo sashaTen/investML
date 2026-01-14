@@ -712,5 +712,8 @@ def pipeline(path, target_column, cv_name, pca_name, model_name, model):
 
 
 
+...
+git checkout -b new_branch    by doing  this    you  create the  new  branch   
+and  swithc   to it 
 
 
