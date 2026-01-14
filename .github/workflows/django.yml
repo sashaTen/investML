@@ -27,6 +27,7 @@ jobs:
           python - <<EOF
           import nltk
           nltk.download("stopwords")
+          nltk.download('punkt_tab')
           EOF
       - name: Run unit tests
         run: |

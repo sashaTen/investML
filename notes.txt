@@ -675,3 +675,9 @@ Mock everything that is not the logic you want to verify    .  no real    db  ca
 the  prediction  dissapears 
 
 ..once  seccion  is  over the  logout  automatically. 
+
+
+
+
+
+*********day   20   ***********
