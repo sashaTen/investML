@@ -10,20 +10,14 @@ from .forms import PortfolioCreateForm, TickerForm
 from django.contrib.auth.decorators import login_required
 from .scripts import (
     news_sentiment,
-    margin_allocation_proportion,
-    get_profit_margin,
     PortfolioAllocation,
     MlPortfolioAllocation,
 )
 from .models import Portfolio, Tickers
-import time
-import logging
 
-logging.basicConfig(level=logging.INFO)
 
 
 def index(request):
-    logging.info("Rendering homepage.")
     return render(request, "homepage.html")
 
 

@@ -14,11 +14,18 @@ import joblib
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
+ARTIFACTS_DIR.mkdir(exist_ok=True)
 
 
 lemma = WordNetLemmatizer()
 stopwordSet = set(stopwords.words("english"))
-path = "C:\\Users\\HP\\Desktop\\investML\\stock_data.csv"
+path = ARTIFACTS_DIR / "stock_data.csv"
+
 target_column = "Sentiment"
 
 
@@ -67,9 +74,9 @@ def evaluate_model(X_test_text, y_test, cv, pca, model):
 
 
 def save_model(cv, pca, model, cv_name, pca_name, model_name):
-    joblib.dump(cv, cv_name)
-    joblib.dump(pca, pca_name)
-    joblib.dump(model, model_name)
+    joblib.dump(cv, ARTIFACTS_DIR /cv_name)
+    joblib.dump(pca, ARTIFACTS_DIR /pca_name)
+    joblib.dump(model, ARTIFACTS_DIR /model_name)
     print("Model, vectorizer, and PCA saved successfully.")
 
 
@@ -84,3 +91,8 @@ def pipeline(path, target_column, cv_name, pca_name, model_name, model):
 
 # model = LogisticRegression()
 # pipeline(path , target_column ,"logistic_count_vectorizer.pkl" , "logistic_pca.pkl" , "logistic_model.pkl" , model )
+
+
+
+knn_model = KNeighborsClassifier(n_neighbors=5)
+pipeline(path, target_column, "knn_count_vectorizer.pkl", "knn_pca.pkl", "knn_model.pkl", knn_model)

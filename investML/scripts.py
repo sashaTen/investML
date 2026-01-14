@@ -4,19 +4,15 @@ from .ml_model import preprocess_text
 from dotenv import load_dotenv
 import os
 import yfinance as yf
+
+
 load_dotenv(".venv/.env")
-
 API_KEY = os.getenv("THE_KEY")  
-
-
-
 tavily_client = TavilyClient(api_key=API_KEY )
 
-
-"random_count_vectorizer.pkl" , "random_pca.pkl" , "random_forest_model.pkl"
-cv = joblib.load("random_count_vectorizer.pkl")
-pca = joblib.load("random_pca.pkl")
-model = joblib.load("random_forest_model.pkl")
+cv = joblib.load("ml_artifacts/knn_count_vectorizer.pkl")
+pca = joblib.load("ml_artifacts/knn_pca.pkl")
+model = joblib.load("ml_artifacts/knn_model.pkl")
 
 def  get_ticker_news(ticker):
     response = tavily_client.search("latest news about  " + ticker)
