@@ -1,0 +1,22 @@
+artifact_path: file:///C:/Users/HP/Desktop/investML/mlruns/0/models/m-103b5acba10f4038b8aed2ae32b4b9ca/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.11
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+mlflow_version: 3.8.1
+model_id: m-103b5acba10f4038b8aed2ae32b4b9ca
+model_size_bytes: 9524071
+model_uuid: m-103b5acba10f4038b8aed2ae32b4b9ca
+prompts: null
+run_id: d0f9f1a0e956467887133bc2e097f646
+utc_time_created: '2026-01-15 05:12:50.594540'

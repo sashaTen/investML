@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/HP/Desktop/investML/mlruns/0/models/m-b238b08614eb414bb12fc146a15dcc9f/artifacts
+creation_timestamp: 1768453970451
+experiment_id: '0'
+last_updated_timestamp: 1768453994165
+model_id: m-b238b08614eb414bb12fc146a15dcc9f
+model_type: null
+name: model
+source_run_id: 30b865c9090e4921a6f2cf2d842da654
+status: 2
+status_message: null

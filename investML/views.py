@@ -9,6 +9,7 @@ from django.urls import reverse
 from .forms import PortfolioCreateForm, TickerForm
 from django.contrib.auth.decorators import login_required
 from .scripts import (
+    
     news_sentiment,
     PortfolioAllocation,
     MlPortfolioAllocation,
