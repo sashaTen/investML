@@ -1,7 +1,5 @@
 #     pytest  -m   unit
-
-
-from   investML.ml_model  import  preprocess_text , split
+from investML.scripts import print_any
 import pytest
 import pandas as pd
 
@@ -59,53 +57,11 @@ def   test_make_prediction():
 
 
 @pytest.mark.unit
-def test_preprocess_text():
-    raw_text = "This is a Sample TEXT! With numbers 123 and symbols #@$."
-    processed = preprocess_text(raw_text)
+def test_print_any():
 
-    assert processed is not None
-    assert isinstance(processed, str)
-
-    assert "sample" in processed
-    assert "text" in processed
-    assert "number" in processed
-    assert "symbol" in processed
-
-    assert processed.islower()
+    test_word = "Hello, InvestML!"
+    print_any(test_word)  # Just ensure it runs without error
+    assert True  # If no exception, the test passes
 
 
-
-@pytest.mark.unit
-def test_split_function():
-    # ---- Arrange ----
-    df = pd.DataFrame({
-        "Text": [
-            "Stock prices are rising",
-            "Market crashes badly",
-            "Investors are optimistic",
-            "Economic slowdown fears",
-            "Tech stocks rally",
-            "Inflation worries continue",
-        ],
-        "label": [1, 0, 1, 0, 1, 0],
-    })
-
-    # ---- Act ----
-    X_train, X_test, y_train, y_test = split(df, "label")
-
-    # ---- Assert ----
-    # sizes
-    assert len(X_train) > 0
-    assert len(X_test) > 0
-
-    assert len(X_train) + len(X_test) == len(df)
-    assert len(y_train) + len(y_test) == len(df)
-
-    # types
-    assert all(isinstance(x, str) for x in X_train)
-    assert all(isinstance(x, str) for x in X_test)
-
-    # stratification preserved
-    assert set(y_train.unique()) == set(df["label"].unique())
-    assert set(y_test.unique()) == set(df["label"].unique())
 

@@ -112,3 +112,8 @@ class MlPortfolioAllocation(PortfolioAllocation):
             base_allocations = super().allocate()
         return base_allocations
        
+
+
+
+def     print_any(word):
+    print(word)
