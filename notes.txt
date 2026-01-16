@@ -720,3 +720,27 @@ and  swithc   to it
 
 git   checkout   "branch name"   here  how  you can   switch branches
 pip install pywin32    in yml
+
+
+
+*****day 21 **********
+APIs allow two systems to communicate and transfer
+data. some  require     keys   some  dont 
+An API lets you programmatically access some data or perform some action.
+in api the  creators   can   put   logic   like downloaded  pdf  or  get  prediction  
+and  more  like   access  to  data .   they   can  guide  users  
+or  users    can   just  interact  with   it   throught  the  ui  like press  button  sends  the   info  with  
+POST  which  does   something  
+import requests   
+response = requests.get("https://unstats.un.org/sdgapi/v1/sdg/Goal/5/Target/\
+List?includechildren=true")
+print(response.json())
+
+there are  guides  in  how   to  use the   urls  for   api   
+for  exmaple   if  you  want  some specific info  
+in   api   documentation   is   said  to Goal/5/Target/\
+List?includechildren=true")    and  by  doing   this   you  get   what   you want 
+
+
+
+*********day   22************

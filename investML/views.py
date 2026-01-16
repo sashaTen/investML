@@ -1,6 +1,6 @@
 #   python manage.py runserver
-
-from django.shortcuts import render
+import requests
+from django.shortcuts import render 
 from django.http import HttpResponse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
