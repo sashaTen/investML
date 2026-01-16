@@ -30,6 +30,7 @@ jobs:
             nltk.download("stopwords")
             nltk.download("punkt")
             nltk.download("wordnet")
+            nltk.download('omw-1.4')
             EOF
       - name: Run unit tests
         run: |
