@@ -1,5 +1,5 @@
 #     pytest  -m   unit
-from investML.scripts import print_any
+from investML.miscelan import print_any
 import pytest
 import pandas as pd
 
