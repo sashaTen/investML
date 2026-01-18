@@ -6,9 +6,9 @@ import os
 import yfinance as yf
 
 
-#load_dotenv(".venv/.env")
-#API_KEY = os.getenv("THE_KEY")  
-tavily_client = TavilyClient(api_key="sksjdfsdjddddddddddddd" )
+load_dotenv(".venv/.env")
+API_KEY = os.getenv("THE_KEY")  
+tavily_client = TavilyClient(api_key=API_KEY)
 
 cv = joblib.load("ml_artifacts/knn_count_vectorizer.pkl")
 pca = joblib.load("ml_artifacts/knn_pca.pkl")

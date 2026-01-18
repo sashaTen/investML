@@ -744,3 +744,7 @@ List?includechildren=true")    and  by  doing   this   you  get   what   you wan
 
 
 *********day   22************
+docker    .      you  created   base    image   ,  then  authorization
+then port   config
+setting   config    in django  so   it  allows  localhost.
+
