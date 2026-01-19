@@ -12,6 +12,7 @@ __pycache__/
 # Git
 .git
 .gitignore
+investML/investML/ml_model.py
 
 # Environment variables
 .env

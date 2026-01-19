@@ -13,9 +13,20 @@ COPY requirements.txt  /app/
 RUN pip install --no-cache-dir -r requirements.txt
 RUN python - <<EOF
 import nltk
-nltk.download("punkt")
-nltk.download("stopwords")
+
+resources = [
+    "punkt",
+    "punkt_tab",
+    "stopwords",
+    "wordnet",
+    "omw-1.4",
+]
+
+for r in resources:
+    nltk.download(r)
 EOF
+
+
 # 4. Install dependencies
 COPY . /app/
 

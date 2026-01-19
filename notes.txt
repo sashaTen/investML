@@ -747,4 +747,36 @@ List?includechildren=true")    and  by  doing   this   you  get   what   you wan
 docker    .      you  created   base    image   ,  then  authorization
 then port   config
 setting   config    in django  so   it  allows  localhost.
+docker   run    -p 8000:8000 investml     how to   run   docker or  you  can 
+set  8000:8000  when  run   from  dekstop   before   run 
+  docker build --no-cache -t my-app .  .
 
+
+RUN python - <<EOF
+import nltk
+
+resources = [
+    "punkt",
+    "punkt_tab",
+    "stopwords",
+    "wordnet",
+    "omw-1.4",
+]
+
+for r in resources:
+    nltk.download(r)
+EOF
+   ran this   and the ml  worked 
+   also   you  can set in  docker setting  before the  run  the 
+   port   and   env and val   for api key
+
+
+   NEVER  FORGET  DOCKERIGNORE 
+   
+services:
+  web:
+    image: investml
+    ports:
+      - "8000:8000"
+    env_file:
+      - .venv/.env
