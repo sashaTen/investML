@@ -1,6 +1,5 @@
 from tavily import TavilyClient
 import joblib
-from .ml_model import preprocess_text
 from dotenv import load_dotenv
 import os
 import yfinance as yf
@@ -22,8 +21,8 @@ def  get_ticker_news(ticker):
     return response["results"][0]["content"]
 
 def make_prediction(text):
-    clean_text = preprocess_text(text)
-    X = cv.transform([clean_text]).toarray()
+   
+    X = cv.transform([text]).toarray()
     X = pca.transform(X)
     prediction = model.predict(X)[0]
     return prediction

@@ -12,7 +12,7 @@ __pycache__/
 # Git
 .git
 .gitignore
-investML/investML/ml_model.py
+
 
 # Environment variables
 .env
@@ -25,3 +25,10 @@ htmlcov/
 # OS files
 .DS_Store
 Thumbs.db
+mlruns
+ml_code 
+__pycache__
+.git
+.gitignore
+.github
+.pytest_cache

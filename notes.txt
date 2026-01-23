@@ -780,3 +780,185 @@ services:
       - "8000:8000"
     env_file:
       - .venv/.env
+
+
+
+
+
+*********  dya   23  *********
+started  the    google  cloud   api   
+enable  billing  and    allow   artifacts  api  and  cloud  run
+you  download   CLI   first   
+and  do  it   with   powershell 
+
+
+
+
+you  get   the  project 
+gcloud config get-value project
+
+then   create   repo    in   gcloud artifacts repositories list --location asia-northeast3
+
+
+
+then     push to  repo 
+docker tag mmm asia-northeast3-docker.pkg.dev/investml-484904/my-repo/mmm
+gcloud auth configure-docker asia-northeast3-docker.pkg.dev
+
+docker push asia-northeast3-docker.pkg.dev/investml-484904/my-repo/mmm
+
+
+
+gcloud run deploy mmm `
+  --image asia-northeast3-docker.pkg.dev/investml-484904/my-repo/mmm `
+  --region asia-northeast3 `
+  --allow-unauthenticated `
+  --set-env-vars API_KEY=YOUR_KEY
+
+
+fix  docker  for the   cloud 
+EXPOSE 8080
+
+CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:$PORT"]
+
+docker build -t mmm .
+docker run ` -e PORT=8080 ` -e API_KEY=your_real_api_key ` -p 8080:8080 ` mmm
+
+---------------
+FROM python:3.11-slim
+WORKDIR /application
+
+
+# Copy all files to the application directory
+COPY . /application
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the desired port
+EXPOSE 8080
+
+# Install Gunicorn
+RUN pip install gunicorn
+
+CMD ["gunicorn", "investML:application", "--bind", "0.0.0.0:8080", "--workers", "3", "--timeout", "300"]
+
+
+
+(.venv) PS C:\Users\HP\Desktop\investML> docker build    -t    investing . 
+ERROR: error during connect: Head "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/_ping": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+
+
+investml-484904
+
+
+ gcloud   artifacts repositories create  invest-repo --repository-format=docker  --location=asia-northeast3 --description="invest repo"    --immutable-tags --async
+ gcloud   auth configure-docker asia-northeast3-docker.pkg.dev
+ gcloud builds  submit --tag asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/investimg:invest-tag
+
+
+
+
+***********************
+**********************
+
+
+👉 **Cloud Build → Artifact Registry → Cloud Run**
+📍 **Region:** Seoul (`asia-northeast3`)
+🆔 **Project:** `investml-484904`
+
+
+
+# 0️⃣ One-time setup (do this once)
+
+bash
+gcloud config set project investml-484904
+
+
+### Enable required APIs
+
+bash
+gcloud services enable \
+  cloudbuild.googleapis.com \
+  artifactregistry.googleapis.com \
+  run.googleapis.com
+
+
+# 1️⃣ Create Artifact Registry (Docker repo)
+
+Artifact Registry stores your Docker images.
+
+bash
+gcloud artifacts repositories create invest-repo --repository-format=docker --location=asia-northeast3 --description="Docker repo for InvestML"
+
+
+✅ Repo name: `investml-repo`
+✅ Region: Seoul
+
+
+
+# 2️⃣ Authenticate Docker to Artifact Registry
+
+bash
+gcloud auth configure-docker asia-northeast3-docker.pkg.dev
+
+
+# 3️⃣ Cloud Build: build & push Docker image
+
+From your project root (where `Dockerfile` exists):
+gcloud builds submit --tag asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest
+
+
+✅ Image URL:
+
+asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest
+
+
+# 4️⃣ Deploy to Cloud Run (Seoul)
+
+```bash
+gcloud run deploy invest-app --image asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest --region asia-northeast3  --platform managed --allow-unauthenticated --port 8080
+```
+or   with  api   key  
+gcloud run deploy invest-app --image asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest  --region asia-northeast3  --platform managed  --allow-unauthenticated --port 8080 --set-env-vars OPENAI_API_KEY=sk-xxxxxx
+
+
+
+* **Allow unauthenticated invocations?** → `y`
+
+
+# 🔍 Common failure checklist (VERY important)
+
+### ✅ Dockerfile must include:
+
+```dockerfile
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+```
+
+### ✅ `requirements.txt` must include:
+
+```txt
+fastapi
+uvicorn[standard]
+```
+
+### ✅ FastAPI file name
+
+```python
+# main.py
+app = FastAPI()
+```
+
+---
+
+
+Code
+ ↓
+Cloud Build  → builds image
+ ↓
+Artifact Registry → stores image
+ ↓
+Cloud Run → runs container
+**********************
+*********************

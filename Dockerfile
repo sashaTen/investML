@@ -1,38 +1,26 @@
-# 1. Base image (Python runtime)
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-
-# 2. Set working directory inside container
-WORKDIR /app
+WORKDIR /application
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-RUN pip install --upgrade pip
-# 3. Copy dependency list first (important for caching)
-COPY requirements.txt  /app/
-
-RUN pip install --no-cache-dir -r requirements.txt
-RUN python - <<EOF
-import nltk
-
-resources = [
-    "punkt",
-    "punkt_tab",
-    "stopwords",
-    "wordnet",
-    "omw-1.4",
-]
-
-for r in resources:
-    nltk.download(r)
-EOF
+# Copy requirements first (better caching)
+COPY  reqs_run.txt  .
 
 
-# 4. Install dependencies
-COPY . /app/
+RUN pip  install --upgrade pip 
+# Install dependencies
+RUN pip install --no-cache-dir -r reqs_run.txt 
 
-# 5. Copy the rest of the code
-EXPOSE 8000 
 
-# 6. Default command (can be overridden)
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Copy the rest of the app
+COPY . .
+
+# Expose the desired port
+EXPOSE 8080
+
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8080"]
+
+
+
+
 
