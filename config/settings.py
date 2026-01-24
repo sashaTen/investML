@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-j@ru2d$4z6e3$gij274a#+dc9+jltm@n8!9e17&wx@2j5lbk-%
 DEBUG = False 
 
 ALLOWED_HOSTS = [
-    "invest-app-213061868662.asia-northeast3.run.app"
+    "invest-app-213061868662.asia-northeast3.run.app",
+    "localhost",
+    "127.0.0.1"
     
     
 ]

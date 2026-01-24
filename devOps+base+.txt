@@ -1,0 +1,34 @@
+###    REMEMBER THE GOLDEN  RULES OF INFO : 
+1 always learn since the bigger picture you have the  more you  know gaps and your case 
+2 what is key value of knowledge/tool/concept  , how the proccess must  look like and decide if it fits your case  and your  constraints allow you 
+
+******* CI-CD   :
+Ultra-short memory hook 🧩
+
+ML system → structure & behavior 
+
+MLOps → automation & reliability
+-- releases.automation.monitoring .testing.
+
+--road :   linux (os  and  network)-> scripts(python/YAML/BASH)-> cloud-> docker/kuber ->infra
+
+*******.so goals   are   : 
+-----------PRIORITY :
+-- get the big picture in order to reason about the concepts  and tools roles to  create  references
+and  apply  from  the   devOps  what  is  needed  for   your   case (it's contraints).  it  is   also  helps 
+to  practice  docker things   like .   and to  reason  about   workflow.    also the   ultimate goals  are :
+1.understanding the big picture of devops and how to  choose tools  +  strategies  for  imrpovement and trpubleshooting 
+2. one clean ci/cd pipeline for your case and reason why  as well as  potential   improvements 
+
+
+-- create rules  for   writing good   code  and learn database   management and  design  for that  you  need   the   knowledge from  SE for DS :
+1  task  is to  add new cool   tech ,    new  feature  or  improve the app in general by applying  SE  like handling  potential  breakdowns.     
+....START   APPLYING   FROM  HERE.DONE 
+--------END OF   PRIORITY
+
+--SaaS.   find  very  doable   one  and then  try   to   learn  only    topics  relevant to  it. like 
+database   management and  design   ,  backend   ,  django   a  bit   deeper.  but  dont  learn   just for the  sake  of  leanrinig . learn  in  order to   replicate  and  adapt  their  success.     
+1.  the task  is  to   build the MVP   before  the  semester.    
+
+
+

@@ -857,8 +857,14 @@ investml-484904
  gcloud   auth configure-docker asia-northeast3-docker.pkg.dev
  gcloud builds  submit --tag asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/investimg:invest-tag
 
-
-
+*************
+dockerignored    many    things    ,   
+created the req_nun.txt  for smaller  docker img
+changed the  dockerfile 
+chenged the  settings   
+removed   ml building   logic  from the  app  dir to separate concerns
+finally    deployed the  app  .    after testing  on   local  docker
+passed   api key  and  it   works now  
 
 ***********************
 **********************
