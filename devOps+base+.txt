@@ -32,3 +32,71 @@ database   management and  design   ,  backend   ,  django   a  bit   deeper.  b
 
 
 
+******************CHAPTER 1 dev ops    intro 
+..build, test, and deploy code continuously, enabling deployment in hours instead of days.
+..makes code moves from development to production quickly, reliably, and securely.(build-> test->deploy->monitor).
+..unit  ,   integration  ,perfomance , secirity tests 
+..goes to  stagying   and  if    good then different  strategies for the deployment 
+Blue-Green Deployment,Canary Deployment , Rolling Updates  
+..Continuous Feedback Loop :   monitoring ,  feedback  and all done with   grafana  and   like   tools 
+..How to Adopt a DevOps Model?
+..mlops   :   
+DevOps tools generate a huge amount of data from testing, deployment, and monitoring for AI and ML.
+
+..surprise   : 
+not  only  the    ml  needs the  devops but the ml   can aid the devops  and  imrpove their 
+perfomance  for example   ml  can   find the bugs  and more.  tasks  like classification  and 
+predictions  are  very  important  for the devops .     
+.. for example  you   have the server  which   runs 24/7 but  you can  write  script  which  turns  it  off   
+during   night   for  example .    
+..Prerequisites Before Learning DevOps
+Operating Systems & Networking, 2. Version Control with Git (VCS),3. Programming & Scripting Skills
+4. Linux Fundamentals, 5. Cloud Computing Basics
+..Virtual Machines (VMs)
+A computer you rent in the cloud
+Acts like a real Linux/Windows machine
+..you also    can  build cloud   native apps   
+..7  practices  of  devops 
+Continuous Development (one small change of code is tested and deployed like login or design)
+Continuous Integration  (to  integrate it above you automate steps with  CI/CD)
+Continuous Testing      (does code  do  what  expected)
+Continuous Deployment/Continuous Delivery  (sometimes it is ok  to keep final deploy manual like with  click) 
+Continuous Monitoring(to keep  improving the app you need  measures and monitoring   helps like alert of long load)
+Continuous Feedback(complain from review that update is not fast and The DevOps improve the tracking speed.)
+Continuous Operations (not shut down app while improve feature but keep it run)
+
+******************  CHAPTER 1  dev ops    intro tasks:
+.. no   hard coding .  only   plan  / design/ strategy and gaps for below.
+How to Adopt a DevOps Model?
+To adopt a DevOps model, ensure the following points:
+
+Assess Current Workflow: Evaluate your existing development and operations processes to identify gaps, inefficiencies, and areas for automation.
+Set Clear DevOps Goals: Define measurable objectives such as faster deployment cycles, better collaboration, or improved system stability.
+Build a Collaborative Culture: Break silos between development, operations, QA, and security teams by encouraging communication and shared responsibilities.
+Automate Infrastructure and Testing: Use tools like Jenkins, Docker, and Ansible to automate code integration, deployment, testing, and infrastructure provisioning.
+Implement CI/CD Pipelines: Establish Continuous Integration and Continuous Deployment pipelines for faster, error-free code delivery.
+Monitor and Optimize Continuously: Use real-time monitoring and feedback loops (via tools like Prometheus, Grafana) to track performance and improve systems iteratively.
+..https://www.terminaltemple.com/   practice  linux  here.  
+..the   re-build   of the  docker  image   is ineffective   but   by caching you can optimize  it   so  apply  it  later.   
+
+
+**************CHAPTER 2. Linux for DevOps 
+
+
+************FINAL  TASKS  :
+.. review  all   topics  and  form the  vision of   your   devops.    like for in intro you learned about the  continious  operation   and   etc   but  it is hard to  do  before  you  learned  the  topic  so  review  all   learned  and    implement   .   do  all  tasks  from   chapter   1   since   it  is   broad  and  tells  how it should  be.     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
