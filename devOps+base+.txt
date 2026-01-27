@@ -78,9 +78,35 @@ Implement CI/CD Pipelines: Establish Continuous Integration and Continuous Deplo
 Monitor and Optimize Continuously: Use real-time monitoring and feedback loops (via tools like Prometheus, Grafana) to track performance and improve systems iteratively.
 ..https://www.terminaltemple.com/   practice  linux  here.  
 ..the   re-build   of the  docker  image   is ineffective   but   by caching you can optimize  it   so  apply  it  later.   
+The hardware includes CPU, ALU, memory, I/O devices, peripheral devices and storage devices.
+The system programs include compilers, loaders, editors and the OS itself.
+CPU controls and processes all computer operations
+ALU performs arithmetic and logical calculations
+RAM temporarily stores data and programs in use
+ROM stores permanent instructions for booting
+..goals   of   os :
+make programs run well, resource of computer manage ,  security 
+..shell and kernel  
+..kernel   is   the  translator   between   hard  and  users 
+..when computer is on the cpu which  is  brain is  working in the instruction -fetch -execute -memory cycle
+the cpu  has the units like  control , alu , cache ,  mmu ,register, momory controller.
+
+
 
 
 **************CHAPTER 2. Linux for DevOps 
+OS perating System(OS) is a software that manages and handles hardware and software resources of a computing device.
+interface between computer hardware and the user.All other programs, including application programs, run on top.
+It assigns resources such as memory, processors, and input/output devices to processes that need them. 
+
+
+
+
+
+
+
+
+
 
 
 ************FINAL  TASKS  :
