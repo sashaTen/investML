@@ -870,6 +870,8 @@ passed   api key  and  it   works now
 **********************
 
 
+
+
 👉 **Cloud Build → Artifact Registry → Cloud Run**
 📍 **Region:** Seoul (`asia-northeast3`)
 🆔 **Project:** `investml-484904`
