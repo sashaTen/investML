@@ -967,4 +967,4 @@ Artifact Registry → stores image
  ↓
 Cloud Run → runs container
 **********************
-*********************
+*********************test change 2026. 01. 28. (수) 13:58:17 KST
