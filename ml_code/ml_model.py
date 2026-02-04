@@ -17,7 +17,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from pathlib import Path
-
+from ml_code.testing_ml import load_df  
 BASE_DIR = Path(__file__).resolve().parent.parent
 ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
 ARTIFACTS_DIR.mkdir(exist_ok=True)
@@ -37,9 +37,7 @@ def preprocess_text(text):
     tokens = [lemma.lemmatize(w) for w in tokens if w not in stopwordSet]
     return " ".join(tokens)
 
-def load_df(path):
-    data = pd.read_csv(path)
-    return data
+
 
 def split(df, target_column):
     data = df
