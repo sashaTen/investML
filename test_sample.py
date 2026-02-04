@@ -17,7 +17,7 @@ def test_print_any():
 
 
 def  test_load_df():
-    df = load_df("ml_code/sample_data.csv")
+    df = load_df("C:\\Users\\HP\\Desktop\\investML\\ml_code\\stock_data.csv")
     assert df is not None
     assert not df.empty 
 
