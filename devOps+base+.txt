@@ -99,7 +99,22 @@ OS perating System(OS) is a software that manages and handles hardware and softw
 interface between computer hardware and the user.All other programs, including application programs, run on top.
 It assigns resources such as memory, processors, and input/output devices to processes that need them. 
 
+practice   every   concept  and question what  is    value 
+https://www.digitalocean.com/community/tutorials/an-introduction-to-linux-basics
+https://www.geeksforgeeks.org/linux-unix/linux-tutorial/
+“Minimum Effective Linux”
 
+filesystem (/, /app, relative vs absolute paths)
+
+basic commands (ls, cd, cat, grep)
+
+processes (ps, kill, foreground/background)
+
+permissions (chmod, chown)
+
+networking basics (ports, localhost, 0.0.0.0)
+
+env vars
 
 
 
