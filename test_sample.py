@@ -3,7 +3,14 @@ from investML.miscelan import print_any
 from  ml_code.testing_ml  import load_df
 import pytest
 import pandas as pd
+from pathlib import Path
 
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
+ARTIFACTS_DIR.mkdir(exist_ok=True)
+path = ARTIFACTS_DIR / "stock_data.csv"
 
 
 @pytest.mark.unit
