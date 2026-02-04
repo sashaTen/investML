@@ -3,14 +3,7 @@ from investML.miscelan import print_any
 from  ml_code.testing_ml  import load_df
 import pytest
 import pandas as pd
-from pathlib import Path
 
-
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
-ARTIFACTS_DIR.mkdir(exist_ok=True)
-path = ARTIFACTS_DIR / "stock_data.csv"
 
 
 @pytest.mark.unit
@@ -23,8 +16,13 @@ def test_print_any():
 
 
 
-def  test_load_df():
-    df = load_df(path )
-    assert df is not None
-    assert not df.empty 
+def test_load_df(tmp_path):
+    # create fake csv
+    csv_file = tmp_path / "fake.csv"
+    csv_file.write_text("a,b\n1,2\n3,4")
+
+    df = load_df(csv_file)
+
+    assert not df.empty
+    assert list(df.columns) == ["a", "b"]
 
