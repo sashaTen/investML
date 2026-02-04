@@ -131,6 +131,1508 @@ env vars
 
 
 
+--the  concepts:   Different distributions are designed for different 
+purposes such as desktops, servers, and embedded systems.
+hard  ->  kernel-> shell ->  apps 
+Hardware
+   ↑
+Kernel
+   ↑
+System Libraries
+   ↑
+System Utilities (apps that manage the system)
+   ↑
+Regular Applications (like Firefox, VSCode)
+| Component            | Role / Layer                                          |
+| -------------------- | ----------------------------------------------------- |
+| **Kernel**           | Core of OS, manages hardware & resources              |
+| **System Libraries** | Provide APIs for apps to safely use kernel features   |
+| **Shell**            | Command-line interpreter, talks to libraries & kernel |
+| **System Utilities** | Special apps for managing system                      |
+| **Applications**     | User programs (Firefox, VSCode, etc.)                 |
+
+
+System Utilities are programs like ls, cp, top, ping.
+
+The shell runs these utilities, but they are separate programs, not part of the shell.
+
+
+
+
+kernel:
+Handles process management, memory, and device control.
+Prevents conflicts between multiple running programs.
+hard : 
+Includes CPU, RAM, storage, and input/output devices.
+Communicates with the OS using device drivers and kernel services.
+
+ls – Lists contents of directories
+cd – Changes the current directory
+pwd – Displays the current directory path
+cp, mv, rm – Used to copy, move, and delete files respectively
+free – Shows memory usage
+df – Checks disk space usage
+top – Monitors running processes
+netstat, ifconfig, ping – Help monitor and troubleshoot network connections
+
+free   :  
+| Column         | Meaning                                                     |
+| -------------- | ----------------------------------------------------------- |
+| **total**      | Total memory (RAM) installed on the system.                 |
+| **used**       | Memory currently used by **processes and kernel**.          |
+| **free**       | Memory **completely unused**.                               |
+| **shared**     | Memory used by **tmpfs** (shared memory between processes). |
+| **buff/cache** | Memory used by the **kernel for buffers and caches**.       |
+| **available**  | Memory available for **new applications** without swapping. |
+
+
+you keep    all   data  on   SSD HHD  on the   hard  disk    and the computer   can  not   access  it   
+directlyy   so  it   fetches   it    to the  ram   first  and  cache   is the part  of the RAM 
+Hard Drive / SSD  →  RAM (with Cache & Buffers)  →  CPU
+Permanent storage     Fast memory                CPU works here
+
+
+Enterprise and business use (Red Hat, CentOS, Rocky Linux)
+Cybersecurity and penetration testing (Kali Linux, Parrot OS)
+Developers and programmers (Fedora, Arch, Ubuntu)
+Multimedia creation (Ubuntu Studio, AV Linux)
+Lightweight and old hardware use (Lubuntu, Puppy Linux)
+above  are   many  types  of the   linux  and then   
+each  distrib  has   own    package    manager  and   that's why   
+in   one  it  can  be APT  and  for other  the   annother one.  
+
+
+
+
+
+
+--concepts    :   
+
+Linux commands are used to interact with the operating system through the terminal and perform 
+tasks like file management, navigation, and system monitoring. 
+ls investML   for ex.    command   +  dir = files   there 
+or  ls + option [-l ,   -a  ,   -h  etc]  or combo   [-lah]     + dir
+| Set        | Characters | Meaning                                                    |
+| ---------- | ---------- | ---------------------------------------------------------- |
+| **Owner**  | `rwx`      | Owner can **read, write, and execute** the file            |
+| **Group**  | `rwx`      | Users in the group can **read, write, and execute**        |
+| **Others** | `r-x`      | Anyone else can **read and execute**, but **cannot write** |
+
+
+-a (all files)
+
+Shows all files, including hidden files.
+
+Hidden files in Linux start with a dot (.), like .bashrc, .gitignore.
+-h (human-readable sizes)
+
+Converts file sizes into KB, MB, GB, instead of showing bytes.
+
+Makes it easier to read, especially for large files.
+
+
+...
+| Option    | Description                                               | Example      |
+| --------- | --------------------------------------------------------- | ------------ |
+| `-l`      | Long listing format (permissions, owner, size, date)      | `ls -l`      |
+| `-a`      | Show all files, including hidden ones (`.` files)         | `ls -a`      |
+| `-h`      | Human-readable sizes (KB, MB, GB) with `-l`               | `ls -lh`     |
+| `-R`      | Recursively list subdirectories                           | `ls -R`      |
+| `-t`      | Sort by modification time (newest first)                  | `ls -lt`     |
+| `-r`      | Reverse order                                             | `ls -lr`     |
+| `-S`      | Sort by file size (largest first)                         | `ls -lS`     |
+| `-1`      | List one file per line                                    | `ls -1`      |
+| `-i`      | Show inode number                                         | `ls -li`     |
+| `-d`      | List directories themselves, not contents                 | `ls -ld */`  |
+| `-F`      | Add symbol to file type (`/` for dir, `*` for executable) | `ls -F`      |
+| `--color` | Show files in colored output (for types)                  | `ls --color` |
+ 
+
+
+How to find options for any command
+
+Use --help or man ls
+
+
+mostly     "ls"    is for sorting   like    sql   query.   helps  you  to find  the info you need 
+
+mkdir .    you creatr   folder  and then chekc   with   ls 
+you  can create  many  dirs 
+mkdir -p first/second/third    by this you create first  folder  , second inside  
+and third inside of second 
+-m    helps you to  define the permission for  oper. 
+also    you   use   --help
+rm -r myfolder
+
+The cp command copies the contents of file1.txt into file2.txt.
+cat filename.txt    -show   content  of  file 
+
+mv changes its location or name
+
+basically     while    reading  the   config  file   you kind of 
+just  google  the  commands  , flags  and   options  .  understand the syntax
+
+Shortcut mindset:
+
+“Understand what the line does; look up the exact options; run it; see what happens.”
+This is exactly how real DevOps, ML engineers, and sysadmins work.
+
+Recognize the command
+
+Example: RUN apt-get install python3-pip → RUN is a Dockerfile instruction, apt-get
+is Linux package manager command.
+
+Understand the goal
+
+What is this line doing? Installing software? Copying files? Setting environment variables?
+
+Look up the syntax
+
+Quickly Google the flags/options you don’t know.
+
+
+uname    for  system  info   
+locate   =   file search
+alex@alex-HP-Laptop-15s-fq2xxx:~$ locate notes.txt
+/home/alex/investML/notes.txt
+/usr/share/doc/openvpn/management-notes.txt.gz
+
+
+touch  for    creating   files you create   many  files 
+also   has  options   
+
+"ln":
+Why we need symbolic links
+
+Convenience / shorter paths
+
+Example: /usr/local/bin/python3.14 is long.
+
+You can create a symlink /usr/bin/python → points to /usr/local/bin/python3.14.
+
+
+
+....
+Used to manage files and directories, such as creating, deleting, copying, and organizing data.
+Helps monitor and control system resources including processes, memory, and CPU usage.
+Allows administrators to manage users, permissions, software packages, and system services.
+Supports networking, automation, and troubleshooting through powerful command-line tools.
+
+
+ex@alex-HP-Laptop-15s-fq2xxx:~$ chmod 744 myfile.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~$ ls  -l   myfile.txt
+-rwxr--r-- 1 alex alex 7496  1월 29 13:54 myfile.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~$ chmod 777 myfile.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~$ ls -l myfile.txt
+-rwxrwxrwx 1 alex alex 7496  1월 29 13:54 myfile.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~$ 
+
+
+.....
+for  package  management  you can  use the APT   
+....
+for  insuring the   safety    you can    control  the   acccess  
+of   other    users 
+
+you  crud  users  and  allow    their  authority 
+
+ 
+.......
+Using nslookup Command
+The nslookup command is used to query DNS (Domain Name System) records. It helps retrieve the IP address
+
+
+
+
+
+tasks      :    
+for  active  recall   re-read    just    and  see   what they   do   
+examples   .    
+for  each    chapter     ask   chatgpt   generate the    tasks   so  you   practice   them  
+not just   passive   learning.  no  perfectionism 
+
+*************************
+
+
+
+***********************
+commands  for : 
+Used to manage files and directories, such as creating, deleting, copying, and organizing data.
+Helps monitor and control system resources including processes, memory, and CPU usage.
+Allows administrators to manage users, permissions, software packages, and system services.
+Supports networking, automation, and troubleshooting through powerful command-line tools.
+
+***********
+
+Practice Problem 1: Creating and Viewing Files
+
+Objective: Practice creating files and displaying their contents.
+
+Task:
+
+Create a file named notes.txt.
+
+Add at least 3 lines of text to the file.
+
+Display the file content:
+
+once normally
+
+once in paged view (scrollable)
+
+Skills practiced: file creation, writing to files, viewing file contents.
+
+alex@alex-HP-Laptop-15s-fq2xxx:~$ cd practice
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cd practice2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ touch notes.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ echo    "he notes/n hello /n hhhh"  notes.txt
+this  the notes/n     hello /n     hhhh notes.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ 
+
+
+
+
+🧪 Practice Problem 3: File Removal and Safety
+
+Objective: Practice deleting files and understanding safe vs permanent removal.
+
+Task:
+
+Create a file named temp.txt and add any text.
+
+Make a copy of the file called temp_backup.txt.
+
+Delete:
+
+temp.txt normally
+
+temp_backup.txt in a way that prevents recovery (research required)
+
+Skills practiced: file deletion, backups, understanding permanent removal.
+
+lex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ touch  tem
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ echo 'any text'   >   tem
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ touch backup
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ cp    tem   backup
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ cat    backup
+any text
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ rm cat
+rm: cannot remove 'cat': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ rm tem
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ ls
+backup  train3  txt.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ 
+
+
+
+
+*****************
+solutions  and  recall  
+***************
+Linux treats everything as a file, including devices and system configurations.
+Ensures efficient data organization and accessibility.
+Involves operations like create, copy, move, rename, and delete.
+Uses file permissions and ownership for secure access control.
+Common commands include cp, mv, rm, ls, cat, and chmod.
+
+
+
+----commmad block :
+
+
+lex@alex-HP-Laptop-15s-fq2xxx:~$ mkdir practice 
+alex@alex-HP-Laptop-15s-fq2xxx:~$ cd practice 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ touch file_train.py
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ touch train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ^C
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ touch  train2  train3 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls 
+file_train.py  train2  train3  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls -l 
+total 0
+-rw-rw-r-- 1 alex alex 0  1월 30 12:14 file_train.py
+-rw-rw-r-- 1 alex alex 0  1월 30 12:15 train2
+-rw-rw-r-- 1 alex alex 0  1월 30 12:15 train3
+-rw-rw-r-- 1 alex alex 0  1월 30 12:14 train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat  train
+cat: train: No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ echo "this is the train file "> train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat  train.txt
+this is the   train    file 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat train.txt     train2
+this is the   train    file 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ touch  file_train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cp   train.txt  / train2 /
+cp: cannot create regular file '/train.txt': Permission denied
+cp: -r not specified; omitting directory '/'
+cp: cannot create regular file '/train2': Permission denied
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cp     train.txt /   file_train.txt
+cp: target 'file_train.txt' is not a directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mkdir practice2
+
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cp  train.txt    train2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat train2
+this is the   train    file 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv  train2  / practice2
+mv: cannot move '/' to 'practice2': Device or resource busy
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv  train2   practice2
+mv: cannot stat 'train2': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv  train2   practice2
+mv: cannot stat 'train2': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv  train2   practice2
+mv: cannot stat 'train2': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls 
+file_train.py  file_train.txt  practice2  train3  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ touch train2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls
+file_train.py  file_train.txt  practice2  train2  train3  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cp   train.txt   train2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat train2
+this is the   train    file 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv   train2    practice2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls
+file_train.py  file_train.txt  practice2  train3  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv  train3   train2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls
+file_train.py  file_train.txt  practice2  train2  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ rm file_train
+rm: cannot remove 'file_train': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ rm file_train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls
+file_train.py  practice2  train2  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ 
+
+alex@alex-HP-Laptop-15s-fq2xxx:/$ cd /
+alex@alex-HP-Laptop-15s-fq2xxx:/$ ls
+bin  boot  cdrom  dev  etc  home  lib  lib32  lib64  libx32  lost+found  media  mnt  
+opt  proc  root  run  sbin  snap  srv  swapfile  sys  tmp  usr  var
+alex@alex-HP-Laptop-15s-fq2xxx:/$ cd  
+alex@alex-HP-Laptop-15s-fq2xxx:~$ ls
+Desktop  Documents  Downloads  google-chrome-stable_current_amd64.deb  investML  microsoft.gpg
+  Music  myfile.txt  Pictures  practice  Public  snap  Templates  Videos
+
+
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ ifconfig
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 12007  bytes 1152523 (1.1 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 12007  bytes 1152523 (1.1 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+wlo1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.30.1.48  netmask 255.255.255.0  broadcast 172.30.1.255
+        inet6 fe80::1d9a:ca15:5141:6ed4  prefixlen 64  scopeid 0x20<link>
+        ether 14:18:c3:bf:e6:59  txqueuelen 1000  (Ethernet)
+        RX packets 387250  bytes 442425619 (442.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 137898  bytes 58221473 (58.2 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+Why this matters (real life)
+
+Debug “no internet”
+
+Know if you’re on Wi-Fi or Ethernet
+
+Check IP when:
+
+Docker networking breaks
+
+servers reject connections
+
+VPNs act weird
+
+
+Kernel
+The kernel is a computer program that is the core of a computer's operating system, 
+with complete control over everything in the system. 
+It manages the following resources of the Linux system:
+
+File management
+Process management
+I/O management
+Memory management
+Device management etc.
+
+
+
+
+Uses of Shell Scripts
+Here are the main reasons shell scripts are widely used in IT and DevOps:...
+...Shell scripts turn routine jobs like file cleanup, backups, or 
+server updates into one-click actions, saving time and reducing manual effort
+..Shell scripts run the exact same steps every time, without mistakes.
+...Shell scripts make it easy to link different commands together. 
+You can pass the output of one command into another, filter data, 
+or run tasks step by step all in one script. This helps automate 
+complex jobs using simple building blocks.
+
+...Shell syntax : 
+Keywords: if, else, break, etc.
+Shell Commands: cd, ls, echo, pwd, touch, etc.
+Functions
+Control Flow: if..then..else, case, loops, etc.
+
+create script.sh    
+in there    :   
+# !/bin/bash
+
+# A simple bash script to move up to desired directory level directly
+function print(){
+
+   cd  ~/practice/practice2 || exit 1
+   touch greet.txt 
+   echo "hello  this  is   the  first    shell script"    >  greet.txt
+   cat   greet.txt
+
+
+}
+
+
+print
+
+
+
+
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ chmod +x print.sh
+chmod: cannot access 'print.sh': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ ls
+backup  script.sh  train3  txt.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ chmod +x script.sh 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ ./script.sh
+hello  this  is   the  first    shell script
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ 
+
+
+--the  concepts:   Different distributions are designed for different 
+purposes such as desktops, servers, and embedded systems.
+hard  ->  kernel-> shell ->  apps 
+Hardware
+   ↑
+Kernel
+   ↑
+System Libraries
+   ↑
+System Utilities (apps that manage the system)
+   ↑
+Regular Applications (like Firefox, VSCode)
+| Component            | Role / Layer                                          |
+| -------------------- | ----------------------------------------------------- |
+| **Kernel**           | Core of OS, manages hardware & resources              |
+| **System Libraries** | Provide APIs for apps to safely use kernel features   |
+| **Shell**            | Command-line interpreter, talks to libraries & kernel |
+| **System Utilities** | Special apps for managing system                      |
+| **Applications**     | User programs (Firefox, VSCode, etc.)                 |
+
+
+System Utilities are programs like ls, cp, top, ping.
+
+The shell runs these utilities, but they are separate programs, not part of the shell.
+
+
+
+
+kernel:
+Handles process management, memory, and device control.
+Prevents conflicts between multiple running programs.
+hard : 
+Includes CPU, RAM, storage, and input/output devices.
+Communicates with the OS using device drivers and kernel services.
+
+ls – Lists contents of directories
+cd – Changes the current directory
+pwd – Displays the current directory path
+cp, mv, rm – Used to copy, move, and delete files respectively
+free – Shows memory usage
+df – Checks disk space usage
+top – Monitors running processes
+netstat, ifconfig, ping – Help monitor and troubleshoot network connections
+
+free   :  
+| Column         | Meaning                                                     |
+| -------------- | ----------------------------------------------------------- |
+| **total**      | Total memory (RAM) installed on the system.                 |
+| **used**       | Memory currently used by **processes and kernel**.          |
+| **free**       | Memory **completely unused**.                               |
+| **shared**     | Memory used by **tmpfs** (shared memory between processes). |
+| **buff/cache** | Memory used by the **kernel for buffers and caches**.       |
+| **available**  | Memory available for **new applications** without swapping. |
+
+
+you keep    all   data  on   SSD HHD  on the   hard  disk    and the computer   can  not   access  it   
+directlyy   so  it   fetches   it    to the  ram   first  and  cache   is the part  of the RAM 
+Hard Drive / SSD  →  RAM (with Cache & Buffers)  →  CPU
+Permanent storage     Fast memory                CPU works here
+
+
+Enterprise and business use (Red Hat, CentOS, Rocky Linux)
+Cybersecurity and penetration testing (Kali Linux, Parrot OS)
+Developers and programmers (Fedora, Arch, Ubuntu)
+Multimedia creation (Ubuntu Studio, AV Linux)
+Lightweight and old hardware use (Lubuntu, Puppy Linux)
+above  are   many  types  of the   linux  and then   
+each  distrib  has   own    package    manager  and   that's why   
+in   one  it  can  be APT  and  for other  the   annother one.  
+
+
+
+
+
+
+--concepts    :   
+
+Linux commands are used to interact with the operating system through the terminal and perform 
+tasks like file management, navigation, and system monitoring. 
+ls investML   for ex.    command   +  dir = files   there 
+or  ls + option [-l ,   -a  ,   -h  etc]  or combo   [-lah]     + dir
+| Set        | Characters | Meaning                                                    |
+| ---------- | ---------- | ---------------------------------------------------------- |
+| **Owner**  | `rwx`      | Owner can **read, write, and execute** the file            |
+| **Group**  | `rwx`      | Users in the group can **read, write, and execute**        |
+| **Others** | `r-x`      | Anyone else can **read and execute**, but **cannot write** |
+
+
+-a (all files)
+
+Shows all files, including hidden files.
+
+Hidden files in Linux start with a dot (.), like .bashrc, .gitignore.
+-h (human-readable sizes)
+
+Converts file sizes into KB, MB, GB, instead of showing bytes.
+
+Makes it easier to read, especially for large files.
+
+
+...
+| Option    | Description                                               | Example      |
+| --------- | --------------------------------------------------------- | ------------ |
+| `-l`      | Long listing format (permissions, owner, size, date)      | `ls -l`      |
+| `-a`      | Show all files, including hidden ones (`.` files)         | `ls -a`      |
+| `-h`      | Human-readable sizes (KB, MB, GB) with `-l`               | `ls -lh`     |
+| `-R`      | Recursively list subdirectories                           | `ls -R`      |
+| `-t`      | Sort by modification time (newest first)                  | `ls -lt`     |
+| `-r`      | Reverse order                                             | `ls -lr`     |
+| `-S`      | Sort by file size (largest first)                         | `ls -lS`     |
+| `-1`      | List one file per line                                    | `ls -1`      |
+| `-i`      | Show inode number                                         | `ls -li`     |
+| `-d`      | List directories themselves, not contents                 | `ls -ld */`  |
+| `-F`      | Add symbol to file type (`/` for dir, `*` for executable) | `ls -F`      |
+| `--color` | Show files in colored output (for types)                  | `ls --color` |
+ 
+
+
+How to find options for any command
+
+Use --help or man ls
+
+
+mostly     "ls"    is for sorting   like    sql   query.   helps  you  to find  the info you need 
+
+mkdir .    you creatr   folder  and then chekc   with   ls 
+you  can create  many  dirs 
+mkdir -p first/second/third    by this you create first  folder  , second inside  
+and third inside of second 
+-m    helps you to  define the permission for  oper. 
+also    you   use   --help
+rm -r myfolder
+
+The cp command copies the contents of file1.txt into file2.txt.
+cat filename.txt    -show   content  of  file 
+
+mv changes its location or name
+
+basically     while    reading  the   config  file   you kind of 
+just  google  the  commands  , flags  and   options  .  understand the syntax
+
+Shortcut mindset:
+
+“Understand what the line does; look up the exact options; run it; see what happens.”
+This is exactly how real DevOps, ML engineers, and sysadmins work.
+
+Recognize the command
+
+Example: RUN apt-get install python3-pip → RUN is a Dockerfile instruction, apt-get
+is Linux package manager command.
+
+Understand the goal
+
+What is this line doing? Installing software? Copying files? Setting environment variables?
+
+Look up the syntax
+
+Quickly Google the flags/options you don’t know.
+
+
+uname    for  system  info   
+locate   =   file search
+alex@alex-HP-Laptop-15s-fq2xxx:~$ locate notes.txt
+/home/alex/investML/notes.txt
+/usr/share/doc/openvpn/management-notes.txt.gz
+
+
+touch  for    creating   files you create   many  files 
+also   has  options   
+
+"ln":
+Why we need symbolic links
+
+Convenience / shorter paths
+
+Example: /usr/local/bin/python3.14 is long.
+
+You can create a symlink /usr/bin/python → points to /usr/local/bin/python3.14.
+
+
+
+....
+Used to manage files and directories, such as creating, deleting, copying, and organizing data.
+Helps monitor and control system resources including processes, memory, and CPU usage.
+Allows administrators to manage users, permissions, software packages, and system services.
+Supports networking, automation, and troubleshooting through powerful command-line tools.
+
+
+ex@alex-HP-Laptop-15s-fq2xxx:~$ chmod 744 myfile.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~$ ls  -l   myfile.txt
+-rwxr--r-- 1 alex alex 7496  1월 29 13:54 myfile.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~$ chmod 777 myfile.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~$ ls -l myfile.txt
+-rwxrwxrwx 1 alex alex 7496  1월 29 13:54 myfile.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~$ 
+
+
+.....
+for  package  management  you can  use the APT   
+....
+for  insuring the   safety    you can    control  the   acccess  
+of   other    users 
+
+you  crud  users  and  allow    their  authority 
+
+ 
+.......
+Using nslookup Command
+The nslookup command is used to query DNS (Domain Name System) records. It helps retrieve the IP address
+
+
+
+
+
+tasks      :    
+for  active  recall   re-read    just    and  see   what they   do   
+examples   .    
+for  each    chapter     ask   chatgpt   generate the    tasks   so  you   practice   them  
+not just   passive   learning.  no  perfectionism 
+
+*************************
+
+
+
+***********************
+commands  for : 
+Used to manage files and directories, such as creating, deleting, copying, and organizing data.
+Helps monitor and control system resources including processes, memory, and CPU usage.
+Allows administrators to manage users, permissions, software packages, and system services.
+Supports networking, automation, and troubleshooting through powerful command-line tools.
+
+***********
+
+Practice Problem 1: Creating and Viewing Files
+
+Objective: Practice creating files and displaying their contents.
+
+Task:
+
+Create a file named notes.txt.
+
+Add at least 3 lines of text to the file.
+
+Display the file content:
+
+once normally
+
+once in paged view (scrollable)
+
+Skills practiced: file creation, writing to files, viewing file contents.
+
+alex@alex-HP-Laptop-15s-fq2xxx:~$ cd practice
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cd practice2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ touch notes.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ echo    "he notes/n hello /n hhhh"  notes.txt
+this  the notes/n     hello /n     hhhh notes.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ 
+
+
+
+
+🧪 Practice Problem 3: File Removal and Safety
+
+Objective: Practice deleting files and understanding safe vs permanent removal.
+
+Task:
+
+Create a file named temp.txt and add any text.
+
+Make a copy of the file called temp_backup.txt.
+
+Delete:
+
+temp.txt normally
+
+temp_backup.txt in a way that prevents recovery (research required)
+
+Skills practiced: file deletion, backups, understanding permanent removal.
+
+lex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ touch  tem
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ echo 'any text'   >   tem
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ touch backup
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ cp    tem   backup
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ cat    backup
+any text
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ rm cat
+rm: cannot remove 'cat': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ rm tem
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ ls
+backup  train3  txt.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ 
+
+
+
+
+*****************
+solutions  and  recall  
+***************
+Linux treats everything as a file, including devices and system configurations.
+Ensures efficient data organization and accessibility.
+Involves operations like create, copy, move, rename, and delete.
+Uses file permissions and ownership for secure access control.
+Common commands include cp, mv, rm, ls, cat, and chmod.
+
+
+
+----commmad block :
+
+
+lex@alex-HP-Laptop-15s-fq2xxx:~$ mkdir practice 
+alex@alex-HP-Laptop-15s-fq2xxx:~$ cd practice 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ touch file_train.py
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ touch train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ^C
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ touch  train2  train3 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls 
+file_train.py  train2  train3  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls -l 
+total 0
+-rw-rw-r-- 1 alex alex 0  1월 30 12:14 file_train.py
+-rw-rw-r-- 1 alex alex 0  1월 30 12:15 train2
+-rw-rw-r-- 1 alex alex 0  1월 30 12:15 train3
+-rw-rw-r-- 1 alex alex 0  1월 30 12:14 train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat  train
+cat: train: No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ echo "this is the train file "> train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat  train.txt
+this is the   train    file 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat train.txt     train2
+this is the   train    file 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ touch  file_train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cp   train.txt  / train2 /
+cp: cannot create regular file '/train.txt': Permission denied
+cp: -r not specified; omitting directory '/'
+cp: cannot create regular file '/train2': Permission denied
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cp     train.txt /   file_train.txt
+cp: target 'file_train.txt' is not a directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mkdir practice2
+
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cp  train.txt    train2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat train2
+this is the   train    file 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv  train2  / practice2
+mv: cannot move '/' to 'practice2': Device or resource busy
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv  train2   practice2
+mv: cannot stat 'train2': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv  train2   practice2
+mv: cannot stat 'train2': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv  train2   practice2
+mv: cannot stat 'train2': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls 
+file_train.py  file_train.txt  practice2  train3  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ touch train2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls
+file_train.py  file_train.txt  practice2  train2  train3  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cp   train.txt   train2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat train2
+this is the   train    file 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv   train2    practice2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls
+file_train.py  file_train.txt  practice2  train3  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ mv  train3   train2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls
+file_train.py  file_train.txt  practice2  train2  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ rm file_train
+rm: cannot remove 'file_train': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ rm file_train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls
+file_train.py  practice2  train2  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ 
+
+alex@alex-HP-Laptop-15s-fq2xxx:/$ cd /
+alex@alex-HP-Laptop-15s-fq2xxx:/$ ls
+bin  boot  cdrom  dev  etc  home  lib  lib32  lib64  libx32  lost+found  media  mnt  
+opt  proc  root  run  sbin  snap  srv  swapfile  sys  tmp  usr  var
+alex@alex-HP-Laptop-15s-fq2xxx:/$ cd  
+alex@alex-HP-Laptop-15s-fq2xxx:~$ ls
+Desktop  Documents  Downloads  google-chrome-stable_current_amd64.deb  investML  microsoft.gpg
+  Music  myfile.txt  Pictures  practice  Public  snap  Templates  Videos
+
+
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ ifconfig
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 12007  bytes 1152523 (1.1 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 12007  bytes 1152523 (1.1 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+wlo1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.30.1.48  netmask 255.255.255.0  broadcast 172.30.1.255
+        inet6 fe80::1d9a:ca15:5141:6ed4  prefixlen 64  scopeid 0x20<link>
+        ether 14:18:c3:bf:e6:59  txqueuelen 1000  (Ethernet)
+        RX packets 387250  bytes 442425619 (442.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 137898  bytes 58221473 (58.2 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+Why this matters (real life)
+
+Debug “no internet”
+
+Know if you’re on Wi-Fi or Ethernet
+
+Check IP when:
+
+Docker networking breaks
+
+servers reject connections
+
+VPNs act weird
+
+
+Kernel
+The kernel is a computer program that is the core of a computer's operating system, 
+with complete control over everything in the system. 
+It manages the following resources of the Linux system:
+
+File management
+Process management
+I/O management
+Memory management
+Device management etc.
+
+
+
+
+Uses of Shell Scripts
+Here are the main reasons shell scripts are widely used in IT and DevOps:...
+...Shell scripts turn routine jobs like file cleanup, backups, or 
+server updates into one-click actions, saving time and reducing manual effort
+..Shell scripts run the exact same steps every time, without mistakes.
+...Shell scripts make it easy to link different commands together. 
+You can pass the output of one command into another, filter data, 
+or run tasks step by step all in one script. This helps automate 
+complex jobs using simple building blocks.
+
+...Shell syntax : 
+Keywords: if, else, break, etc.
+Shell Commands: cd, ls, echo, pwd, touch, etc.
+Functions
+Control Flow: if..then..else, case, loops, etc.
+
+create script.sh    
+in there    :   
+# !/bin/bash
+
+# A simple bash script to move up to desired directory level directly
+function print(){
+
+   cd  ~/practice/practice2 || exit 1
+   touch greet.txt 
+   echo "hello  this  is   the  first    shell script"    >  greet.txt
+   cat   greet.txt
+
+
+}
+
+
+print
+
+
+
+
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ chmod +x print.sh
+chmod: cannot access 'print.sh': No such file or directory
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ ls
+backup  script.sh  train3  txt.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ chmod +x script.sh 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ ./script.sh
+hello  this  is   the  first    shell script
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice2$ 
+
+
+
+*******************************
+****************************
+*********************************
+visit  the  page    again  and   try  to    practice     what  in  there   more    .   or  read  and   or examples  more    
+tomorrow  is the  last  day    and then   start    doing  and    ci /cd    other  things    
+
+
+
+
+Containers: Docker, Podman, and container runtimes leverage Linux kernel features like namespaces and cgroups.
+Automation: Bash scripts, cron jobs, and configuration tools like Ansible work seamlessly on Linux.
+Cloud-native: The major cloud providers (AWS, Azure, GCP) offer default Linux-based instances.
+Security & Access: Permissions, firewalls, and auditing in Linux give you fine-grained control over system security.
+
+shoud  solve  practice  for them 
+Navigating the Linux filesystem
+Understanding file permissions
+Managing users and groups
+Installing software
+Running and monitoring services
+Writing Bash scripts
+Scheduling cron jobs
+Diagnosing networks
+Monitoring system performance
+
+
+
+
+
+-----------------
+In / → catastrophic    be  very   careful   (dont    do   it   posiible )
+You’ve been told that your Nginx configuration file might be broken. Here’s how you’d investigate:
+
+cd /etc/nginx
+ls -l
+sudo nano nginx.conf
+After editing, you can restart the service:
+
+sudo systemctl restart nginx
+
+Nginx is a web server, reverse proxy, and load balancer.
+
+2️⃣ |
+
+The pipe
+
+Takes the output of the left command and feeds it as input to the right command.
+
+So:
+
+history output ──▶ grep
+grep ssh
+
+grep = search/filter text
+
+This means:
+
+“Show me only lines that contain the string ssh”
+
+
+alex@alex-HP-Laptop-15s-fq2xxx:~$ history | grep cd
+   24  cd source 
+   43  cd ~/projects/investML   # example
+   93  cd Downloads
+   95  cd
+   97  cd Downloads
+   99  cd
+  113  cd   investML  mkdir ops.txt
+  114  cd   investML  mkdir ops
+  115  cd investML
+  121  cd   --helo
+  122  cd  --help 
+  129  cd 
+  144  cd /home/alex/investML/manage.py
+  154  cd practice 
+  192  cd
+  194  cd /
+  197  cd/ 
+  198  cd /
+  200  cd  
+
+
+
+
+In Linux, almost everything is a file - configuration files, user data, logs, and even representations of hardware. So, knowing how to manage files and directories is the foundation of everything else you'll do.
+
+Whether you're setting up a web server, writing a script, or debugging a container - you'll be:
+
+Creating and editing files
+Organizing them into folders (directories)
+Moving, renaming, or deleting them
+
+x@alex-HP-Laptop-15s-fq2xxx:~$ cd practice
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ ls
+file_train.py  practice2  train2  train.txt
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ nano train2
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$ cat train2
+hello    this noano   practivce 
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice$
+
+
+
+This is where you’ll often write:
+
+Bash scripts
+Configuration files
+Log notes
+
+
+alex@alex-HP-Laptop-15s-fq2xxx:~/practice/practice3/practice2$ su -  sasha 
+Password: 
+sasha@alex-HP-Laptop-15s-fq2xxx:~$ 
+
+Groups help you assign permissions to multiple users at once.
+
+View current groups:
+
+groups
+Add user to a group:
+
+sudo usermod -aG docker john
+Here, John can now use Docker without sudo.
+
+
+
+sasha@alex-HP-Laptop-15s-fq2xxx:~$ sudo    groupadd  developers 
+[sudo] password for sasha: 
+sasha is not in the sudoers file.  This incident will be reported.
+sasha@alex-HP-Laptop-15s-fq2xxx:~$ su   - alex
+Password: 
+alex@alex-HP-Laptop-15s-fq2xxx:~$ sudo   groupadd developers 
+[sudo] password for alex: 
+alex@alex-HP-Laptop-15s-fq2xxx:~$ getent groups 
+Unknown database: groups
+Try `getent --help' or `getent --usage' for more information.
+alex@alex-HP-Laptop-15s-fq2xxx:~$ getent group 
+alex@alex-HP-Laptop-15s-fq2xxx:~$ sudo groupdel developers   
+alex@alex-HP-Laptop-15s-fq2xxx:~$ getent group 
+root:x:0:
+
+
+
+
+Upgrade everything in one go:
+
+sudo apt update && sudo apt upgrade -y
+The -y flag automatically says “yes” to all prompts - useful in scripts.
+
+
+
+sudo apt remove nginx
+
+
+
+sudo apt update
+sudo apt install docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
+
+
+
+7. Services and Processes: Keeping Things Running
+
+
+When you start a web server, a database, or even a background script - it becomes a process running on your system.
+then you’ll use services, managed by a tool called systemd (most modern Linux systems use it).
+
+
+
+Process: An individual running task (e.g., your Python script).
+Service: A managed process under systemd (e.g., Nginx, Docker).
+ps aux          # View all running processes
+top             # Real-time view of resource usage
+htop   
+
+
+
+
+Find a process:
+
+ps aux | grep nginx
+
+
+
+
+sudo systemctl status docker
+
+Want your service to auto-start after a reboot?
+
+sudo systemctl enable yourservice
+
+
+
+Let’s say your web server crashed, and you want to:
+
+Check its status
+Restart it
+View logs
+sudo systemctl status apache2
+sudo systemctl restart apache2
+journalctl -u apache2 --since today
+
+
+
+
+Tired of repeating the same commands every time you spin up a server, install dependencies, or deploy an app?
+
+That’s where Bash scripting comes in. With just a few lines, you can automate tasks like:
+
+Installing packages
+Backing up files
+Deploying code
+Running cron jobs
+Checking service health      //  practice   it later 
+
+
+#!/bin/bash
+
+echo "Deploying Flask App..."
+
+cd /home/ubuntu/myapp
+git pull origin main
+
+sudo systemctl restart flaskapp
+echo "Deployment complete!"
+
+
+
+
+networking  for the   linux   is   : 
+ports 
+ip  ,  connection   
+access    manangement 
+firewall  and xposure to  port 
+
+
+
+
+
+
+Crontab - Scheduling Repetitive Tasks
+In the world of DevOps, automation isn’t just about running tasks it’s about running them at the right time without human intervention.
+
+Want to:
+
+Back up logs every night?
+Run health checks every 5 minutes?
+Clean up temp files weekly?
+
+
+
+
+
+11. Monitoring Basics - Watching Your System's Health
+Is it consuming too much memory?
+Is disk space running low?
+Is the CPU being maxed out?
+Which process is causing issues?
+
+
+
+
+Check CPU & Memory Usage
+View live system stats:
+top
+
+
+
+
+Monitor Network Usage
+
+
+........................
+
+************************  NETWORKS  ***************
+
+IP   :  
+┌──────────── HEADER ────────────┐
+│ From IP                        │
+│ To IP                          │
+│ Protocol (TCP / UDP / ICMP)    │
+│ Sequence number                │
+│ Port (80, 443, 22, etc.)       │
+└──────────── DATA ──────────────┘
+│ A small piece of your message  │
+└────────────────────────────────┘
+Packet = a small chunk of data traveling on the network
+
+Imagine sending a big book:
+
+You rip it into pages
+
+Each page gets:
+
+From address
+
+To address
+
+Page number
+
+Each page = packet
+| Thing  | What it is           | Think of it as  |
+| ------ | -------------------- | --------------- |
+| Packet | Small data chunk     | A letter        |
+| TCP    | Reliable rule set    | Registered mail |
+| UDP    | Fast rule set        | Shouting        |
+| Socket | App’s network handle | Phone/mailbox   |
+
+Docker exposes ports → sockets
+
+Kubernetes Services route sockets
+
+Firewalls filter packets
+
+Bugs happen when:
+
+Socket open ✅
+
+Packets blocked ❌
+
+That’s why:
+
+“Port is open but connection fails”
+
+
+A firewall is a bouncer for network traffic — it decides which packets are allowed in or out of a machine or network.
+
+🚪 What a firewall actually controls
+
+A firewall looks at packets and asks:
+
+Where is this packet from?
+
+Where is it going (IP)?
+
+Which port?
+
+Which protocol (TCP / UDP)?
+
+Is this part of an existing connection
+
+
+
+They only judge traffic rules..   no app  scanning 
+***********
+SSH = Secure Shell
+
+It lets you log into another computer over a network and control it as if you were sitting in front of it, but securely.
+SSH is a secure remote terminal.
+A port is a door number on a computer.
+
+Computer = building (IP address)
+
+Port = door
+
+Program = person waiting behind that door
+.....
+One clean mental model (keep this forever)
+IP = building
+Port = door number
+Listening program = person standing behind the door
+If no one is behind the door → you knock forever.
+
+
+Localhost example (Python Django — PERFECT analogy)
+
+You run:
+
+python manage.py runserver
+
+
+What Django does:
+
+Binds to:
+
+127.0.0.1:8000
+
+
+Starts listening
+
+Now your browser sends:
+
+Destination IP: 127.0.0.1
+Destination Port: 8000
+
+
+Linux kernel:
+
+“Is anything listening on port 8000?”
+
+Django answers → page loads.
+
+🔁 Change the port = different door
+python manage.py runserver 0.0.0.0:80
+
+
+Now Django listens on:
+
+Port 80
+
+
+Browser goes:
+
+http://localhost
+
+
+Same idea. Different door.
+
+🚫 What happens if port isn’t listening
+
+Try this:
+
+curl http://localhost:9999
+
+
+Result:
+
+Connection refused
+
+
+Why?
+
+Port exists ❌
+
+Program listening ❌
+
+🧱 Firewalls (extra layer, very important)
+
+Even if a program is listening:
+
+Program listening  ✅
+Firewall open      ❌
+
+
+Packets never reach it.
+
+So both must be true:
+
+Program listening
+
+Firewall allows the port
+
+🧠 Socket view (advanced but simple)
+
+When Django runs:
+
+Socket created
+Bind to IP + port
+Listen()
+
+
+Same for:
+
+Telnet
+
+SSH
+
+FTP
+
+Web servers
+
+🔒 Why Telnet is usually closed
+
+Sends passwords in plain text
+
+Firewalls block port 23 by default
+
+SSH (22) replaced it
+
+TL;DR (tattoo this mentally)
+
+Open port + listening program = connection works
+No listener = connection refused
+Firewall blocks = timeout
+
+And yes — Django on localhost is the same exact concept.
+
+
+
+
+
+Computers talk using numbers (IP addresses):
+
+142.250.206.46
+
+
+Humans prefer names:
+
+google.com
+
+
+DNS connects the two.
+
+
+
+| Tool       | Think               |
+| ---------- | ------------------- |
+| ping       | “Alive?”            |
+| traceroute | “Where stuck?”      |
+| netstat    | “Who’s listening?”  |
+| nmap       | “Which doors open?” |
+| tcpdump    | “Show packets”      |
+| ifconfig   | “Who am I?”         |
+| dig        | “Name → IP”         |
+| nslookup   | “Name → IP (old)”   |
+| wireshark  | “Packets with eyes” |
+| host       | “Quick DNS”         |
+| iperf      | “How fast?”         |
+
+
+
+
+*********************
+(option ,  flags, man   ,   --help )
+touch  ,   nano , cat ,  less ,  head ,  tail , mv , cp , ls , rm  
+bin , etc ,  them    to  learn   better 
+sudo  ,  su  ,groupadd , ls -l  for  permissions  and  chmod , chown   0+x  for permissions 
+APT ,    purge ,   remove  and third   party   install   look  for the   'how'
+ps , top, htop , kill .    ps aux | grep ngix passing the  lesft to right
+start  , stop , restart 	status  , enable , disable 
+bash scripts   -    script.sh -> chmod +x  script - >    ./script.sh   , it has [for  ,  if   ,  do ]
+What services are listening for connections?
+ss -tuln
+netstat -tulnp
+
+******************
+
+
+Navigating the Linux filesystem
+Understanding file permissions
+Managing users and groups
+Installing software
+Running and monitoring services
+Writing Bash scripts
+Scheduling cron jobs
+Diagnosing networks
+Monitoring system performance
+
+
+
+
+
+
+
+
 
 
 
