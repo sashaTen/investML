@@ -25,6 +25,11 @@ jobs:
       - name: Run unit tests
         run: |
           pytest 
-      - name: Run lint checks
+      - name: Run greeting
         run: |
           echo "hello  world"
+      - name: create file
+        run: |
+          touch newfile.txt
+          echo "This is a new file" > newfile.txt   
+          cat newfile.txt
