@@ -48,28 +48,28 @@ jobs:
         run: |
           gcloud auth list
           gcloud config list project
-      - name: Build and deploy
+      - name: Build and deploy to Cloud Run
         env:
-          THE_KEY: ${{ secrets.THE_KEY }}
+         THE_KEY: ${{ secrets.THE_KEY }}
         run: |
-          gcloud auth list
-          gcloud config list project
+              # Create Artifact Registry repo if it doesn't exist
+              gcloud artifacts repositories create invest-repo \
+                --repository-format=docker \
+                --location=asia-northeast3 \
+                --description="Docker repo for InvestML" || true
 
-          gcloud artifacts repositories create invest-repo \
-            --repository-format=docker \
-            --location=asia-northeast3 \
-            --description="Docker repo for InvestML" || true
+              # Build container
+              gcloud builds submit \
+                --tag asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest
 
-          gcloud builds submit \
-            --tag asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest
-
-          gcloud run deploy invest-app \
-            --image asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest \
-            --region asia-northeast3 \
-            --platform managed \
-            --allow-unauthenticated \
-            --port 8080 \
-            --set-env-vars THE_KEY=$THE_KEY
+              # Deploy to Cloud Run
+              gcloud run deploy invest-app \
+                --image asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest \
+                --region asia-northeast3 \
+                --platform managed \
+                --allow-unauthenticated \
+                --port 8080 \
+                --set-env-vars THE_KEY=$THE_KEY
 
 
-                
+                    
