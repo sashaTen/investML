@@ -927,7 +927,8 @@ asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest
 
 
 # 4️⃣ Deploy to Cloud Run (Seoul)
-
+ 
+ 
 ```bash
 gcloud run deploy invest-app --image asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest --region asia-northeast3  --platform managed --allow-unauthenticated --port 8080
 ```
