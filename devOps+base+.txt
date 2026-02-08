@@ -1,3 +1,7 @@
+ci /cd is finished
+
+
+
 ###    REMEMBER THE GOLDEN  RULES OF INFO : 
 1 always learn since the bigger picture you have the  more you  know gaps and your case 
 2 what is key value of knowledge/tool/concept  , how the proccess must  look like and decide if it fits your case  and your  constraints allow you 
