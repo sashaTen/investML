@@ -1835,6 +1835,9 @@ Diagnosing networks
 Monitoring system performance
 
 
+***************     GIT    DEPTH    ***********
+so   you   know   all  .   like  branch ,  track , push , pull ,clone 
+The core functionality of Git works in mainly three file states modified state, staged state, or committed state.
 
 
 

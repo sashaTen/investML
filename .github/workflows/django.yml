@@ -33,3 +33,13 @@ jobs:
           touch newfile.txt
           echo "This is a new file" > newfile.txt   
           cat newfile.txt
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GSP_SA_KEY }}
+
+      - name: Verify auth
+        run: |
+          gcloud auth list
+          gcloud config list project
