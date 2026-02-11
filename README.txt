@@ -182,12 +182,14 @@ from  templates  you get this
 
 
 [ practices list :   try to  break  and  tweak   your  system ,     check    files for   inspiration ,  there are   django concepts ,
-tooling  like    gcloud  ,  tasks  they  serve  ,   engineering  like   OOP  ,  computation,]
+tooling  like    gcloud  ,  tasks  they  serve  ,   engineering  like   OOP  ,  computation,   ml pipeline  and  gcloud  new   features
+go to   things   you learned   like  SE for  DS  and  ci/cd  and  try to   validate them ]
 
 [rules:  the   point  is  to know goal , break it down with  requirenments   in   mind until
 tooling and steps   ideation and execute plan and   just step  by step   connect
 things till they  work from base  to final" the point is to know bases"
 .gitignore ,   .venv    , dockerignore ,     design   code  folders  and   files  like   separate   ml  train and  more 
-so the   dockerimage  is   light so  not  only   functions   but   also  the   tools need to  consider the computation ]
+so the   dockerimage  is   light so  not  only   functions   but   also  the   tools need to  consider the computation ,separate reqs.txt for  the 
+run docker ]
 
 
