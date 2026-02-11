@@ -80,14 +80,14 @@ def save_model(cv, pca, model, cv_name, pca_name, model_name):
 
 
 def pipeline(path, target_column, cv_name, pca_name, model_name, model):
-    with mlflow.start_run():
+    #with mlflow.start_run():
         df = load_df(path)
         X_train_text, X_test_text, y_train, y_test = split(df, target_column)
         cv, pca, X_train = preprocess(X_train_text)
         model = modelling(X_train, y_train, model)
         accuracy = evaluate_model(X_test_text, y_test, cv, pca, model)
-        mlflow.log_metric("accuracy", accuracy)
-        mlflow.sklearn.log_model(model, "model")
+       # mlflow.log_metric("accuracy", accuracy)
+       # mlflow.sklearn.log_model(model, "model")
         save_model(cv, pca, model, cv_name, pca_name, model_name)
 
 
