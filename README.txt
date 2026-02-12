@@ -181,9 +181,24 @@ from  templates  you get this
 
 
 
-[ practices list :   try to  break  and  tweak   your  system ,     check    files for   inspiration ,  there are   django concepts ,
+[ practices list ] :  
+[ try to  break  and  tweak   your  system ,     check    files for   inspiration ,  there are   django concepts ,
 tooling  like    gcloud  ,  tasks  they  serve  ,   engineering  like   OOP  ,  computation,   ml pipeline  and  gcloud  new   features
 go to   things   you learned   like  SE for  DS  and  ci/cd  and  try to   validate them ]
+
+
+
+
+[webde/mlops/ ml/ system]   there   are  some   directions  i can  dive   later   with   roadman.sh maybe or 
+maybe   with book  for   google  engineering and  mlops.
+
+
+
+
+
+
+
+
 
 [rules:  the   point  is  to know goal , break it down with  requirenments   in   mind until
 tooling and steps   ideation and execute plan and   just step  by step   connect
