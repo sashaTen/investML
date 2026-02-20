@@ -11,7 +11,7 @@ Diagnosing networks
 Monitoring system performance
 
 
-
+C:\Users\HP\Desktop\investML\ml_code\stock_data.csv
 
 ********     docker :    
 

@@ -208,3 +208,21 @@ so the   dockerimage  is   light so  not  only   functions   but   also  the   t
 run docker ]
 
 
+**********
+move  to  vertex 
+**********
+1  enable the cloud storage and go  to  storage cli docs for commands 
+2 gcloud storage buckets create gs://stock_sentiment/ --uniform-bucket-level-access
+3 gcloud storage cp  stock_data.csv  gs://stock_sentiment
+4 gcloud storage buckets add-iam-policy-binding gs://BUCKET_NAME --member=allUsers --role=roles/storage.objectViewer 
+5 vertex - workbench - jupiter   launcher python kernel 
+6 df = pd.read_csv("gs://stock_sentiment/stock_data.csv") df.head()
+7 launcher terminal gsutil cp train.csv gs://stock_sentiment and gsutil cp test.csv gs://stock_sentiment 
+8 you  need   to save import joblib
+
+joblib.dump(cv, "count_vectorizer.joblib")
+joblib.dump(pca, "pca.joblib")
+joblib.dump(model, "model.joblib")
+
+print("All artifacts saved!")
+9 gcloud storage cp *.joblib gs://stock_sentiment/models/   saved to  storage 
