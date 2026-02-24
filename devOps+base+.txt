@@ -13,21 +13,40 @@ Monitoring system performance
 
 C:\Users\HP\Desktop\investML\ml_code\stock_data.csv
 
-********     docker :    
+
+
+-----------DOCKER :   
+1   you can   manage lifecycle  : start ,stop ,restart , rm 
+CMD ["python", "app.py"]  vs    
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8080"]     
+
+one  is  for   local  and  for  the   production :
+
+WSGI Server (e.g., Gunicorn): Serves the Python application, replacing the development server.
+
+and this command    is used it is web's part but this is how you  deploy the python in real prodcution
+this  command   is   inhereted   by docker   since  in  docker   run    you 
+write the command    which   is  makes   it run  in production. how you want docker to run == how you define terminal real prodcution deploy command 
+
+Docker is NOT deployment logic.
+
+Docker = packaging + startup instruction.
+
+Deployment platform decides:
+
+scaling
+
+routing
+
+networking. 
+
+
+need  to   practice  volume . 
 
 
 
 
 
-
-
-
-
-
-
-***************     GIT    DEPTH    ***********
-so   you   know   all  .   like  branch ,  track , push , pull ,clone 
-The core functionality of Git works in mainly three file states modified state, staged state, or committed state.
 
 
 

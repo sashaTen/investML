@@ -226,3 +226,8 @@ joblib.dump(model, "model.joblib")
 
 print("All artifacts saved!")
 9 gcloud storage cp *.joblib gs://stock_sentiment/models/   saved to  storage 
+
+
+
+------------docker : 
+1   you can   manage lifecycle  : start ,stop ,restart , rm 
