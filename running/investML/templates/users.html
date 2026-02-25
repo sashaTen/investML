@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<h2 style="margin-bottom: 0.5rem;">
+    Welcome, {{ user.username|default:"Guest" }} 👋
+</h2>
+
+<p style="color: #9ca3af; margin-bottom: 1.5rem;">
+    AI-powered stock analysis and portfolio intelligence
+</p>
+
+<!-- ACTIONS -->
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
+    <a href="{% url 'index' %}"
+       style="padding: 0.6rem 1.2rem; border-radius: 10px; background: #1f2937; color: #e5e7eb; text-decoration: none;">
+        Home
+    </a>
+
+    <a href="{% url 'choose_tickers' %}"
+       style="padding: 0.6rem 1.2rem; border-radius: 10px; background: #38bdf8; color: #020617; font-weight: 600; text-decoration: none;">
+        + Choose Tickers
+    </a>
+</div>
+
+<!-- TICKERS SECTION -->
+<h3 style="margin-bottom: 1rem;">📊 Available Tickers</h3>
+
+{% if tickers %}
+    <div style="
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+    ">
+        {% for ticker in tickers %}
+            <div style="
+                background: rgba(17, 24, 39, 0.9);
+                border: 1px solid #1f2937;
+                border-radius: 14px;
+                padding: 1.2rem;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            "
+            onmouseover="this.style.transform='translateY(-3px)'"
+            onmouseout="this.style.transform='translateY(0)'"
+            >
+                <div style="font-size: 1.1rem; font-weight: 700; color: #38bdf8;">
+                    {{ ticker.ticker }}
+                </div>
+
+                <div style="margin-top: 0.5rem; color: #9ca3af;">
+                    <a href="{% url 'get_prediction' ticker.id %}" style="color: #38bdf8; text-decoration: none;">
+                        Want Ml prediction? Click here →
+                    </a>
+                </div>
+
+               <div style="margin-top: 0.2rem; font-size: 1rem;">
+                    {% if ticker.prediction == 1 %}
+                        <span style="color: #22c55e; font-weight: 600;">
+                            📈 It will rise
+                        </span>
+                    {% elif ticker.prediction == 42.0 %}
+                      <span style="color: #22c55e; font-weight: 600;">
+                            📈 Prediction Needed
+                        </span>
+                    {% else %}
+                        <span style="color: #ef4444; font-weight: 600;">
+                            📉 It will fall
+                        </span>
+                    {% endif %}
+                </div>
+
+                <form method="post" action="{% url 'delete_ticker' ticker.id %}" style="margin-top: 0.75rem;">
+                {% csrf_token %}
+                <button type="submit" style="font-size: 1.1rem; font-weight: 700;background: rgba(17, 24, 39, 0.9); color: #38bdf8;" title="Delete ticker">Delete</button>
+                </form>
+                
+
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div style="
+        padding: 1.5rem;
+        border-radius: 14px;
+        background: #020617;
+        border: 1px dashed #1f2937;
+        color: #9ca3af;
+    ">
+        No tickers available yet.  
+        <a href="{% url 'choose_tickers' %}" style="color: #38bdf8; text-decoration: none;">
+            Add your first ticker →
+        </a>
+    </div>
+{% endif %}
+
+{% endblock content %}

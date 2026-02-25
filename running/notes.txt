@@ -1,0 +1,979 @@
+RE-READ   EVERY  DAY  AND   REMEMBER  THERE  RULES 
+FOR   EVERY  SECCION   LIKE    ACTIVATION  AND DEACTIVATION OF THE   .VENV  AS WELL 
+AS  FINISHING  THE  requirements    AND  CHECKING THE   PERFOMANCE  AND 
+ANALYSING  AND    FIXING  CODE   ACCORDING   THE   REPRODUCIBILITY AND PERFOMANCE 
+
+
+****    FURTHER OPTIMIZATION  ARE : 
+.. 1 USER  management LIKE PASSWORD RESET AND CHANGE AND ETC: 
+https://realpython.com/django-user-management/#enable-logging-out
+
+..2 database   design 
+..3 database for ml predictions time and tickers 
+..4 dynamic   oages   for   example  for  example   you  dont  create    for each product item separate  detail page  or links 
+with   info   transfer
+
+
+
+cd project
+source .venv/bin/activate   # or Windows activate
+# work
+pip freeze > requirements.txt   # only if deps changed
+git add .
+git commit -m "message"
+git push
+
+
+
+
+git status
+
+
+*** day 1    :    ***
+python -m venv .venv
+
+.venv\Scripts\activate
+
+your project files should be in the same parent folder as .venv.
+
+pip install django
+pip freeze > requirements.txt
+
+django-admin startproject config .
+
+
+create    view /  url  and   main  url
+
+
+git init
+git path to  github repo
+git rm -r --cached .venv / if  you  pushed the env to the github
+git add / commit / push 
+
+
+daily    practice :
+cd project
+ # or Windows activate
+# work
+pip freeze > requirements.txt   # only if deps changed
+git add .
+git commit -m "message"
+git push
+
+today    i deleted   env  due to    gitignore issue  
+because  of  powershell  encoding  and etc    the  system   did   not see the gitignore
+however  you should   to  check  root  -cause   .   the biggest  issue  was  that   git  did not see 
+so the fix   is   to  make it   vsisible 
+
+
+You are on Windows
+Windows tools love UTF-16.
+Git only understands .gitignore if it is plain text (ASCII or UTF-8 without BOM).
+If the encoding is wrong → Git silently ignores the file.
+2️ You create .gitignore using:
+Notepad
+PowerShell echo
+PowerShell Set-Content (default)
+➡️ File becomes UTF-16
+➡️ Git cannot parse it
+3️⃣ Symptoms you saw
+These are signature symptoms:
+.venv keeps appearing in git status
+git check-ignore -v .venv prints nothing
+.gitignore looks correct when you open it
+Push becomes very slow (because .venv is huge)
+Once you see this pattern → think encoding immediately.
+
+git check-ignore -v .venv
+Get-Content .gitignore -Encoding Byte
+If you see zeros → you found the bug.
+Set-Content -Encoding Ascii .gitignore ".venv`n**/.venv/"
+
+
+
+
+
+*** day 2  : *****
+downloaded   the  stock data 
+created    ml_model.python
+
+
+below   global  things   have to  be   level  up    as 
+the global    variables  not in the  functions because  they 
+are initialized   every   time the   function called  so   it  is 
+bad for the perfomance 
+
+"""lemma = WordNetLemmatizer()
+stopwordSet = set(stopwords.words("english"))"""
+
+i  also put    prepreccess and  the train  aside 
+so   i  can    call the  preprocess  while the train   
+is not called   saved    since   it  is re-trained 
+every  time  run  server  
+
+
+
+"""cv = joblib.load("count_vectorizer.pkl")
+pca = joblib.load("pca.pkl")
+model = joblib.load("logreg_model.pkl")"""
+those  are  also need to  be  in global so  every http req 
+does not  call  it   
+
+
+
+when   inference   you   
+apply  "transform"  
+and  not    "fit"   since   you  dont  train
+and only  need the  transform
+"""cv.transform(data)
+pca.transform(data)"""
+
+
+'''ALWAYS  IN THE END  OF THE CODE  WRITING 
+IF   IT'S  functionS  ASK AND CORRECT  FROM  PERCEPTIVE 
+OF PERFOMANCE'''
+
+
+
+
+*****day 3   ********:
+now prediction   is   in the prediction   page 
+and the index   page  is   just the  home page 
+never    forget  to   activate the .venv 
+
+
+
+create   class  in models  like  tickers  for ex 
+then make migrations 
+migrate 
+admin register   
+
+
+
+
+
+*********day   4* **********
+
+added the    template   for the   main   page  
+main   page   greets  the   users    and  explains   the  
+functionalities   of the app 
+
+
+******   day 5    management   of   users *********
+
+
+A session is how Django remembers who you are between page requests.
+
+
+user   creation  is  very  simple  in    django .   
+{{  }}-   is for   variables   display  
+
+{%  %}    for  "if"    or   "for"   is is  the logic in templates
+
+{{user}}   -    by   this you  load the logged in   user 
+
+you create   sign up   by  creatin  the template for  form  
+and view  which  if  GET displays the form 
+and if from  this page  you  get POST the   django saves this form to the users model 
+""""  if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect(reverse("dashboard"))  """"
+
+
+
+Work With Django Auth
+it is automated authentication system and an authorization system
+in global url path("accounts/", include("django.contrib.auth.urls"))
+names  of the  urls  are  "login" and "logout"
+
+The "login" URL finds the LoginView.
+The LoginView looks for a template in registration/ named login.html.  
+
+so  basically you just create the auth url -> template and that's it 
+since  the  model , seccion and  LoginView is done by django 
+in the settingns  write LOGIN_REDIRECT_URL = "dashboard"
+
+
+******  day 6  *******
+
+1    i created    base   portfolio   
+in there 
+ user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="portfolios"
+    )
+above is  foreignkey  for  one  portfolio one user who is  logged in 
+
+then PortfolioCreateForm was created  .   with  fields 
+this form from django that   you pass   through  view to  the  template
+if GET the page  shows  form
+if POST the page saves  the  portfolio and redirect  to  the   portfolio_list page.
+so   to run   it  well the   template portfolio gets the form and sends to  views
+the redirect  is calling  the link with name "portfolio_list" which  causes  the  view function
+called portfolio_list  and  it if logged in  aka login_required 
+finds the portfolios of the current seccion  user   and   gives   it to    template
+this is the  key  line 
+"""def portfolio_list(request):
+    portfolios = Portfolio.objects.filter(user=request.user) """
+
+if not   looged   in   while creatin   portfolio  it 
+leads   you to the login   page   and then only after login  you  
+can access the portfolio create page  .  in portfolio list you  see  all portfolios of current  user 
+
+
+*****   day  7 ******
+Creating or updating a model → ModelForm
+Just selecting / filtering / calculating → Form
+
+
+
+ user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="tickers",default=None
+    )
+i made above  so   when  logged in users choose the stock
+the information  about  who is user  is   also  saved 
+and when   i need  to display user's  stocks  i can  
+simply filter   them 
+
+
+user = models.OneToOneField   is self  explainable 
+
+form.Form   is   read  only  vs    modelForm  is  for operations 
+
+
+next   plan   is   
+tickers =  models.ManyToManyField(Tickers, related_name='portfolios')
+add  the  tickers  to   portfolio
+
+@login_required
+def choose_tickers(request):
+    if request.method == "POST":    
+        form = TickerForm(request.POST)
+        if form.is_valid():
+            ticker_obj = form.save(commit=False)    # wait  for user auth
+            ticker_obj.user = request.user          # ticker.user field =  user auth passed to  form 
+            ticker_obj = form.save()  # saves to DB   
+            return HttpResponse(
+                f"Ticker: {ticker_obj.ticker}, Prediction: {ticker_obj.prediction}"
+            )
+    else:
+        form = TickerForm()  # 👈 VERY IMPORTANT
+
+    return render(request, "choose_tickers.html", {"form": form})  
+
+
+
+def dashboard(request):
+    if request.user.is_anonymous:
+         context = {"tickers": []}
+    else:
+        tickers = Tickers.objects.filter(user=request.user)
+        context = {"tickers": tickers}
+    return render(request, "users.html", context)
+    it is  very  important to if is_anonymous 
+    so no   ticjers   displayed   and  if    auth  then 
+    filter   and  shows   yours 
+    
+
+
+    ********day  7 ********* 
+    i want the  user  to  able to   choose  the stocks   he chose 
+    not  from  all   users.    
+
+
+    toay  i  only   updates   forms    and  got  rid  of fielf  for  tickers 
+       
+
+
+
+******* day  8 ************
+try :
+            portfolio = Portfolio.objects.get(user=request.user)
+            portfolio.tickers.add(*tickers)
+        except Portfolio.DoesNotExist:
+            return redirect("create_portfolio")
+above   works   now    and  adds   tickers  to   individual  portfolio of user 
+
+
+
+
+*******day 9 ******
+logout fixed  design
+
+
+i add  the function  to   delete the   ticker 
+A button in HTML
+When clicked → it sends a POST request
+Django receives the request
+Django finds the ticker
+Django deletes it
+Django redirects back to dashboard
+via form  i send the  post  with  action="{% url 'delete_ticker' ticker.id %}" btn  
+it calls the  function with  name   delete_ticker
+then  url   calls  the  function delete_ticker
+path("delete_ticker/<int:ticker_id>/", delete_ticker, name="delete_ticker"),
+the fucntion   has   input  such  as def delete_ticker(request, ticker_id):
+so the  url   besides the request (GET/POST) gives the  ticker_id as input 
+then ticker = Tickers.objects.get(id=ticker_id, user=request.user)
+and ticker.delete   gets rid of it 
+
+
+
+
+
+************  day   10 ***********
+added  the  budget field  in the  model  and  in the  form 
+as well  as    in  portfolio_list   new   templeate  that  shows   
+all  the  details   for  the portfolio  as  well  the  delete  function    in  it 
+
+
+def save(self, *args, **kwargs) and  super   
+super  is    like   make  self function calling   
+args   are   inputs and the   kwargs  are inputs with values   like    risk =  50 
+super().save() = Django’s original save logic    on  this passed  values 
+
+
+
+
+
+
+************   day  11 *************
+  <a href="{% url 'get_prediction' ticker.id %}" style="color: #38bdf8; text-decoration: none;">
+                        Want Ml prediction? Click here →
+                    </a>
+
+
+now  i   got   prediction click  in   dashboard
+as well  as  i   creted   simple   working    url  and  view  for get_prediction
+also    you can   now check  the  predictin   by clicking   
+further    you  have  to   fix   allocation  and   fix  the   will  fall on default
+
+
+
+
+*******day   12   ************
+
+i  got   beta   instead  of  volatility   
+too  slow to  load  and  inside  of the  loop   
+def allocation(request):
+    user = request.user
+    portfolio = Portfolio.objects.get(user=user)
+    allocations = []
+    average_allocation = portfolio.budget / portfolio.tickers.count() if portfolio.tickers.count() > 0 else 0
+    tickers   =   portfolio.tickers.all()
+    for  i  in  tickers:
+        allocations.append({"ticker":  get_beta(i.ticker), "allocation": average_allocation})
+    return render(request, 'allocation.html', {'allocations': allocations}) 
+
+
+
+def get_beta(symbol):
+    ticker = yf.Ticker(symbol)
+    info = ticker.info
+    return info.get("beta")
+
+
+
+
+********* day 13   ***********
+the    link to   the allocation  in the  portfolio  list   template
+def  get_profit_margin(symbol):
+    ticker = yf.Ticker(symbol)
+    info = ticker.info
+    return info.get("profitMargins")
+got  now the   profit  margin 
+
+
+def margin_allocation_proportion(tickers, budget):
+    sum = 0 
+    for  i  in  tickers:
+        sum  +=   get_profit_margin(i.ticker)
+    return  round(budget/(sum*100),2)
+and  in the  views    allocations.append({   "ticker" :    i.ticker    , "profit_margin":  get_profit_margin(i.ticker), "allocation": round(proportion*100*get_profit_margin(i.ticker),3 ) })
+so   the  key    idea   if    margins  are  0.22 ,   0.21   ,   0.15   then  thier  sum  is  0.58 
+then x100   and 58.  then  we  delete   the   budget  on it    and  get the   proportion
+and  then    proportion X margin X 100   and  we  get the  allocation 
+
+
+
+********day   14 ****************
+freezed   reauierement  adter   downloaded the    dotenv  then
+from dotenv import load_dotenv
+import os
+
+load_dotenv(".venv/.env")
+
+API_KEY = os.getenv("THE_KEY")  
+
+below  is the  logic   how to     input the    tavely  into the prediction   
+def    predict(request):
+
+    clean_text = preprocess_text("bad bad market")
+    X = cv.transform([clean_text]).toarray()
+    X = pca.transform(X)
+
+    prediction = model.predict(X)[0]
+    response = tavily_client.search("Who is Leo Messi?")
+    clean_text = preprocess_text(response["results"][0]["content"])
+    X = cv.transform([clean_text]).toarray()
+    X = pca.transform(X)
+    prediction = model.predict(X)[0]
+
+
+
+    return HttpResponse(prediction)
+
+
+
+
+    ********day    15   ************: 
+    tasks  for   SE for DS: 
+    1 clean code
+    2 DRY 
+    3 functional    modulairty 
+ in functions 
+    4  readability and  unnecessary   variables
+    5 standarts pep 
+    6 time memory complexity 
+
+
+
+
+
+****day 16****
+
+in the    get_prediction
+  if ticker.prediction > 1 :
+        prediction = news_sentiment(ticker.ticker)
+        ticker.prediction = prediction
+        ticker.save()
+        return redirect("dashboard")   
+    else:
+        return redirect("dashboard")
+so  here  if the   prediction  of ticker  is    default then   only   the model  is  applied
+
+
+
+in the   allocation
+ for  i in tickers:
+        if i.prediction > 1 :
+            if news_sentiment(i.ticker)  == 1:
+               i.prediction = 1
+               i.save()
+               prediction_list.append( i.ticker)
+            else :
+               i.prediction = 0
+               i.save()
+        else:
+            prediction_list.append( i.ticker)
+
+
+if  defalut then  predict  and  save    so  the  next  time   
+it  will apply  ml   
+if  exists   then  it   just  retrieves 
+
+
+
+******   day   17    **********
+thought   of  redisign  the   code  with  OOP .
+OOP   can  be  used  in  model as well   as   in   working  with   DB
+some   methods    can    like    
+class   Portfolio:
+   def __init__(self ,   budget):  #  then   you  can   reuse  this budget for   long   term 
+       self.budget =   budget  
+
+   def show_budget(self   ,     budget): # you  just   want to display and the data is not  stored
+       return    budget    
+
+portfolio1   =  Portfolio()
+portfolio1.show_budget(1000)    #   is the   exmaple  of  how to  use  it .
+also    you can  use   custom   ones    like  portfolio1.time = 10
+so this  makes   it  simpler   and  no   need to  recreate   same   vars 
+
+inheretance   allows   you  to  write  less  code   
+you  must  create   from   lowest   like    from  'living_creature' -> to -> 'birds'  ->   further narrowing
+"user"   ->     'student'     ->   'phd student'
+
+When you add the __init__() function, the child class will no longer inherit the parent's __init__() function.
+To keep the inheritance of the parent's __init__()
+class Student(Person):
+  def __init__(self, fname, lname):
+    Person.__init__(self, fname, lname)
+    
+
+
+Polymorphism is often used in Class methods, where we can have multiple classes with the same method name.
+
+For example, say we have three classes: Car, Boat, and Plane, and they all have a method called move():
+
+The power is not calling the same method.
+The power is not needing to change your code when new types appear.
+Polymorphism is not avoiding function customization —
+it is moving customization into the objects instead of the function.
+
+
+encapsulation   is  created for the   safety   
+
+An inner class is a class defined inside another class. The inner class can access the properties and methods of the outer class.
+
+for   allocation   function in the  views 
+🔧 A small amount of OOP would improve clarity and scalability
+
+❌ Heavy OOP would be overengineering    
+
+
+OOP adds value when you have:
+
+Long-lived state
+
+Multiple interchangeable behaviors
+
+Objects with identity
+
+
+
+*******  day  18   *****
+if you   pass  vars  into  template  it  is  a bad  practice  since 
+you will  have  to  change   all the  urls
+
+instead   you  should    pass  the   POST   method
+like  {% csrf_token %}
+    <button type="submit"
+            style="margin-top: 1rem; padding: 0.5rem 1rem;
+                   background-color: #3b82f6; color: white;
+                   border-radius: 0.25rem;">
+        Generate ML-Based Allocation 🤖
+    </button>
+
+and in the view  function  make conditional  like 
+  if request.method == "POST":
+        ml_portfolio  =  MlPortfolioAllocation(portfolio)   #
+        t_ml_allocations  = ml_portfolio.allocate()     
+
+
+but  below  version  is   better    :  
+def allocation(request):
+    user = request.user
+    portfolio = Portfolio.objects.get(user=user)
+    if request.method == "POST":
+        ml_portfolio  =  MlPortfolioAllocation(portfolio)   #
+        request.session["ml_allocations"] = ml_portfolio.allocate()    
+    base_portfolio = PortfolioAllocation(portfolio)
+    t_allocations = base_portfolio.allocate()
+    t_ml_allocations = request.session.pop("ml_allocations", [])
+    return render(request, 'allocation.html', {'allocations': t_allocations, 'ml_allocations': t_ml_allocations}) 
+
+
+1     the  base  allocate  after   you  press   POST dont re-run 
+2     request  seccion   and   pop    are  here   to  help not to  re-run Ml
+it  is    kind  of   temp  memory associated  in  django for  user 
+
+
+..........
+also   i  changed the  class  and   now   it   uses  the   outer   functions   and  not it's  own  so   DRY is 
+applied 
+.............
+def   pipeline(path , target_column, cv_name ,    pca_name ,  model_name , model ): 
+    X_train_text, X_test_text, y_train, y_test = split(path, target_column)
+    cv, pca, X_train = preprocess(X_train_text)
+    model = modelling(X_train, y_train, model)
+    evaluate_model(X_test_text, y_test, cv, pca, model)
+    save_model(cv, pca, model ,  cv_name ,    pca_name ,  model_name )
+
+#model = DecisionTreeClassifier(max_depth=5)
+#pipeline(path , target_column ,"tree_count_vectorizer.pkl" , "tree_pca.pkl" , "tree_model.pkl" , model )  
+
+now the    pipeline   instead   of    randomforest  pipeline  is less code   since    model   is defined  outside  and  is  an input 
+............
+if   you   tried  the   allcoation    before choosing  stocks   
+you got an   error  and  now  with  try   except   you  are  redirected to 
+dashboard
+Golden rules to remember 🧠
+
+1️⃣ Don’t catch exceptions you can’t fix
+2️⃣ Catch specific, not generic
+3️⃣ Catch at edges, not everywhere
+4️⃣ Let bugs crash early in development
+5️⃣ Use logs if you catch errors
+At system boundaries (VERY IMPORTANT)
+
+These are places where failure is expected:
+
+User input
+
+HTTP requests
+
+Files
+
+Database queries
+
+External APIs
+
+ML model loading
+
+
+.................
+logging module in Python lets you record whatever message you would like.
+What’s useful to log? This will depend on your exact use case and project but could
+include:
+• A message to say that a long-running task has started or finished
+• Error messages so that you know what has gone wrong in a production system
+• Which functions called some other functions
+• The inputs and outputs of a function
+• The file path where some data has been saved
+
+.............
+installed    black  for    pep8  formating
+
+
+
+
+******  dya   19    *****
+ investML.scripts    those   imports   are  very   important. 
+ today  i  installed the    PyTest   library  and  checked  the  results   
+ also     i   uninstall the   pytest-django   and   use    just  plain  pytest
+
+by   markgin  @pytest.mark.ml  and   run  pytest -m  ml   you  choose    what to   run   
+as   well   you  can   mark   some tests    "unit"   some   "slow"
+some tests  are run   the  before the  launch only   so    you  mark   tests you want to run .
+
+
+Mock everything that is not the logic you want to verify    .  no real    db  calls   or the   api  calls   
+
+--   tickers  is the    object   of  portfolio
+
+    def allocate(self):
+        proportion = margin_allocation_proportion(self.tickers, self.budget)
+        allocations = []
+
+        for t in self.tickers:
+            margin = self.margins[t.ticker]
+            allocation = round(proportion * 100 * margin, 3)
+
+            allocations.append({
+                "prediction" : t.prediction,
+                "ticker": t.ticker,
+                "margin": margin,
+                "allocation": allocation
+            })
+
+        return allocations
+
+...added  the tests  for the  ml data   and  also    changes the  pipeline  by  adding the  load_df  whcih   before  was   inside  of  split 
+
+
+
+
+*************later  improve.   you  make  this  after  mastery the   SE so you apply the  knowledges ********
+.. db .  for  example  if  apple   already  existed   then  delete  and   add  from  the  user 
+the  prediction  dissapears 
+
+..once  seccion  is  over the  logout  automatically. 
+
+
+
+
+
+*********day   20   ***********
+for   better   structure  created   the   folder  called   ml artifacts   
+as  well   finally   passed the  test   in  github   actions  
+
+now    the  documentations .  it speaks    ideas  ,  maintained with  code ,  
+has many  types (text files ,  readme , in code ,   mlflow . other tools )
+
+
+In machine learning projects, it’s important to document what combinations you have tried.(for  model x + hyperparams Y  is result)
+Consider recording the following:
+• The data you used to train the model
+• The training/evaluation/test split
+• The feature engineering choices you made
+• The model hyperparameters (such as the regularization in a logistic regression
+model or the learning rate for a neural network)
+• The metrics you are evaluating your model on, such as accuracy, precision, and
+recal
+
+the  basic  example  of  mlflow   :
+def pipeline(path, target_column, cv_name, pca_name, model_name, model):
+    with mlflow.start_run():
+        df = load_df(path)
+        X_train_text, X_test_text, y_train, y_test = split(df, target_column)
+        cv, pca, X_train = preprocess(X_train_text)
+        model = modelling(X_train, y_train, model)
+        accuracy = evaluate_model(X_test_text, y_test, cv, pca, model)
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.sklearn.log_model(model, "model")
+        save_model(cv, pca, model, cv_name, pca_name, model_name)
+
+
+
+...
+git checkout -b new_branch    by doing  this    you  create the  new  branch   
+and  swithc   to it 
+
+
+
+git   checkout   "branch name"   here  how  you can   switch branches
+pip install pywin32    in yml
+
+
+
+*****day 21 **********
+APIs allow two systems to communicate and transfer
+data. some  require     keys   some  dont 
+An API lets you programmatically access some data or perform some action.
+in api the  creators   can   put   logic   like downloaded  pdf  or  get  prediction  
+and  more  like   access  to  data .   they   can  guide  users  
+or  users    can   just  interact  with   it   throught  the  ui  like press  button  sends  the   info  with  
+POST  which  does   something  
+import requests   
+response = requests.get("https://unstats.un.org/sdgapi/v1/sdg/Goal/5/Target/\
+List?includechildren=true")
+print(response.json())
+
+there are  guides  in  how   to  use the   urls  for   api   
+for  exmaple   if  you  want  some specific info  
+in   api   documentation   is   said  to Goal/5/Target/\
+List?includechildren=true")    and  by  doing   this   you  get   what   you want 
+
+
+
+*********day   22************
+docker    .      you  created   base    image   ,  then  authorization
+then port   config
+setting   config    in django  so   it  allows  localhost.
+docker   run    -p 8000:8000 investml     how to   run   docker or  you  can 
+set  8000:8000  when  run   from  dekstop   before   run 
+  docker build --no-cache -t my-app .  .
+
+
+RUN python - <<EOF
+import nltk
+
+resources = [
+    "punkt",
+    "punkt_tab",
+    "stopwords",
+    "wordnet",
+    "omw-1.4",
+]
+
+for r in resources:
+    nltk.download(r)
+EOF
+   ran this   and the ml  worked 
+   also   you  can set in  docker setting  before the  run  the 
+   port   and   env and val   for api key
+
+
+   NEVER  FORGET  DOCKERIGNORE 
+   
+services:
+  web:
+    image: investml
+    ports:
+      - "8000:8000"
+    env_file:
+      - .venv/.env
+
+
+
+****************
+in  petest   really try  to  fake    the  data  and   all  
+**************
+*************
+****************
+
+*********  dya   23  *********
+started  the    google  cloud   api   
+enable  billing  and    allow   artifacts  api  and  cloud  run
+you  download   CLI   first   
+and  do  it   with   powershell 
+
+
+
+
+you  get   the  project 
+gcloud config get-value project
+
+then   create   repo    in   gcloud artifacts repositories list --location asia-northeast3
+
+
+
+then     push to  repo 
+docker tag mmm asia-northeast3-docker.pkg.dev/investml-484904/my-repo/mmm
+gcloud auth configure-docker asia-northeast3-docker.pkg.dev
+
+docker push asia-northeast3-docker.pkg.dev/investml-484904/my-repo/mmm
+
+
+
+gcloud run deploy mmm `
+  --image asia-northeast3-docker.pkg.dev/investml-484904/my-repo/mmm `
+  --region asia-northeast3 `
+  --allow-unauthenticated `
+  --set-env-vars API_KEY=YOUR_KEY
+
+
+fix  docker  for the   cloud 
+EXPOSE 8080
+
+CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:$PORT"]
+
+docker build -t mmm .
+docker run ` -e PORT=8080 ` -e API_KEY=your_real_api_key ` -p 8080:8080 ` mmm
+
+---------------
+FROM python:3.11-slim
+WORKDIR /application
+
+
+# Copy all files to the application directory
+COPY . /application
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the desired port
+EXPOSE 8080
+
+# Install Gunicorn
+RUN pip install gunicorn
+
+CMD ["gunicorn", "investML:application", "--bind", "0.0.0.0:8080", "--workers", "3", "--timeout", "300"]
+
+
+
+(.venv) PS C:\Users\HP\Desktop\investML> docker build    -t    investing . 
+ERROR: error during connect: Head "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/_ping": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+
+
+investml-484904
+
+
+ gcloud   artifacts repositories create  invest-repo --repository-format=docker  --location=asia-northeast3 --description="invest repo"    --immutable-tags --async
+ gcloud   auth configure-docker asia-northeast3-docker.pkg.dev
+ gcloud builds  submit --tag asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/investimg:invest-tag
+
+*************
+dockerignored    many    things    ,   
+created the req_nun.txt  for smaller  docker img
+changed the  dockerfile 
+chenged the  settings   
+removed   ml building   logic  from the  app  dir to separate concerns
+finally    deployed the  app  .    after testing  on   local  docker
+passed   api key  and  it   works now  
+
+***********************
+**********************
+
+
+
+
+👉 **Cloud Build → Artifact Registry → Cloud Run**
+📍 **Region:** Seoul (`asia-northeast3`)
+🆔 **Project:** `investml-484904`
+
+
+
+# 0️⃣ One-time setup (do this once)
+
+bash
+gcloud config set project investml-484904
+
+
+### Enable required APIs
+
+bash
+gcloud services enable \
+  cloudbuild.googleapis.com \
+  artifactregistry.googleapis.com \
+  run.googleapis.com
+
+
+# 1️⃣ Create Artifact Registry (Docker repo)
+
+Artifact Registry stores your Docker images.
+
+bash
+gcloud artifacts repositories create invest-repo --repository-format=docker --location=asia-northeast3 --description="Docker repo for InvestML"
+
+
+✅ Repo name: `investml-repo`
+✅ Region: Seoul
+
+
+
+# 2️⃣ Authenticate Docker to Artifact Registry
+
+bash
+gcloud auth configure-docker asia-northeast3-docker.pkg.dev
+
+
+# 3️⃣ Cloud Build: build & push Docker image
+
+From your project root (where `Dockerfile` exists):
+gcloud builds submit --tag asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest
+
+
+✅ Image URL:
+asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest
+
+
+# 4️⃣ Deploy to Cloud Run (Seoul)
+ 
+ 
+```bash
+gcloud run deploy invest-app --image asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest --region asia-northeast3  --platform managed --allow-unauthenticated --port 8080
+```
+or   with  api   key  
+gcloud run deploy invest-app --image asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest  --region asia-northeast3  --platform managed  --allow-unauthenticated --port 8080 --set-env-vars OPENAI_API_KEY=sk-xxxxxx
+
+
+
+* **Allow unauthenticated invocations?** → `y`
+
+
+# 🔍 Common failure checklist (VERY important)
+
+### ✅ Dockerfile must include:
+
+```dockerfile
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+```
+
+### ✅ `requirements.txt` must include:
+
+```txt
+fastapi
+uvicorn[standard]
+```
+
+### ✅ FastAPI file name
+
+```python
+# main.py
+app = FastAPI()
+```
+
+---
+
+
+Code
+ ↓
+Cloud Build  → builds image
+ ↓
+Artifact Registry → stores image
+ ↓
+Cloud Run → runs container
+**********************
+*********************test change 2026. 01. 28. (수) 13:58:17 KST
+
+
+
