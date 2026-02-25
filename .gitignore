@@ -1,3 +1,5 @@
 venv
 **/venv/
 .api 
+mlruns
+__pycache__
