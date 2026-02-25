@@ -31,9 +31,6 @@ jobs:
           touch newfile.txt
           echo "This is a new file" > newfile.txt   
           cat newfile.txt
-
-
-
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
