@@ -7,7 +7,7 @@ import yfinance as yf
 loaded = load_dotenv()
 
 if not loaded:
-    load_dotenv(".venv/.env")
+    load_dotenv("venv/.env")
 
 API_KEY = os.getenv("THE_KEY")  
 tavily_client = TavilyClient(api_key=API_KEY)

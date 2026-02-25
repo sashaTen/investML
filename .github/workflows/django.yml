@@ -36,5 +36,43 @@ jobs:
 
 
 
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GSP_SA_KEY }}
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: investml-484904
+
+      - name: Verify auth
+        run: |
+          gcloud auth list
+          gcloud config list project
+      - name: Build and deploy to Cloud Run
+        env:
+         THE_KEY: ${{ secrets.THE_KEY }}
+        run: |
+              # Create Artifact Registry repo if it doesn't exist
+              gcloud artifacts repositories create invest-repo \
+                --repository-format=docker \
+                --location=asia-northeast3 \
+                --description="Docker repo for InvestML" || true
+
+              # Build container
+              gcloud builds submit \
+                --tag asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest
+
+              # Deploy to Cloud Run
+              gcloud run deploy invest-app \
+                --image asia-northeast3-docker.pkg.dev/investml-484904/invest-repo/invest-app:latest \
+                --region asia-northeast3 \
+                --platform managed \
+                --allow-unauthenticated \
+                --port 8080 \
+                --set-env-vars THE_KEY=$THE_KEY
+
+
 
     
