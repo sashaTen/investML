@@ -6,8 +6,8 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Copy the requirements file into the container
-
-
+COPY reqs.txt .
+RUN pip install --no-cache-dir -r reqs.txt
 # Copy the rest of the application code into the container
 COPY . .
 
