@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/HP/Desktop/investML/mlruns/0/30b865c9090e4921a6f2cf2d842da654/artifacts
+end_time: 1768453994476
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 30b865c9090e4921a6f2cf2d842da654
+run_name: dapper-kite-610
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768453940834
+status: 3
+tags: []
+user_id: HP
