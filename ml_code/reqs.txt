@@ -1,1 +1,5 @@
 google-cloud-storage==3.9.0
+pandas==2.3.3
+nltk==3.9.2
+scikit-learn==1.8.0
+joblib==1.5.3
