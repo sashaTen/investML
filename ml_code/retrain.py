@@ -144,9 +144,9 @@ if __name__ == "__main__":
     pipeline(
         path,
         target_column,
-        "knn_count_vectorizer_v1.pkl",
-        "knn_pca_v1.pkl",
-        "knn_model_v1.pkl",
+        "vectorizer_v1.pkl",
+        "pca_v1.pkl",
+        "model_v1.pkl",
         knn_model
     )
 
@@ -154,9 +154,9 @@ if __name__ == "__main__":
     artifact_dir = Path("ml_artifacts")
 
     artifacts = [
-        ("knn_count_vectorizer_v1.pkl", "knn_count_vectorizerv1.pkl"),
-        ("knn_pca_v1.pkl", "knn_pcav1.pkl"),
-        ("knn_model_v1.pkl", "knn_modelv1.pkl"),
+        ("vectorizer_v1.pkl", "vectorizer_v1.pkl"),
+        ("pca_v1.pkl", "pca_v1.pkl"),
+        ("model_v1.pkl", "model_v1.pkl"),
     ]
 
     for source_name, destination_name in artifacts:
