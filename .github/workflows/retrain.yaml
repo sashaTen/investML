@@ -54,10 +54,17 @@ jobs:
         run: |
           gcloud run jobs create my-data-transformation \
             --image=asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest \
-            --region=asia-northeast3 || echo "Job already exists"
+            --region=asia-northeast3 \
+            --memory=2Gi \
+            --cpu=2
 
       - name: Execute Cloud Run Job
         working-directory: ml_code
         run: |
           gcloud run jobs execute my-data-transformation \
             --region=asia-northeast3
+
+      - name: Download Artifacts from GCS
+        run: |
+          
+          python load_cloud_artifacts.py 

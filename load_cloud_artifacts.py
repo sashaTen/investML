@@ -44,7 +44,8 @@ def download_blob(bucket_name,  destination_folder):
 
 
 #download_blob("ml_buckets_a",  ARTIFACTS_DIR )
-
+if __name__ == "__main__":
+    download_blob("ml_buckets_a",  ARTIFACTS_DIR )
 
 
 
