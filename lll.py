@@ -47,31 +47,4 @@ def download_blob(bucket_name,  destination_folder):
 
 
 
-def find_latest_file(folder_path, pattern):
 
-    folder = Path(folder_path)
-
-    matched_files = [
-        f for f in folder.iterdir()
-        if f.is_file() and re.search(pattern, f.name)
-    ]
-
-    if not matched_files:
-        return None
-
-    # latest by modification time
-    latest = max(matched_files, key=lambda f: f.stat().st_mtime)
-    
-
-    p = Path(latest)
-
-    new_path = Path("ml_artifacts") / p.name
-
-    return new_path.as_posix() 
-
-latest_model = find_latest_file(
-    ARTIFACTS_DIR,
-    r"model"
-)
-
-print(latest_model)

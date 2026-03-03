@@ -1,9 +1,10 @@
+import re 
 from tavily import TavilyClient
 import joblib
 from dotenv import load_dotenv
 import os
 import yfinance as yf
-
+from pathlib  import Path
 loaded = load_dotenv()
 
 if not loaded:
@@ -12,9 +13,62 @@ if not loaded:
 API_KEY = os.getenv("THE_KEY")  
 tavily_client = TavilyClient(api_key=API_KEY)
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
+ARTIFACTS_DIR.mkdir(exist_ok=True)
+
+def find_latest_file(folder_path, pattern):
+
+    folder = Path(folder_path)
+
+    matched_files = [
+        f for f in folder.iterdir()
+        if f.is_file() and re.search(pattern, f.name)
+    ]
+
+    if not matched_files:
+        return None
+
+    # latest by modification time
+    latest = max(matched_files, key=lambda f: f.stat().st_mtime)
+    
+
+    p = Path(latest)
+
+    new_path = Path("ml_artifacts") / p.name
+
+    return new_path.as_posix() 
+
+
+
+
+latest_model = find_latest_file(
+    ARTIFACTS_DIR,
+    r"model"
+)
+latest_pca = find_latest_file(
+    ARTIFACTS_DIR,
+    r"pca"
+)
+latest_cv = find_latest_file(
+    ARTIFACTS_DIR,
+    r"count_vectorizer"
+)
+
+
+
+
+
+cv = joblib.load(latest_cv)
+pca = joblib.load(latest_pca)
+model = joblib.load(latest_model)
+
+
+
+
 cv = joblib.load("ml_artifacts/knn_count_vectorizer.pkl")
 pca = joblib.load("ml_artifacts/knn_pca.pkl")
-model = joblib.load("ml_artifacts/knn_model.pkl")
+model = joblib.load(latest_model)
 
 def  get_ticker_news(ticker):
     response = tavily_client.search("latest news about  " + ticker)
