@@ -137,6 +137,45 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
 
 
 
+
+def clean_folder_except(folder_path: str, file_to_keep: str):
+    """
+    Deletes all files in folder_path except file_to_keep.
+    
+    :param folder_path: Path to the folder
+    :param file_to_keep: Filename (not full path) to preserve
+    """
+    folder = Path(folder_path)
+
+    if not folder.exists() or not folder.is_dir():
+        raise ValueError(f"{folder_path} is not a valid directory")
+
+    for item in folder.iterdir():
+        # Skip the file we want to keep
+        if item.name == file_to_keep:
+            continue
+
+        # Delete files
+        if item.is_file():
+            item.unlink()
+
+        # Optional: delete subdirectories too
+        elif item.is_dir():
+            for sub in item.rglob("*"):
+                if sub.is_file():
+                    sub.unlink()
+            sub.rmdir()  # remove empty dir
+            item.rmdir()
+
+    print(f"Folder cleaned. Kept: {file_to_keep}")
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
 
     knn_model = KNeighborsClassifier(n_neighbors=5)
@@ -169,3 +208,9 @@ if __name__ == "__main__":
             destination_name
         )
     
+
+
+    clean_folder_except(
+    folder_path=str(ARTIFACTS_DIR),
+    file_to_keep="stock_data.csv"
+)
