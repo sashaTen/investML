@@ -1,0 +1,13 @@
+name: Monthly Job
+
+on:
+  schedule:
+    - cron: '7 4 3 * *'   # 13:07 KST (UTC+9)
+  workflow_dispatch:
+
+jobs:
+  monthly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Hello
+        run: echo "hello world"
