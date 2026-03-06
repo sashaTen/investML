@@ -47,37 +47,19 @@ jobs:
         working-directory: ml_code
         run: |
           gcloud builds submit \
-                  --tag asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest
-      - name: Check if job exists
-        id: check_job
-        run: |
-          if gcloud run jobs describe my-data-transformation --region=asia-northeast3 >/dev/null 2>&1; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-          fi
+            --tag asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest
 
-      - name: Create Cloud Run Job
-        if: steps.check_job.outputs.exists == 'false'
+      - name: Create Cloud Run Job (if not exists)
+        working-directory: ml_code
         run: |
-          gcloud run jobs create my-data-transformation \
+          gcloud run jobs update my-data-transformation \
             --image=asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest \
             --region=asia-northeast3 \
             --memory=2Gi \
             --cpu=2
 
-            - name: Update Cloud Run Job
-      - name: Update Cloud Run Job
-        if: steps.check_job.outputs.exists == 'true'
+      - name: Execute Cloud Run Job
+        working-directory: ml_code
         run: |
-          gcloud run jobs update my-data-transformation \
-            --image=asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest \
+          gcloud run jobs execute my-data-transformation \
             --region=asia-northeast3
-      - name: execute Cloud Run Job
-        working-directory: ml_code 
-        run: | 
-           gcloud run jobs execute my-data-transformation \ --region=asia-northeast3
-
-
-
-
