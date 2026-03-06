@@ -170,22 +170,40 @@ def clean_folder_except(folder_path: str, file_to_keep: str):
     print(f"Folder cleaned. Kept: {file_to_keep}")
 
 
+def  get_version_number(filename):
+    num = filename.split("_v")[1].split(".")[0]
+    return int(num) 
 
 
 
+def overwrite_version():
+    with open("version.txt", "r") as f:
+        content = f.read()
+    
+    # modify content
+    content = content.replace(f"{content}", f"{int(content) + 1}")
+
+    with open("version.txt", "w") as f:
+        f.write(content)
+    
 
 
 
 if __name__ == "__main__":
+    overwrite_version()
+    with open("version.txt", "r") as f:
+        content = f.read()
+            
+    
 
     knn_model = KNeighborsClassifier(n_neighbors=5)
 
     pipeline(
         path,
         target_column,
-        "vectorizer_v1.pkl",
-        "pca_v1.pkl",
-        "model_v1.pkl",
+        f"vectorizer_v{int(content)}.pkl",
+        f"pca_v{int(content)}.pkl",
+        f"model_v{int(content)}.pkl",
         knn_model
     )
 
@@ -193,9 +211,9 @@ if __name__ == "__main__":
     artifact_dir = Path("ml_artifacts")
 
     artifacts = [
-        ("vectorizer_v1.pkl", "vectorizer_v1.pkl"),
-        ("pca_v1.pkl", "pca_v1.pkl"),
-        ("model_v1.pkl", "model_v1.pkl"),
+        (f"vectorizer_v{int(content)}.pkl", f"vectorizer_v{int(content)}.pkl"),
+        (f"pca_v{int(content)}.pkl", f"pca_v{int(content)}.pkl"),
+        (f"model_v{int(content)}.pkl", f"model_v{int(content)}.pkl"),
     ]
 
     for source_name, destination_name in artifacts:
@@ -214,3 +232,4 @@ if __name__ == "__main__":
     folder_path=str(ARTIFACTS_DIR),
     file_to_keep="stock_data.csv"
 )
+ 

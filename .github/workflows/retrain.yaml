@@ -64,7 +64,4 @@ jobs:
           gcloud run jobs execute my-data-transformation \
             --region=asia-northeast3
 
-      - name: Download Artifacts from GCS
-        run: |
-          
-          python load_cloud_artifacts.py 
+  

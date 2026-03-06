@@ -1093,4 +1093,17 @@ gcloud config set run/region asia-northeast3
 gcloud run jobs create retrain --image=asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest 
 gcloud run jobs execute  retrain
 
+------
+
+gcloud storage cp version.txt gs://ml_buckets_a/version.txt
+
+
+
+
+how to   get   latest   ?    : 
+go to  meta file  and read  it.   get the version 
+then compare to your current    version   and   if   bigger 
+then   download   f'model_{version}'
+
+in the retrain.  
 
