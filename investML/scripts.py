@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 import yfinance as yf
 from pathlib  import Path
+from google.cloud import storage
 loaded = load_dotenv()
 
 if not loaded:
@@ -17,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
 ARTIFACTS_DIR.mkdir(exist_ok=True)
 
-def find_latest_file(folder_path, pattern):
+def find_latest_model_version(folder_path, pattern):
 
     folder = Path(folder_path)
 
@@ -36,39 +37,72 @@ def find_latest_file(folder_path, pattern):
     p = Path(latest)
 
     new_path = Path("ml_artifacts") / p.name
+    s = new_path.as_posix() 
 
-    return new_path.as_posix() 
+    num = int(re.search(r'v(\d+)', s).group(1))
+
+    print(num)
+
+    return num
 
 
 
+def    get_version():
+    bucket_name = "ml_buckets_a"
+    file_name = "version.txt"
 
-latest_model = find_latest_file(
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(file_name)
+
+    content = blob.download_as_text()
+
+    return content.strip()
+
+
+current_version = find_latest_model_version(
     ARTIFACTS_DIR,
     r"model"
 )
-latest_pca = find_latest_file(
-    ARTIFACTS_DIR,
-    r"pca"
-)
-latest_cv = find_latest_file(
-    ARTIFACTS_DIR,
-    r"count_vectorizer"
-)
+
+cloud_version = int(get_version())
+
+if cloud_version > current_version:
+    print("New model version available. Downloading...")
+
+    download_blob(
+        "ml_buckets_a",
+        f"model_v{cloud_version}.pkl",
+        ARTIFACTS_DIR / f"model_v{cloud_version}.pkl"
+    )
+
+    download_blob(
+        "ml_buckets_a",
+        f"vectorizer_v{cloud_version}.pkl",
+        ARTIFACTS_DIR / f"vectorizer_v{cloud_version}.pkl"
+    )
+
+    download_blob(
+        "ml_buckets_a",
+        f"pca_v{cloud_version}.pkl",
+        ARTIFACTS_DIR / f"pca_v{cloud_version}.pkl"
+    )
+
+    cv = joblib.load(ARTIFACTS_DIR / f"vectorizer_v{cloud_version}.pkl")
+    pca = joblib.load(ARTIFACTS_DIR / f"pca_v{cloud_version}.pkl")
+    model = joblib.load(ARTIFACTS_DIR / f"model_v{cloud_version}.pkl")
+
+else:
+    print("No new model version available.")
+
+    cv = joblib.load(f"ml_artifacts/vectorizer_v{current_version}.pkl")
+    pca = joblib.load(f"ml_artifacts/pca_v{current_version}.pkl")
+    model = joblib.load(f"ml_artifacts/model_v{current_version}.pkl")
 
 
 
 
 
-cv = joblib.load(latest_cv)
-pca = joblib.load(latest_pca)
-model = joblib.load(latest_model)
-
-
-
-
-cv = joblib.load("ml_artifacts/knn_count_vectorizer.pkl")
-pca = joblib.load("ml_artifacts/knn_pca.pkl")
-model = joblib.load(latest_model)
 
 def  get_ticker_news(ticker):
     response = tavily_client.search("latest news about  " + ticker)

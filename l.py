@@ -1,7 +1,8 @@
 
 from pathlib import Path
 from google.cloud import storage
-
+import re 
+import joblib
 BASE_DIR = Path(__file__).resolve().parent
 ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
 print(ARTIFACTS_DIR)
@@ -20,6 +21,11 @@ def    get_version():
 
     return content.strip()
 
+
+"""  f"vectorizer_v{int(content)+1}.pkl",
+        f"pca_v{int(content)+1}.pkl",
+        f"model_v{int(content)+1}.pkl", """
+
 def   download_blob(bucket_name, blob_name, destination_file):
 # create client
     client = storage.Client()
@@ -36,37 +42,33 @@ def   download_blob(bucket_name, blob_name, destination_file):
 
 
 
+def find_latest_model_version(folder_path, pattern):
 
+    folder = Path(folder_path)
 
-""" 
-
-#download_blob("ml_buckets_a",  ARTIFACTS_DIR )
-if __name__ == "__main__":
-    bucket_name = "ml_buckets_a"
-    artifact_dir = Path("ml_artifacts")
-
-    artifacts = [
-        f"vectorizer_v{int(get_version())}.pkl",  
-        
+    matched_files = [
+        f for f in folder.iterdir()
+        if f.is_file() and re.search(pattern, f.name)
     ]
 
-    for artifact in artifacts:
-        download_blob(bucket_name, artifact, artifact_dir / artifact)
+    if not matched_files:
+        return None
 
+    # latest by modification time
+    latest = max(matched_files, key=lambda f: f.stat().st_mtime)
+    
 
+    p = Path(latest)
 
-from google.cloud import storage
+    new_path = Path("ml_artifacts") / p.name
+    s = new_path.as_posix() 
 
- """
+    num = int(re.search(r'v(\d+)', s).group(1))
 
+    print(num)
 
+    return num
 
-
-
-#   gcloud storage cp version.txt gs://ml_buckets_a/version.txt
-
-content = get_version()
-print("Current version:", content)
 
 
 

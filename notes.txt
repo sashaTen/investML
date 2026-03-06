@@ -1101,13 +1101,25 @@ gcloud storage cp version.txt gs://ml_buckets_a/version.txt
 
 
 how to   get   latest   ?    : 
-go to  meta file  and read  it.   get the version 
+go to  meta file  in gcloud  and read  it.   get the version 
 then compare to your current    version   and   if   bigger 
 then   download   f'model_{version}'
 
 in the retrain.  
 
 
+
+
+    bucket_name = "ml_buckets_a"
+    artifact_dir = Path("ml_artifacts")
+
+    artifacts = [
+        f"vectorizer_v{int(get_version())}.pkl",  
+        
+    ]
+
+    for artifact in artifacts:
+        download_blob(bucket_name, artifact, artifact_dir / artifact)
 
 
 
