@@ -170,29 +170,54 @@ def clean_folder_except(folder_path: str, file_to_keep: str):
     print(f"Folder cleaned. Kept: {file_to_keep}")
 
 
-def  get_version_number(filename):
-    num = filename.split("_v")[1].split(".")[0]
-    return int(num) 
 
 
 
-def overwrite_version():
-    with open("version.txt", "r") as f:
-        content = f.read()
+
+
     
-    # modify content
-    content = content.replace(f"{content}", f"{int(content) + 1}")
+def    get_version():
+    bucket_name = "ml_buckets_a"
+    file_name = "version.txt"
 
-    with open("version.txt", "w") as f:
-        f.write(content)
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(file_name)
+
+    content = blob.download_as_text()
+
+    return content.strip()
+
+
+def update_version():
+
+    bucket_name = "ml_buckets_a"
+    blob_name = "version.txt"
+
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+   
+
     
+    # new content
+    new_value = str(int(new_value)+1)
+
+    # overwrite file
+    blob.upload_from_string(new_value)
+
+    print("File updated.")
+    
+
+
+
 
 
 
 if __name__ == "__main__":
-    overwrite_version()
-    with open("version.txt", "r") as f:
-        content = f.read()
+    
+    content = get_version()
+    update_version(content)
             
     
 
@@ -201,9 +226,9 @@ if __name__ == "__main__":
     pipeline(
         path,
         target_column,
-        f"vectorizer_v{int(content)}.pkl",
-        f"pca_v{int(content)}.pkl",
-        f"model_v{int(content)}.pkl",
+        f"vectorizer_v{int(content)+1}.pkl",
+        f"pca_v{int(content)+1}.pkl",
+        f"model_v{int(content)+1}.pkl",
         knn_model
     )
 
@@ -211,9 +236,9 @@ if __name__ == "__main__":
     artifact_dir = Path("ml_artifacts")
 
     artifacts = [
-        (f"vectorizer_v{int(content)}.pkl", f"vectorizer_v{int(content)}.pkl"),
-        (f"pca_v{int(content)}.pkl", f"pca_v{int(content)}.pkl"),
-        (f"model_v{int(content)}.pkl", f"model_v{int(content)}.pkl"),
+        (f"vectorizer_v{int(content)+1}.pkl", f"vectorizer_v{int(content)+1}.pkl"),
+        (f"pca_v{int(content)+1}.pkl", f"pca_v{int(content)+1}.pkl"),
+        (f"model_v{int(content)+1}.pkl", f"model_v{int(content)+1}.pkl"),
     ]
 
     for source_name, destination_name in artifacts:

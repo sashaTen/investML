@@ -38,7 +38,7 @@ def   download_blob(bucket_name, blob_name, destination_file):
 
 
 
-
+""" 
 
 #download_blob("ml_buckets_a",  ARTIFACTS_DIR )
 if __name__ == "__main__":
@@ -55,7 +55,9 @@ if __name__ == "__main__":
 
 
 
+from google.cloud import storage
 
+ """
 
 
 
@@ -63,6 +65,8 @@ if __name__ == "__main__":
 
 #   gcloud storage cp version.txt gs://ml_buckets_a/version.txt
 
+content = get_version()
+print("Current version:", content)
 
 
 
