@@ -73,8 +73,11 @@ jobs:
           gcloud run jobs update my-data-transformation \
             --image=asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest \
             --region=asia-northeast3
+      - name: execute Cloud Run Job
+        working-directory: ml_code 
+        run: | 
+           gcloud run jobs execute my-data-transformation \ --region=asia-northeast3
 
 
 
 
-            

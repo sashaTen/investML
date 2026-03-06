@@ -189,7 +189,7 @@ def    get_version():
     return content.strip()
 
 
-def update_version():
+def update_version(new_value):
 
     bucket_name = "ml_buckets_a"
     blob_name = "version.txt"
