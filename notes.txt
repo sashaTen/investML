@@ -1211,3 +1211,13 @@ jobs:
         working-directory: ml_code 
         run: | 
            gcloud run jobs execute my-data-transformation \ --region=asia-northeast3
+
+
+
+
+************
+so the good  practice  is to   manually  set the gcloud   like   first  files 
+like  artifact   registry  and etc   and then    in    yaml  just  update them without
+declaration   of the    registry   again   . 
+
+
