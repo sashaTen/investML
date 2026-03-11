@@ -71,6 +71,34 @@ def find_latest_model_version(folder_path, pattern):
 
 
 
+""" 
+import yfinance as yf
+import pandas as pd
 
+
+def get_prices_difference(ticker_symbol, start_date):
+    ticker = yf.Ticker(ticker_symbol)
+
+    start = pd.Timestamp(start_date)
+    end = start + pd.Timedelta(days=10)
+
+    data = ticker.history(start=start, end=end)
+
+    if data.empty:
+        return None, None
+
+    # first trading day on or after start_date
+    closest_day_price = data.iloc[0]["Close"]
+
+    # next trading day
+    if len(data) > 1:
+        next_day_price = data.iloc[1]["Close"]
+    else:
+        next_day_price = None
+
+    return  next_day_price - closest_day_price
+
+
+print(get_prices_difference("AAPL", "2024-01-01")) """
 
 

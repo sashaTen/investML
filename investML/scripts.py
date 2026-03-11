@@ -6,6 +6,7 @@ import os
 import yfinance as yf
 from pathlib  import Path
 from google.cloud import storage
+from .models import Sentiment
 loaded = load_dotenv()
 
 if not loaded:
@@ -106,6 +107,13 @@ else:
 
 def  get_ticker_news(ticker):
     response = tavily_client.search("latest news about  " + ticker)
+    Sentiment.objects.create(
+            ticker=ticker,
+            sentiment_text=response["results"][0]["content"]  # Assuming you have the sentiment text available
+        )
+    \
+    if Sentiment.objects.count() % 1000 == 0:
+        print("hi")
     return response["results"][0]["content"]
 
 def make_prediction(text):

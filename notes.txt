@@ -1221,3 +1221,16 @@ like  artifact   registry  and etc   and then    in    yaml  just  update them w
 declaration   of the    registry   again   . 
 
 
+***************data   for  retrain   :   
+it  has to   save the  text   data and the  date of the text 
+by  date  it finds the   price  and   next   day 2026-03-11   price and   then   next   day - news date 
+ = if same or bigger then positive (1) and less then    negative label (-1).   
+ function  that cleans  and prepreccess  for the   pipeline   .   
+ then   navigate the  pipeline   to that   if retrain .   
+
+
+ thoughts :    'i already  forgot the   django  things   idid   so    must to  remind and recall '. 
+
+
+
+ debug false set

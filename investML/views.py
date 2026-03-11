@@ -14,7 +14,7 @@ from .scripts import (
     PortfolioAllocation,
     MlPortfolioAllocation,
 )
-from .models import Portfolio, Tickers
+from .models import Portfolio, Tickers ,Sentiment
 
 
 
@@ -142,3 +142,7 @@ def allocation(request):
         "allocation.html",
         {"allocations": t_allocations, "ml_allocations": t_ml_allocations},
     )
+
+
+
+
