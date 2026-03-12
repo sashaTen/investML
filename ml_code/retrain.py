@@ -14,6 +14,8 @@ from sklearn.neighbors import KNeighborsClassifier
 
 from pathlib import Path
 
+
+
 BASE_DIR = Path(__file__).resolve().parent
 ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
 ARTIFACTS_DIR.mkdir(exist_ok=True)
@@ -26,8 +28,45 @@ path = ARTIFACTS_DIR / "stock_data.csv"
 target_column = "Sentiment"
 
 
+
+def   download_blob(bucket_name, blob_name, destination_file):
+# create client
+    client = storage.Client()
+
+    # get bucket
+    bucket = client.bucket(bucket_name)
+
+    # get file (blob)
+    blob = bucket.blob(blob_name)
+
+    # download
+    blob.download_to_filename(destination_file)
+
+
+
+
+download_blob(
+        "ml_buckets_a",
+        "data_v3.csv",
+        ARTIFACTS_DIR / "data_v3.csv"
+    )
+
+
+def prepare_sentiment_df(df):
+    df = df.rename(columns={
+        "label": "Sentiment",
+        "sentiment_text": "Text"
+    })
+    
+    df = df[["Text", "Sentiment"]]  # keep only these columns
+    
+    return df 
+
 def load_df(path):
     data = pd.read_csv(path)
+    if "label" in data.columns:
+        data = prepare_sentiment_df(data)
+       
     return data
 
 

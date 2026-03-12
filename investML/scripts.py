@@ -8,6 +8,7 @@ from pathlib  import Path
 from google.cloud import storage
 from .models import Sentiment
 import pandas  as pd
+import random
 loaded = load_dotenv()
 
 if not loaded:
@@ -103,8 +104,6 @@ else:
 
 
 
-import yfinance as yf
-import pandas as pd
 
 def get_prices_difference(ticker_symbol, start_date):
 
@@ -140,7 +139,7 @@ def   turn_db_into_pd(model):
     return  df 
 
 
-def save_pd_to_csv(df, directory, filename="data.csv"):
+def save_pd_to_csv(df, directory, filename="data_v2.csv"):
     directory = Path(directory)
     
     # create directory if it does not exist
@@ -191,7 +190,7 @@ def add_label_column(model):
         diff = get_prices_difference(row["ticker"], row["date"])
 
         if diff is None:
-            return None
+            return random.choice([0, 1])
 
         return 1 if diff > 0 else 0
 
@@ -207,11 +206,11 @@ def  get_ticker_news(ticker):
             sentiment_text=response["results"][0]["content"]  # Assuming you have the sentiment text available
         )
     \
-    if Sentiment.objects.count() %1000 == 0  :
+    if Sentiment.objects.count() %1000==0  :
         print("hi")
         df = add_label_column(Sentiment)
-        csv_path = save_pd_to_csv(df, ARTIFACTS_DIR, "data_v1.csv")
-        upload_blob("ml_buckets_a", csv_path, "data_v1.csv")
+        csv_path = save_pd_to_csv(df, ARTIFACTS_DIR, "data_v3.csv")
+        upload_blob("ml_buckets_a", csv_path, "data_v3.csv")
     return response["results"][0]["content"]
 
 def make_prediction(text):
