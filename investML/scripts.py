@@ -7,6 +7,7 @@ import yfinance as yf
 from pathlib  import Path
 from google.cloud import storage
 from .models import Sentiment
+import pandas  as pd
 loaded = load_dotenv()
 
 if not loaded:
@@ -102,7 +103,101 @@ else:
 
 
 
+import yfinance as yf
+import pandas as pd
 
+def get_prices_difference(ticker_symbol, start_date):
+
+    ticker = yf.Ticker(ticker_symbol)
+
+    start = pd.Timestamp(start_date)
+    end = start + pd.Timedelta(days=10)
+
+    data = ticker.history(start=start, end=end)
+
+    if data.empty:
+        return None
+
+    closest_day_price = data.iloc[0]["Close"]
+
+    if len(data) < 2:
+        return None
+
+    next_day_price = data.iloc[1]["Close"]
+    
+    
+    if next_day_price - closest_day_price >= 0:
+        return 1
+    else:
+        return 0
+    
+
+def   turn_db_into_pd(model):
+    qs = model.objects.all().values()
+
+    df = pd.DataFrame(list(qs))
+
+    return  df 
+
+
+def save_pd_to_csv(df, directory, filename="data.csv"):
+    directory = Path(directory)
+    
+    # create directory if it does not exist
+    directory.mkdir(parents=True, exist_ok=True)
+
+    path = directory / filename
+
+    df.to_csv(path, index=False)
+
+    return path
+
+def upload_blob(bucket_name, source_file_name, destination_blob_name):
+    """Uploads a file to the bucket."""
+    # The ID of your GCS bucket
+    # bucket_name = "your-bucket-name"
+    # The path to your file to upload
+    # source_file_name = "local/path/to/file"
+    # The ID of your GCS object
+    # destination_blob_name = "storage-object-name"
+
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+
+    # Optional: set a generation-match precondition to avoid potential race conditions
+    # and data corruptions. The request to upload is aborted if the object's
+    # generation number does not match your precondition. For a destination
+    # object that does not yet exist, set the if_generation_match precondition to 0.
+    # If the destination object already exists in your bucket, set instead a
+    # generation-match precondition using its generation number.
+    generation_match_precondition = 0
+
+    blob.upload_from_filename(source_file_name, if_generation_match=generation_match_precondition)
+
+    print(
+        f"File {source_file_name} uploaded to {destination_blob_name}."
+    )
+
+
+
+
+
+def add_label_column(model):
+
+    df = turn_db_into_pd(model)
+
+    def compute_label(row):
+        diff = get_prices_difference(row["ticker"], row["date"])
+
+        if diff is None:
+            return None
+
+        return 1 if diff > 0 else 0
+
+    df["label"] = df.apply(compute_label, axis=1)
+
+    return df
 
 
 def  get_ticker_news(ticker):
@@ -112,8 +207,11 @@ def  get_ticker_news(ticker):
             sentiment_text=response["results"][0]["content"]  # Assuming you have the sentiment text available
         )
     \
-    if Sentiment.objects.count() % 1000 == 0:
+    if Sentiment.objects.count() %1000 == 0  :
         print("hi")
+        df = add_label_column(Sentiment)
+        csv_path = save_pd_to_csv(df, ARTIFACTS_DIR, "data_v1.csv")
+        upload_blob("ml_buckets_a", csv_path, "data_v1.csv")
     return response["results"][0]["content"]
 
 def make_prediction(text):

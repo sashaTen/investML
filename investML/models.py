@@ -141,7 +141,6 @@ class  Portfolio(models.Model):
 class  Sentiment(models.Model):
     ticker = models.CharField(max_length=100)
     sentiment_text = models.TextField()
-    label =  models.IntegerField(default=0)
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
