@@ -21,6 +21,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
 ARTIFACTS_DIR.mkdir(exist_ok=True)
 
+
+def   download_blob(bucket_name, blob_name, destination_file):
+# create client
+    client = storage.Client()
+
+    # get bucket
+    bucket = client.bucket(bucket_name)
+
+    # get file (blob)
+    blob = bucket.blob(blob_name)
+
+    # download
+    blob.download_to_filename(destination_file)
+
+
+
+
 def find_latest_model_version(folder_path, pattern):
 
     folder = Path(folder_path)
@@ -50,9 +67,9 @@ def find_latest_model_version(folder_path, pattern):
 
 
 
-def    get_version():
+def get_version(file_name):
     bucket_name = "ml_buckets_a"
-    file_name = "version.txt"
+    
 
     client = storage.Client()
     bucket = client.bucket(bucket_name)
@@ -60,15 +77,27 @@ def    get_version():
 
     content = blob.download_as_text()
 
-    return content.strip()
+
+    return content
+
+
+
+def  get_artifact_version(content, type):
+    for line in content.splitlines():
+        key, value = line.split("=")
+        if key.strip() == type:
+            return int(value.strip())
+        
+
 
 
 current_version = find_latest_model_version(
     ARTIFACTS_DIR,
     r"model"
 )
+content = get_version(file_name="version.txt")
+cloud_version  = get_artifact_version(content, "ml_artifacts")
 
-cloud_version = int(get_version())
 
 if cloud_version > current_version:
     print("New model version available. Downloading...")
@@ -104,9 +133,7 @@ else:
 
 
 
-
 def get_prices_difference(ticker_symbol, start_date):
-
     ticker = yf.Ticker(ticker_symbol)
 
     start = pd.Timestamp(start_date)
@@ -115,17 +142,17 @@ def get_prices_difference(ticker_symbol, start_date):
     data = ticker.history(start=start, end=end)
 
     if data.empty:
-        return None
+        return None, None
 
-    closest_day_price = data.iloc[0]["Close"]
-
-    if len(data) < 2:
-        return None
-
-    next_day_price = data.iloc[1]["Close"]
+    # first trading day on or after start_date
+    dates  =  []
+    for  i  in range(1, len(data)):
+         if data.iloc[i]["Close"] != None and data.iloc[i]["Close"] != 0:
+                dates.append(data.iloc[i]["Close"])
+                if  len(dates) == 2:
+                    break
     
-    
-    if next_day_price - closest_day_price >= 0:
+    if dates[1]-dates[0] >= 0:
         return 1
     else:
         return 0
@@ -135,11 +162,15 @@ def   turn_db_into_pd(model):
     qs = model.objects.all().values()
 
     df = pd.DataFrame(list(qs))
+    
+    df["date"] = pd.to_datetime(df["date"])
+    cutoff = pd.Timestamp.today() - pd.Timedelta(days=5)  
+    df = df[df["date"] <= cutoff]
 
     return  df 
 
 
-def save_pd_to_csv(df, directory, filename="data_v2.csv"):
+def save_pd_to_csv(df, directory, filename):
     directory = Path(directory)
     
     # create directory if it does not exist
@@ -179,23 +210,20 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     )
 
 
+# 
+
+def compute_label(row):
+        diff = get_prices_difference(row["ticker"], row["date"])
+        return diff
 
 
 
 def add_label_column(model):
 
-    df = turn_db_into_pd(model)
-
-    def compute_label(row):
-        diff = get_prices_difference(row["ticker"], row["date"])
-
-        if diff is None:
-            return random.choice([0, 1])
-
-        return 1 if diff > 0 else 0
-
+    df = turn_db_into_pd(model) 
+    
+    
     df["label"] = df.apply(compute_label, axis=1)
-
     return df
 
 
@@ -206,11 +234,11 @@ def  get_ticker_news(ticker):
             sentiment_text=response["results"][0]["content"]  # Assuming you have the sentiment text available
         )
     \
-    if Sentiment.objects.count() %1000==0  :
+    if Sentiment.objects.count() %1000== 0 :
         print("hi")
         df = add_label_column(Sentiment)
-        csv_path = save_pd_to_csv(df, ARTIFACTS_DIR, "data_v3.csv")
-        upload_blob("ml_buckets_a", csv_path, "data_v3.csv")
+        csv_path = save_pd_to_csv(df, ARTIFACTS_DIR, "data_v5.csv")
+        upload_blob("ml_buckets_a", csv_path, "data_v5.csv")
     return response["results"][0]["content"]
 
 def make_prediction(text):

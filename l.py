@@ -3,6 +3,8 @@ from pathlib import Path
 from google.cloud import storage
 import re 
 import joblib
+import yfinance as yf
+import pandas as pd
 BASE_DIR = Path(__file__).resolve().parent
 ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
 print(ARTIFACTS_DIR)
@@ -26,18 +28,7 @@ def    get_version():
         f"pca_v{int(content)+1}.pkl",
         f"model_v{int(content)+1}.pkl", """
 
-def   download_blob(bucket_name, blob_name, destination_file):
-# create client
-    client = storage.Client()
 
-    # get bucket
-    bucket = client.bucket(bucket_name)
-
-    # get file (blob)
-    blob = bucket.blob(blob_name)
-
-    # download
-    blob.download_to_filename(destination_file)
 
 
 
@@ -71,10 +62,6 @@ def find_latest_model_version(folder_path, pattern):
 
 
 
-""" 
-import yfinance as yf
-import pandas as pd
-
 
 def get_prices_difference(ticker_symbol, start_date):
     ticker = yf.Ticker(ticker_symbol)
@@ -88,17 +75,22 @@ def get_prices_difference(ticker_symbol, start_date):
         return None, None
 
     # first trading day on or after start_date
-    closest_day_price = data.iloc[0]["Close"]
+    dates  =  []
+    for  i  in range(1, len(data)):
+         if data.iloc[i]["Close"] != None and data.iloc[i]["Close"] != 0:
+                dates.append(data.iloc[i]["Close"])
+                if  len(dates) == 2:
+                    break
 
     # next trading day
-    if len(data) > 1:
-        next_day_price = data.iloc[1]["Close"]
-    else:
-        next_day_price = None
+    
 
-    return  next_day_price - closest_day_price
+    return  dates[1]-dates[0]
+
+#
 
 
-print(get_prices_difference("AAPL", "2024-01-01")) """
+
+#print(get_prices_difference("AAPL", "2023-01-01"))
 
 

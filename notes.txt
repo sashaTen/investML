@@ -1234,3 +1234,9 @@ by  date  it finds the   price  and   next   day 2026-03-11   price and   then  
 
 
  debug false set
+ v ,  %1000  ,     df df["date"] = pd.to_datetime("2023-01-01")
+ download_blob(
+        "ml_buckets_a",
+        "data_v3.csv",
+        ARTIFACTS_DIR / "data_v3.csv"
+    )
