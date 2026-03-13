@@ -98,6 +98,38 @@ current_version = find_latest_model_version(
 content = get_version(file_name="version.txt")
 cloud_version  = get_artifact_version(content, "ml_artifacts")
 
+#########
+
+def update_version(content, version ,type="ml_artifacts"):
+    lines = content.splitlines()
+    new_lines = []
+
+    for line in lines:
+        key, value = line.split("=")
+
+        if key.strip() == type:
+            new_lines.append(f"{type} = {version+1}")
+        else:
+            new_lines.append(line)
+
+    return "\n".join(new_lines)
+
+
+
+def upload_version(blob_name , new_content):
+    bucket_name = "ml_buckets_a"
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+    # download file
+    blob.upload_from_string(new_content)
+
+    print("Version updated.")
+
+
+
+
+
 
 if cloud_version > current_version:
     print("New model version available. Downloading...")
@@ -162,7 +194,7 @@ def   turn_db_into_pd(model):
     qs = model.objects.all().values()
 
     df = pd.DataFrame(list(qs))
-    
+    df["date"] = pd.to_datetime("2023-01-01")
     df["date"] = pd.to_datetime(df["date"])
     cutoff = pd.Timestamp.today() - pd.Timedelta(days=5)  
     df = df[df["date"] <= cutoff]
@@ -234,11 +266,17 @@ def  get_ticker_news(ticker):
             sentiment_text=response["results"][0]["content"]  # Assuming you have the sentiment text available
         )
     \
-    if Sentiment.objects.count() %1000== 0 :
+    if Sentiment.objects.count() %1000 == 0 :
+        current_data_version = find_latest_model_version(
+    ARTIFACTS_DIR,
+    r"data"
+)
+        new_content = update_version(content, current_data_version, "data")
         print("hi")
         df = add_label_column(Sentiment)
-        csv_path = save_pd_to_csv(df, ARTIFACTS_DIR, "data_v5.csv")
-        upload_blob("ml_buckets_a", csv_path, "data_v5.csv")
+        csv_path = save_pd_to_csv(df, ARTIFACTS_DIR, f"data_v{current_data_version + 1}.csv")
+        upload_version("version.txt", new_content)
+        upload_blob("ml_buckets_a", csv_path, f"data_v{current_data_version + 1}.csv")
     return response["results"][0]["content"]
 
 def make_prediction(text):

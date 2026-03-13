@@ -27,8 +27,6 @@ path = ARTIFACTS_DIR / "stock_data.csv"
 
 target_column = "Sentiment"
 
-
-
 def   download_blob(bucket_name, blob_name, destination_file):
 # create client
     client = storage.Client()
@@ -42,8 +40,66 @@ def   download_blob(bucket_name, blob_name, destination_file):
     # download
     blob.download_to_filename(destination_file)
 
+  
+
+def get_version(file_name):
+    bucket_name = "ml_buckets_a"
+    
+
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(file_name)
+
+    content = blob.download_as_text()
 
 
+    return content
+
+
+def update_version(content, version ,type="ml_artifacts"):
+    lines = content.splitlines()
+    new_lines = []
+
+    for line in lines:
+        key, value = line.split("=")
+
+        if key.strip() == type:
+            new_lines.append(f"{type} = {version+1}")
+        else:
+            new_lines.append(line)
+
+    return "\n".join(new_lines)
+
+
+
+def upload_version(blob_name , new_content):
+    bucket_name = "ml_buckets_a"
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+    # download file
+    blob.upload_from_string(new_content)
+
+    print("Version updated.")
+    
+
+def  get_artifact_version(content, type):
+    for line in content.splitlines():
+        key, value = line.split("=")
+        if key.strip() == type:
+            return int(value.strip())
+        
+
+content = get_version(file_name="version.txt")        
+
+cloud_version  = get_artifact_version(content, "data")
+
+
+download_blob(
+        "ml_buckets_a",
+        f"data_v{cloud_version}.csv",
+        ARTIFACTS_DIR / f"data_v{cloud_version}.csv"
+    )
 
 
 
@@ -59,11 +115,16 @@ def prepare_sentiment_df(df):
     return df 
 
 def load_df(path):
-    data = pd.read_csv(path)
-    if "label" in data.columns:
-        data = prepare_sentiment_df(data)
-       
-    return data
+    df1 = pd.read_csv(path)
+    if "label" in df1.columns:
+        df1 = prepare_sentiment_df(df1)
+    path2 = ARTIFACTS_DIR / "stock_data.csv"
+
+   
+    df2 = pd.read_csv(path2)
+
+    df = pd.concat([df1, df2], ignore_index=True)   
+    return df
 
 
 def preprocess_text(text):
@@ -210,54 +271,7 @@ def clean_folder_except(folder_path: str, file_to_keep: str):
 
 
 
-    
-
-def get_version(file_name):
-    bucket_name = "ml_buckets_a"
-    
-
-    client = storage.Client()
-    bucket = client.bucket(bucket_name)
-    blob = bucket.blob(file_name)
-
-    content = blob.download_as_text()
-
-
-    return content
-
-
-def update_version(content, version ,type="ml_artifacts"):
-    lines = content.splitlines()
-    new_lines = []
-
-    for line in lines:
-        key, value = line.split("=")
-
-        if key.strip() == type:
-            new_lines.append(f"{type} = {version+1}")
-        else:
-            new_lines.append(line)
-
-    return "\n".join(new_lines)
-
-
-
-def upload_version(blob_name , new_content):
-    bucket_name = "ml_buckets_a"
-    client = storage.Client()
-    bucket = client.bucket(bucket_name)
-    blob = bucket.blob(blob_name)
-    # download file
-    blob.upload_from_string(new_content)
-
-    print("Version updated.")
-    
-
-def  get_artifact_version(content, type):
-    for line in content.splitlines():
-        key, value = line.split("=")
-        if key.strip() == type:
-            return int(value.strip())
+  
 
 
 
@@ -272,7 +286,7 @@ if __name__ == "__main__":
     knn_model = KNeighborsClassifier(n_neighbors=5)
 
     pipeline(
-        path,
+        ARTIFACTS_DIR / f"data_v{cloud_version}.csv",
         target_column,
         f"vectorizer_v{int(version)+1}.pkl",
         f"pca_v{int(version)+1}.pkl",
