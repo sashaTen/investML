@@ -45,11 +45,7 @@ def   download_blob(bucket_name, blob_name, destination_file):
 
 
 
-download_blob(
-        "ml_buckets_a",
-        "data_v3.csv",
-        ARTIFACTS_DIR / "data_v3.csv"
-    )
+
 
 
 def prepare_sentiment_df(df):
@@ -215,9 +211,10 @@ def clean_folder_except(folder_path: str, file_to_keep: str):
 
 
     
-def    get_version():
+
+def get_version(file_name):
     bucket_name = "ml_buckets_a"
-    file_name = "version.txt"
+    
 
     client = storage.Client()
     bucket = client.bucket(bucket_name)
@@ -225,49 +222,61 @@ def    get_version():
 
     content = blob.download_as_text()
 
-    return content.strip()
+
+    return content
 
 
-def update_version(new_value):
+def update_version(content, version ,type="ml_artifacts"):
+    lines = content.splitlines()
+    new_lines = []
 
+    for line in lines:
+        key, value = line.split("=")
+
+        if key.strip() == type:
+            new_lines.append(f"{type} = {version+1}")
+        else:
+            new_lines.append(line)
+
+    return "\n".join(new_lines)
+
+
+
+def upload_version(blob_name , new_content):
     bucket_name = "ml_buckets_a"
-    blob_name = "version.txt"
-
     client = storage.Client()
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(blob_name)
-   
+    # download file
+    blob.upload_from_string(new_content)
 
-    
-    # new content
-    new_value = str(int(new_value)+1)
-
-    # overwrite file
-    blob.upload_from_string(new_value)
-
-    print("File updated.")
+    print("Version updated.")
     
 
-
+def  get_artifact_version(content, type):
+    for line in content.splitlines():
+        key, value = line.split("=")
+        if key.strip() == type:
+            return int(value.strip())
 
 
 
 
 if __name__ == "__main__":
     
-    content = get_version()
-    update_version(content)
-            
-    
+    content = get_version(file_name="version.txt")
+    version = get_artifact_version(content, "ml_artifacts")
+    new_content = update_version(content, version, "ml_artifacts")
+    upload_version("version.txt", new_content)
 
     knn_model = KNeighborsClassifier(n_neighbors=5)
 
     pipeline(
         path,
         target_column,
-        f"vectorizer_v{int(content)+1}.pkl",
-        f"pca_v{int(content)+1}.pkl",
-        f"model_v{int(content)+1}.pkl",
+        f"vectorizer_v{int(version)+1}.pkl",
+        f"pca_v{int(version)+1}.pkl",
+        f"model_v{int(version)+1}.pkl",
         knn_model
     )
 
@@ -275,9 +284,9 @@ if __name__ == "__main__":
     artifact_dir = Path("ml_artifacts")
 
     artifacts = [
-        (f"vectorizer_v{int(content)+1}.pkl", f"vectorizer_v{int(content)+1}.pkl"),
-        (f"pca_v{int(content)+1}.pkl", f"pca_v{int(content)+1}.pkl"),
-        (f"model_v{int(content)+1}.pkl", f"model_v{int(content)+1}.pkl"),
+        (f"vectorizer_v{int(version)+1}.pkl", f"vectorizer_v{int(version)+1}.pkl"),
+        (f"pca_v{int(version)+1}.pkl", f"pca_v{int(version)+1}.pkl"),
+        (f"model_v{int(version)+1}.pkl", f"model_v{int(version)+1}.pkl"),
     ]
 
     for source_name, destination_name in artifacts:
