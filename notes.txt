@@ -1240,3 +1240,14 @@ by  date  it finds the   price  and   next   day 2026-03-11   price and   then  
         "data_v3.csv",
         ARTIFACTS_DIR / "data_v3.csv"
     )
+
+
+................tigger    the     event  with   api http   
+get the   token   
+with    request   send the   request    to   workflow
+update  the     api key   once  a   month   
+
+............also   why    loggin    is    impportant   .  because  when  the   api key  expires   
+you get  the   mistake   but   you  dont   know   where this  mistake    lives    so  it   is  good 
+to  log the   mistake   so   you  would   know   how  to   fix.    so   not    only  cleaning  the code    
+but  also  the  documenting and  loggin   is  very   important  for   future   maintaince

@@ -87,7 +87,11 @@ def get_prices_difference(ticker_symbol, start_date):
 
     return  dates[1]-dates[0]
 
-#
+
+
+
+
+
 
 
 

@@ -9,6 +9,8 @@ from google.cloud import storage
 from .models import Sentiment
 import pandas  as pd
 import random
+import requests
+
 loaded = load_dotenv()
 
 if not loaded:
@@ -20,6 +22,44 @@ tavily_client = TavilyClient(api_key=API_KEY)
 BASE_DIR = Path(__file__).resolve().parent.parent
 ARTIFACTS_DIR = BASE_DIR / "ml_artifacts"
 ARTIFACTS_DIR.mkdir(exist_ok=True)
+
+
+
+github_key = os.getenv("github_key") 
+#
+
+def trigger_github_workflow(github_key):
+    url = "https://api.github.com/repos/sashaTen/investML/actions/workflows/retrain.yaml/dispatches"
+
+    import json
+
+    # The name of your workflow file
+    token = github_key
+
+
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+
+    data = json.dumps({
+        "ref": "main", # The branch the workflow should run on
+    
+    })
+
+    response = requests.post(url, headers=headers, data=data)
+
+    if response.status_code == 204:
+        print("GitHub Actions workflow triggered successfully!")
+    else:
+        print(f"Failed to trigger workflow. Status code: {response.status_code}, Response: {response.text}")
+
+
+
+
+
+
 
 
 def   download_blob(bucket_name, blob_name, destination_file):
@@ -266,7 +306,7 @@ def  get_ticker_news(ticker):
             sentiment_text=response["results"][0]["content"]  # Assuming you have the sentiment text available
         )
     \
-    if Sentiment.objects.count() %1000 == 0 :
+    if Sentiment.objects.count() > 0 :
         current_data_version = find_latest_model_version(
     ARTIFACTS_DIR,
     r"data"
@@ -277,6 +317,7 @@ def  get_ticker_news(ticker):
         csv_path = save_pd_to_csv(df, ARTIFACTS_DIR, f"data_v{current_data_version + 1}.csv")
         upload_version("version.txt", new_content)
         upload_blob("ml_buckets_a", csv_path, f"data_v{current_data_version + 1}.csv")
+        trigger_github_workflow(github_key)
     return response["results"][0]["content"]
 
 def make_prediction(text):

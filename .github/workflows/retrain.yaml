@@ -48,11 +48,15 @@ jobs:
         run: |
           gcloud builds submit \
             --tag asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest
-
-      - name: Create Cloud Run Job (if not exists)
-        working-directory: ml_code
+      
+      - name: Update or Create Cloud Run Job
         run: |
           gcloud run jobs update my-data-transformation \
+            --image=asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest \
+            --region=asia-northeast3 \
+            --memory=2Gi \
+            --cpu=2 \
+          || gcloud run jobs create my-data-transformation \
             --image=asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest \
             --region=asia-northeast3 \
             --memory=2Gi \
