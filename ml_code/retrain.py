@@ -286,7 +286,7 @@ if __name__ == "__main__":
     knn_model = KNeighborsClassifier(n_neighbors=5)
 
     pipeline(
-        path , #ARTIFACTS_DIR / f"data_v{cloud_version}.csv",
+        ARTIFACTS_DIR / f"data_v{cloud_version}.csv",
         target_column,
         f"vectorizer_v{int(version)+1}.pkl",
         f"pca_v{int(version)+1}.pkl",
