@@ -61,7 +61,7 @@ def trigger_github_workflow(github_key):
 
 
 
-
+""" 
 def   download_blob(bucket_name, blob_name, destination_file):
 # create client
     client = storage.Client()
@@ -73,7 +73,7 @@ def   download_blob(bucket_name, blob_name, destination_file):
     blob = bucket.blob(blob_name)
 
     # download
-    blob.download_to_filename(destination_file)
+    blob.download_to_filename(destination_file) """
 
 
 
@@ -107,7 +107,7 @@ def find_latest_model_version(folder_path, pattern):
 
 
 
-def get_version(file_name):
+""" def get_version(file_name):
     bucket_name = "ml_buckets_a"
     
 
@@ -118,7 +118,7 @@ def get_version(file_name):
     content = blob.download_as_text()
 
 
-    return content
+    return content """
 
 
 
@@ -131,12 +131,7 @@ def  get_artifact_version(content, type):
 
 
 
-current_version = find_latest_model_version(
-    ARTIFACTS_DIR,
-    r"model"
-)
-content = get_version(file_name="version.txt")
-cloud_version  = get_artifact_version(content, "ml_artifacts")
+
 
 #########
 
@@ -155,7 +150,7 @@ def update_version(content, version ,type="ml_artifacts"):
     return "\n".join(new_lines)
 
 
-
+""" 
 def upload_version(blob_name , new_content):
     bucket_name = "ml_buckets_a"
     client = storage.Client()
@@ -165,9 +160,19 @@ def upload_version(blob_name , new_content):
     blob.upload_from_string(new_content)
 
     print("Version updated.")
+ """
 
 
 
+
+current_version = find_latest_model_version(
+    ARTIFACTS_DIR,
+    r"model"
+    
+)
+"""
+content = get_version(file_name="version.txt")
+cloud_version  = get_artifact_version(content, "ml_artifacts")
 
 
 
@@ -197,11 +202,11 @@ if cloud_version > current_version:
     model = joblib.load(ARTIFACTS_DIR / f"model_v{cloud_version}.pkl")
 
 else:
-    print("No new model version available.")
+    print("No new model version available.") """
 
-    cv = joblib.load(f"ml_artifacts/vectorizer_v{current_version}.pkl")
-    pca = joblib.load(f"ml_artifacts/pca_v{current_version}.pkl")
-    model = joblib.load(f"ml_artifacts/model_v{current_version}.pkl")
+cv = joblib.load(f"ml_artifacts/vectorizer_v{current_version}.pkl")
+pca = joblib.load(f"ml_artifacts/pca_v{current_version}.pkl")
+model = joblib.load(f"ml_artifacts/model_v{current_version}.pkl")
 
 
 
@@ -253,26 +258,15 @@ def save_pd_to_csv(df, directory, filename):
     df.to_csv(path, index=False)
 
     return path
-
+""" 
 def upload_blob(bucket_name, source_file_name, destination_blob_name):
-    """Uploads a file to the bucket."""
-    # The ID of your GCS bucket
-    # bucket_name = "your-bucket-name"
-    # The path to your file to upload
-    # source_file_name = "local/path/to/file"
-    # The ID of your GCS object
-    # destination_blob_name = "storage-object-name"
-
+  
+   
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
 
-    # Optional: set a generation-match precondition to avoid potential race conditions
-    # and data corruptions. The request to upload is aborted if the object's
-    # generation number does not match your precondition. For a destination
-    # object that does not yet exist, set the if_generation_match precondition to 0.
-    # If the destination object already exists in your bucket, set instead a
-    # generation-match precondition using its generation number.
+   
     generation_match_precondition = 0
 
     blob.upload_from_filename(source_file_name, if_generation_match=generation_match_precondition)
@@ -280,7 +274,7 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     print(
         f"File {source_file_name} uploaded to {destination_blob_name}."
     )
-
+ """
 
 # 
 
@@ -307,16 +301,17 @@ def  get_ticker_news(ticker):
         )
     \
     if Sentiment.objects.count() > 0 :
+        
+        """
         current_data_version = find_latest_model_version(
     ARTIFACTS_DIR,
     r"data"
-)
-        new_content = update_version(content, current_data_version, "data")
+) new_content = update_version(content, current_data_version, "data")
         print("hi")
         df = add_label_column(Sentiment)
         csv_path = save_pd_to_csv(df, ARTIFACTS_DIR, f"data_v{current_data_version + 1}.csv")
         upload_version("version.txt", new_content)
-        upload_blob("ml_buckets_a", csv_path, f"data_v{current_data_version + 1}.csv")
+        upload_blob("ml_buckets_a", csv_path, f"data_v{current_data_version + 1}.csv") """
         trigger_github_workflow(github_key)
     return response["results"][0]["content"]
 

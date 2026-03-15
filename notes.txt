@@ -1256,3 +1256,136 @@ check   versions    only  if     sentiment   %1000==0   then     no need   extra
 
 
 SECRET_KEY = 'django-insecure'
+
+
+
+
+
+
+
+
+2026-03-15 14:18:43.201 JST
+
+Cloud Run
+
+CreateService
+
+invest-app
+
+investmlappdommamahood@in…
+audit_log, method: "google.cloud.run.v1.Services.CreateService", principal_email: "investmlappdommamahood@investml-484904.iam.gserviceaccount.com"
+2026-03-15 14:19:02.676 JST
+Starting new instance. Reason: DEPLOYMENT_ROLLOUT - Instance started due to traffic shifting between revisions due to deployment, traffic split adjustment, or deployment health check.
+2026-03-15 14:19:03.649 JST
+[2026-03-15 05:19:03 +0000] [1] [INFO] Starting gunicorn 24.0.0
+2026-03-15 14:19:03.650 JST
+[2026-03-15 05:19:03 +0000] [1] [INFO] Listening at: http://0.0.0.0:8080 (1)
+2026-03-15 14:19:03.650 JST
+[2026-03-15 05:19:03 +0000] [1] [INFO] Using worker: sync
+2026-03-15 14:19:03.664 JST
+Default STARTUP TCP probe succeeded after 1 attempt for container "invest-app-1" on port 8080.
+2026-03-15 14:19:03.665 JST
+[2026-03-15 05:19:03 +0000] [2] [INFO] Booting worker with pid: 2
+2026-03-15 14:19:03.741 JST
+
+Cloud Run
+
+CreateService
+
+invest-app-00001-fpm
+Ready condition status changed to True for Revision invest-app-00001-fpm with message: Deploying revision succeeded in 20.11s.
+2026-03-15 14:19:05.010 JST
+
+Cloud Run
+
+CreateService
+
+invest-app
+Ready condition status changed to True for Service invest-app.
+2026-03-15 14:19:12.531 JST
+
+
+GET
+
+403
+
+0 ms
+
+Chrome 145.0.0.0
+https://invest-app-213061868662.asia-northeast3.run.app/
+2026-03-15 14:19:40.086 JST
+
+Cloud Run
+
+ReplaceService
+
+invest-app
+
+alexscriptdotpy@gmail.com…
+audit_log, method: "google.cloud.run.v1.Services.ReplaceService", principal_email: "alexscriptdotpy@gmail.com"
+2026-03-15 14:19:42.372 JST
+
+Cloud Run
+
+ReplaceService
+
+invest-app
+Ready condition status changed to True for Service invest-app.
+2026-03-15 14:19:45.148 JST
+
+
+GET
+
+500
+
+204 B
+
+7.354 s
+
+Chrome 145.0.0.0
+https://invest-app-213061868662.asia-northeast3.run.app/
+2026-03-15 14:19:52.503 JST
+[2026-03-15 05:19:52 +0000] [2] [ERROR] Error handling request /
+2026-03-15 14:19:52.503 JST
+
+Traceback (most recent call last):   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner     response = get_response(request)                ^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response     callback, callback_args, callback_kwargs = self.resolve_request(request)                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/base.py", line 313, in resolve_request     resolver_match = resolver.resolve(request.path_info)                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 666, in resolve     for pattern in self.url_patterns:                    ^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__     res = instance.__dict__[self.name] = self.func(instance)                                          ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 718, in url_patterns     patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)                        ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__     res = instance.__dict__[self.name] = self.func(instance)                                          ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 711, in urlconf_module     return import_module(self.urlconf_name)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module     return _bootstrap._gcd_import(name[level:], package, level)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked   File "<frozen importlib._bootstrap_external>", line 999, in exec_module   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed   File "/application/config/urls.py", line 24, in <module>     path("", include("investML.urls")),              ^^^^^^^^^^^^^^^^^^^^^^^^ … [message truncated due to size]
+2026-03-15 14:19:52.503 JST
+During handling of the above exception, another exception occurred:
+2026-03-15 14:19:52.504 JST
+
+Traceback (most recent call last):   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner     response = get_response(request)                ^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 120, in __call__     response = response or self.get_response(request)                            ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner     response = response_for_exception(request, exc)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception     response = handle_uncaught_exception(                ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 185, in handle_uncaught_exception     callback = resolver.resolve_error_handler(500)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 732, in resolve_error_handler     callback = getattr(self.urlconf_module, "handler%s" % view_type, None)                        ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__     res = instance.__dict__[self.name] = self.func(instance)                                          ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 711, in urlconf_module     return import_module(self.urlconf_name)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module     return _bootstrap._gcd_import(name[level:], package, level)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked   File "<frozen importlib._bootstrap_external>", line 999, in exec_module   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed   File "/application/config/urls.py", line 24, in <module>     path("", include("investML.urls")),              ^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/py… [message truncated due to size]
+2026-03-15 14:19:52.504 JST
+During handling of the above exception, another exception occurred:
+2026-03-15 14:19:52.504 JST
+
+Traceback (most recent call last):   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner     response = get_response(request)                ^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 120, in __call__     response = response or self.get_response(request)                            ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner     response = response_for_exception(request, exc)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception     response = handle_uncaught_exception(                ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 185, in handle_uncaught_exception     callback = resolver.resolve_error_handler(500)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 732, in resolve_error_handler     callback = getattr(self.urlconf_module, "handler%s" % view_type, None)                        ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__     res = instance.__dict__[self.name] = self.func(instance)                                          ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 711, in urlconf_module     return import_module(self.urlconf_name)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module     return _bootstrap._gcd_import(name[level:], package, level)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked   File "<frozen importlib._bootstrap_external>", line 999, in exec_module   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed   File "/application/config/urls.py", line 24, in <module>     path("", include("investML.urls")),              ^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/py… [message truncated due to size]
+2026-03-15 14:19:52.504 JST
+During handling of the above exception, another exception occurred:
+2026-03-15 14:19:52.504 JST
+
+Traceback (most recent call last):   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner     response = get_response(request)                ^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 120, in __call__     response = response or self.get_response(request)                            ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner     response = response_for_exception(request, exc)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception     response = handle_uncaught_exception(                ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 185, in handle_uncaught_exception     callback = resolver.resolve_error_handler(500)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 732, in resolve_error_handler     callback = getattr(self.urlconf_module, "handler%s" % view_type, None)                        ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__     res = instance.__dict__[self.name] = self.func(instance)                                          ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 711, in urlconf_module     return import_module(self.urlconf_name)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module     return _bootstrap._gcd_import(name[level:], package, level)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked   File "<frozen importlib._bootstrap_external>", line 999, in exec_module   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed   File "/application/config/urls.py", line 24, in <module>     path("", include("investML.urls")),              ^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/py… [message truncated due to size]
+2026-03-15 14:19:52.504 JST
+During handling of the above exception, another exception occurred:
+2026-03-15 14:19:52.504 JST
+
+Traceback (most recent call last):   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner     response = get_response(request)                ^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 120, in __call__     response = response or self.get_response(request)                            ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner     response = response_for_exception(request, exc)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception     response = handle_uncaught_exception(                ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 185, in handle_uncaught_exception     callback = resolver.resolve_error_handler(500)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 732, in resolve_error_handler     callback = getattr(self.urlconf_module, "handler%s" % view_type, None)                        ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__     res = instance.__dict__[self.name] = self.func(instance)                                          ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 711, in urlconf_module     return import_module(self.urlconf_name)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module     return _bootstrap._gcd_import(name[level:], package, level)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked   File "<frozen importlib._bootstrap_external>", line 999, in exec_module   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed   File "/application/config/urls.py", line 24, in <module>     path("", include("investML.urls")),              ^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/py… [message truncated due to size]
+2026-03-15 14:19:52.504 JST
+During handling of the above exception, another exception occurred:
+2026-03-15 14:19:52.504 JST
+
+Traceback (most recent call last):   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner     response = get_response(request)                ^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 120, in __call__     response = response or self.get_response(request)                            ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner     response = response_for_exception(request, exc)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception     response = handle_uncaught_exception(                ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 185, in handle_uncaught_exception     callback = resolver.resolve_error_handler(500)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 732, in resolve_error_handler     callback = getattr(self.urlconf_module, "handler%s" % view_type, None)                        ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__     res = instance.__dict__[self.name] = self.func(instance)                                          ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 711, in urlconf_module     return import_module(self.urlconf_name)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module     return _bootstrap._gcd_import(name[level:], package, level)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked   File "<frozen importlib._bootstrap_external>", line 999, in exec_module   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed   File "/application/config/urls.py", line 24, in <module>     path("", include("investML.urls")),              ^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/py… [message truncated due to size]
+2026-03-15 14:19:52.504 JST
+During handling of the above exception, another exception occurred:
+2026-03-15 14:19:52.504 JST
+
+Traceback (most recent call last):   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner     response = get_response(request)                ^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 120, in __call__     response = response or self.get_response(request)                            ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner     response = response_for_exception(request, exc)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception     response = handle_uncaught_exception(                ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 185, in handle_uncaught_exception     callback = resolver.resolve_error_handler(500)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 732, in resolve_error_handler     callback = getattr(self.urlconf_module, "handler%s" % view_type, None)                        ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__     res = instance.__dict__[self.name] = self.func(instance)                                          ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 711, in urlconf_module     return import_module(self.urlconf_name)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module     return _bootstrap._gcd_import(name[level:], package, level)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked   File "<frozen importlib._bootstrap_external>", line 999, in exec_module   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed   File "/application/config/urls.py", line 24, in <module>     path("", include("investML.urls")),              ^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/py… [message truncated due to size]
+2026-03-15 14:19:52.504 JST
+During handling of the above exception, another exception occurred:
+2026-03-15 14:19:52.504 JST
+
+Traceback (most recent call last):   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner     response = get_response(request)                ^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 120, in __call__     response = response or self.get_response(request)                            ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner     response = response_for_exception(request, exc)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception     response = handle_uncaught_exception(                ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 185, in handle_uncaught_exception     callback = resolver.resolve_error_handler(500)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 732, in resolve_error_handler     callback = getattr(self.urlconf_module, "handler%s" % view_type, None)                        ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__     res = instance.__dict__[self.name] = self.func(instance)                                          ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 711, in urlconf_module     return import_module(self.urlconf_name)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module     return _bootstrap._gcd_import(name[level:], package, level)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked   File "<frozen importlib._bootstrap_external>", line 999, in exec_module   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed   File "/application/config/urls.py", line 24, in <module>     path("", include("investML.urls")),              ^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/py… [message truncated due to size]
+2026-03-15 14:19:52.504 JST
+During handling of the above exception, another exception occurred:
+2026-03-15 14:19:52.504 JST
+
+Traceback (most recent call last):   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 134, in handle     self.handle_request(listener, req, client, addr)   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 177, in handle_request     respiter = self.wsgi(environ, resp.start_response)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__     response = self.get_response(request)                ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/base.py", line 140, in get_response     response = self._middleware_chain(request)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner     response = response_for_exception(request, exc)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception     response = handle_uncaught_exception(                ^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 185, in handle_uncaught_exception     callback = resolver.resolve_error_handler(500)                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 732, in resolve_error_handler     callback = getattr(self.urlconf_module, "handler%s" % view_type, None)                        ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__     res = instance.__dict__[self.name] = self.func(instance)                                          ^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/site-packages/django/urls/resolvers.py", line 711, in urlconf_module     return import_module(self.urlconf_name)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module     return _bootstrap._gcd_import(name[level:], package, level)            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked   File "<frozen import… [message truncated due to size]
