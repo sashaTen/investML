@@ -306,7 +306,7 @@ def  get_ticker_news(ticker):
             sentiment_text=response["results"][0]["content"]  # Assuming you have the sentiment text available
         )
     \
-    if Sentiment.objects.count() %1000== 0 :
+    if Sentiment.objects.count() > 0 :
         current_data_version = find_latest_model_version(
     ARTIFACTS_DIR,
     r"data"
