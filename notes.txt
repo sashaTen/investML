@@ -1253,3 +1253,6 @@ to  log the   mistake   so   you  would   know   how  to   fix.    so   not    o
 but  also  the  documenting and  loggin   is  very   important  for   future   maintaince
 
 check   versions    only  if     sentiment   %1000==0   then     no need   extra   step  to  cloud   for  versioning 
+
+
+SECRET_KEY = 'django-insecure'
