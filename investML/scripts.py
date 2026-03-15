@@ -25,7 +25,7 @@ ARTIFACTS_DIR.mkdir(exist_ok=True)
 
 
 
-github_key = os.getenv("github_key") 
+github_key = os.getenv("KEY_GITHUB") 
 #
 
 def trigger_github_workflow(github_key):

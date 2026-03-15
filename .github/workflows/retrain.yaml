@@ -50,17 +50,21 @@ jobs:
             --tag asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest
       
       - name: Update or Create Cloud Run Job
+        env:
+         KEY_GITHUB: ${{ secrets.KEY_GITHUB }}
         run: |
           gcloud run jobs update my-data-transformation \
             --image=asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest \
             --region=asia-northeast3 \
             --memory=2Gi \
             --cpu=2 \
+            --set-env-vars KEY_GITHUB=$KEY_GITHUB \
           || gcloud run jobs create my-data-transformation \
             --image=asia-northeast3-docker.pkg.dev/investml-484904/retrain/retrain:latest \
             --region=asia-northeast3 \
             --memory=2Gi \
-            --cpu=2
+            --cpu=2 \
+            --set-env-vars  KEY_GITHUB=$KEY_GITHUB
 
       - name: Execute Cloud Run Job
         working-directory: ml_code
