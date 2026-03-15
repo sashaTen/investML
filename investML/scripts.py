@@ -10,7 +10,7 @@ from .models import Sentiment
 import pandas  as pd
 import random
 import requests
-
+import json
 loaded = load_dotenv()
 
 if not loaded:
@@ -31,7 +31,7 @@ github_key = os.getenv("KEY_GITHUB")
 def trigger_github_workflow(github_key):
     url = "https://api.github.com/repos/sashaTen/investML/actions/workflows/retrain.yaml/dispatches"
 
-    import json
+    
 
     # The name of your workflow file
     token = github_key

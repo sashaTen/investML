@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-j@ru2d$4z6e3$gij274a#+dc9+jltm@n8!9e17&wx@2j5lbk-%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "invest-app-213061868662.asia-northeast3.run.app",
