@@ -306,7 +306,7 @@ def  get_ticker_news(ticker):
         )
        
        
-    if Sentiment.objects.count() >0   #%1000== 0 :
+    if Sentiment.objects.count() >0  :   #%1000== 0 :
         current_data_version = find_latest_model_version(
     ARTIFACTS_DIR,
     r"data"
