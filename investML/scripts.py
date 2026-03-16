@@ -169,7 +169,6 @@ def upload_version(blob_name , new_content):
 
 
 
-
 if cloud_version > current_version:
     print("New model version available. Downloading...")
 
