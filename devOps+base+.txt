@@ -77,6 +77,8 @@ and     check  the  funcdamentals  and    learn  on the   go  and  try   and
 eventually   you  know   what   you  want 
 
 
+************      READ.ME   dirty   version   :   
+CI/CD 
 
 
 

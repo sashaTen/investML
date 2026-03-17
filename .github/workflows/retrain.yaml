@@ -1,8 +1,7 @@
 name: Monthly Job
 
 on:
-  schedule:
-    - cron: '12 4 3 * *'  # 13:07 KST (UTC+9)
+   # 13:07 KST (UTC+9)
   workflow_dispatch:
 jobs:
   monthly:
