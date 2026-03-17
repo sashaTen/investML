@@ -69,7 +69,7 @@ enter  that   key  along  with   api keys  in github   secrets
                 --platform managed \
                 --allow-unauthenticated \
                 --port 8080 \
-                --set-env-vars THE_KEY=$THE_KEY
+                --set-env-vars THE_KEY=$THE_KEY,KEY_GITHUB=${{ secrets.KEY_GITHUB }}
 
 
 above  is    minimalistic   config  for the    small  deploy.
