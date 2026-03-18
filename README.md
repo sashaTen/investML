@@ -8,15 +8,35 @@ pip install -r requirements.txt
 
 ---
 
-
-
-
-
-
 ---basic    functionalities  :
 homepage -  create account - login - logout - fill the portfolio for risk  evaluation
 dashboard - choose stock /delete stock  from portfolio/ get ml prediction
 getting allocation with financial eval /  getting the allocation with ml  model
+
+![1773817581242](image/README/1773817581242.png)
+
+
+
+![1773817669178](image/README/1773817669178.png)
+
+
+
+![1773817679343](image/README/1773817679343.png)
+
+
+![1773817699473](image/README/1773817699473.png)
+
+
+![1773817707567](image/README/1773817707567.png)
+
+
+![1773817716265](image/README/1773817716265.png)
+
+
+
+![1773817730255](image/README/1773817730255.png)
+
+
 
 --development pipeline  model is DevOps :
 
