@@ -12,12 +12,6 @@ pip install -r requirements.txt
 
 
 
- <img width="600" height="600" alt="1" src="https://github.com/user-attachments/assets/de6f162f-1c1b-455a-927d-95028e93dbd1" />
-
- 
-
-
-
 
 ---basic    functionalities  :
 homepage -  create account - login - logout - fill the portfolio for risk  evaluation
