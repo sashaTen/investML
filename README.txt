@@ -3,10 +3,108 @@ Clone project on a new machine:
 
 git clone https://github.com/you/repo.git
 cd repo
-python -m venv .venv
+python -m venv .venv  and set you api keys for tavely and github
 source .venv/bin/activate   # or Windows activate
 pip install -r requirements.txt
+*******************
+---basic    functionalities  :   
+homepage -  create account - login - logout - fill the portfolio for risk  evaluation
+dashboard - choose stock /delete stock  from portfolio/ get ml prediction 
+getting allocation with financial eval /  getting the allocation with ml  model
 
+--development pipeline  model is DevOps :  
+
+**req . analysis : 
+1 account management
+2 low latency ml prediction 
+3 stock related latest news  based sentiment prediction 
+4 ci/cd model for changing code 
+5 security of api 
+6 automatic re-train for ml 
+7 software principles such DRY (OOP and clean code) , microservice architecture , versioning 
+
+**development and tech stack : 
+1 automation and versioning : git ,  github ,  github actions 
+2 backend  : django , tavely search api , y finance api ,docker , GCP 
+3 front-end :   html ,  css , js 
+4 data analysis and ml :  pandas , numpy , sklearn. 
+5 database :   sqlLite with django ORM
+
+**testing :  
+integrated   unit tests  with  any  tool 
+**deployment : 
+automated deployment using  jenkins/github actions ,  docker  ,  cloud (GCP , Azure or AWS)  
+**maintainance : 
+
+							
+
+
+--- ml pipeline : 
+post -monitoring  with  yfinance
+
+
+
+
+
+
+
+--- how implemented guides   : 
+* portfolio calculation with yfinance 
+* re-train :   
+in "scripts.py" in the function "get_ticker_news"
+Sentiment db model adds  the ticker and sentiment text to the db,
+if Sentiment.objects.count()%1000== 0
+# finds latest data version 
+# updates version.txt in the cloud and triggers workflow to retrain the model with new data
+sentiment model goes  to add_label_column where 5 latest dates cuttof are applied due 
+y-finance holidays.   labeling and monitoring are done with  y-finance 
+we get the prices  of start date and next  day   with 10 days  range 
+with  not   None vals from trading holidays so no None i and next i
+we get the   difference and if raised   the label  is 1 if  
+decreased  the label  is  0.  then  label  is  attached to the sentiment model 
+where to date  and  text    row.  
+then  the version.txt file in the cloud  is  updated  from  the  string 
+and the new df saved in  project  goes to  cloud.   
+then  retrain    pipeline  is   triggered  with post http   method 
+you   define the in   url  the repo/workflow/file  and secret  token 
+you trigger the  workflow dispatch .  
+
+in  the   retrain.yaml "  working-directory: ml_code"
+is because it the  same  repo  but   it   is  inner  folder 
+because  the docker of that  folder is   invisible  for  global   docker 
+so  technically  it   is   another microservice   even  though  it is  same repo.  
+then just setup  the gcloud   as  you  would in the bash 
+artifacts registry -> builds -> run  update || or  run create -> jobs  execute 
+"in simple words :  github runs  virtual job  which   goes to   your  folder ml_code
+which   has  dockerfile  and script for   auto -retrain ,  then   it  deploys and runs 
+the dockerized script in the cloud" 
+
+retrain.py : 
+gets   version   from  cloud 
+uploads    updated  version  file 
+prepares  the data 
+concats  with   prev data 
+trains   model   and   saved   3 ml  artifacts 
+applies  versioning   by  naming the   artifacts   with f"curent version+1"
+and  uploads   aritfacts   to  the  cloud.    
+while 
+
+*CI/CD : 
+*django.yaml  
+on push  github   loads the   code 
+same   fasion  as retrain 
+but deploy  pytest   step  added 
+and the  deploy    instead  of create  or   update 
+because it  is gCloud Run service  and  job. 
+dont forget --set-env-vars THE_KEY=$THE_KEY,KEY_GITHUB=${{ secrets.KEY_GITHUB }} 
+
+
+
+----further improvements   :  
+*scripts.py.    -    it checks   versions  and   loads if   new  available
+it is better  to put  this  logic   not in  global   scripts but after
+Sentiment.objects.count()%1000== 0  .  and   in the global   load   just
+existing   latest  current   versions.
 ********************
 ..Step:
 ..Principles: 
