@@ -47,6 +47,8 @@ getting allocation with financial eval /  getting the allocation with ml  model
 
 ![1773817716265](image/README/1773817716265.png)
 
+![1773894382296](image/README/1773894382296.png)
+
 ![1773817730255](image/README/1773817730255.png)
 
 --development pipeline  model is DevOps :
