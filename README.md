@@ -13,6 +13,13 @@ homepage -  create account - login - logout - fill the portfolio for risk  evalu
 dashboard - choose stock /delete stock  from portfolio/ get ml prediction
 getting allocation with financial eval /  getting the allocation with ml  model
 
+
+![1773897127656](image/README/1773897127656.png)
+
+![1773897972160](image/README/1773897972160.png)
+
+
+
 ![1773817581242](image/README/1773817581242.png)
 
 ![1773817669178](image/README/1773817669178.png)
