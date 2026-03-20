@@ -2,23 +2,30 @@ Clone project on a new machine:
 
 git clone https://github.com/you/repo.git
 cd repo
-python -m venv .venv  and set you api keys for tavely and github
-source .venv/bin/activate   # or Windows activate
+python -m venv venv  and set you api keys for tavely and github
+source venv/bin/activate   # or Windows activate
 pip install -r requirements.txt
+
+-- To deploy  go to "deployment.txt" file and find step number 9 ,   you will find the script  for deployement. Copy that into "django.yaml" file and commit.
 
 ---
 
----basic    functionalities  :
-homepage -  create account - login - logout - fill the portfolio for risk  evaluation
-dashboard - choose stock /delete stock  from portfolio/ get ml prediction
-getting allocation with financial eval /  getting the allocation with ml  model
+---
 
-#  **
+basic    functionalities  :
+
+- homepage -  create account - login - logout - fill the portfolio for risk  evaluation
+- dashboard - choose stock /delete stock  from portfolio/ get ml prediction
+- getting allocation with financial eval /  getting the allocation with ml  model
+
+---
+
+# **
+
     HOW APP WORKS**
 
 ![1773897127656](image/README/1773897127656.png)
 
-# 
     CI/CD + MLOPS PIPELINE
 
 ![1773975211338](image/README/1773975211338.png)
@@ -84,7 +91,7 @@ finds latest data version
 
 updates version.txt in the cloud and triggers workflow to retrain the model with new data
 
-sentiment model goes  to add_label_column where 5 latest dates cuttof are applied due
+sentiment model goes  to add_label_column where 5 latest dates cut-off are applied due
 y-finance holidays.   labeling and monitoring are done with  y-finance
 we get the prices  of start date and next  day   with 10 days  range
 with  not   None vals from trading holidays so no None i and next i
@@ -178,8 +185,8 @@ What is good ci/cd? Best practices?
    -create    reqs  minimal  for   run
    -dockerfile and  dockerignore
    -CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8080"] in dockerfile is  important   since
-   running   locally   and    in the  cloud   are   different  so this  is .
-   Cloud Run expects a real HTTP server, not Django’s dev server  which  is   gunicorn
+   running   locally   and    in the  cloud   are   different  so this  is . docker is literally the [package and run]
+2) Cloud Run expects a real HTTP server, not Django’s dev server  which  is   gunicorn
    config.wsgi:application This part tells Gunicorn what Django app to run.
    Why --bind 0.0.0.0:8080?
    injects a port via $PORT
@@ -298,42 +305,26 @@ from  templates  you get this
 
 ---
 
-[ practices list ] :
-[ try to  break  and  tweak   your  system ,     check    files for   inspiration ,  there are   django concepts ,
-tooling  like    gcloud  ,  tasks  they  serve  ,   engineering  like   OOP  ,  computation,   ml pipeline  and  gcloud  new   features
-go to   things   you learned   like  SE for  DS  and  ci/cd  and  try to   validate them ]
 
-[webde/mlops/ ml/ system]   there   are  some   directions  i can  dive   later   with   roadman.sh maybe or
-maybe   with book  for   google  engineering and  mlops.
+-----FUTURE IMRPOVEMENTS :
+-best practices :
+*write plan before code and after how you realized
+it. have the daily journal
 
-[rules:  the   point  is  to know goal , break it down with  requirenments   in   mind until
-tooling and steps   ideation and execute plan and   just step  by step   connect
-things till they  work from base  to final" the point is to know bases"
-.gitignore ,   .venv    , dockerignore ,     design   code  folders  and   files  like   separate   ml  train and  more
-so the   dockerimage  is   light so  not  only   functions   but   also  the   tools need to  consider the computation ,separate reqs.txt for  the
-run docker ]
+* venv
+* minimalistic packaging  of docker with run-only requirenments file  and dockerignore
+* *gitignore venv  and sensible info
+  *small changes to   project  is  best  way to  recall.
+  *security is  one top things along with bigO, db , netwrok , linux , good code.
+  *need to  see   opensource mlops end-to-end
+
+things  to   improve :
+0   base : [security , bigO, db , netwrok , linux , good code]
+
+1    your  current  app
+what  you did.   you  current   knowledge to cement. Aspects like deployement , modelling  and etc.
+just read  files  and thing of how to improve or what to  add maybe for  practice
+
+2 system.  you   have to  know what   your  system  misses
 
 ---
-
-move  to  vertex
-
----
-
-1  enable the cloud storage and go  to  storage cli docs for commands
-2 gcloud storage buckets create gs://stock_sentiment/ --uniform-bucket-level-access
-3 gcloud storage cp  stock_data.csv  gs://stock_sentiment
-4 gcloud storage buckets add-iam-policy-binding gs://BUCKET_NAME --member=allUsers --role=roles/storage.objectViewer
-5 vertex - workbench - jupiter   launcher python kernel
-6 df = pd.read_csv("gs://stock_sentiment/stock_data.csv") df.head()
-7 launcher terminal gsutil cp train.csv gs://stock_sentiment and gsutil cp test.csv gs://stock_sentiment
-8 you  need   to save import joblib
-
-joblib.dump(cv, "count_vectorizer.joblib")
-joblib.dump(pca, "pca.joblib")
-joblib.dump(model, "model.joblib")
-
-print("All artifacts saved!")
-9 gcloud storage cp *.joblib gs://stock_sentiment/models/   saved to  storage
-
-------------docker :
-1   you can   manage lifecycle  : start ,stop ,restart , rm
