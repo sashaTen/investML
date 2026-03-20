@@ -13,12 +13,15 @@ homepage -  create account - login - logout - fill the portfolio for risk  evalu
 dashboard - choose stock /delete stock  from portfolio/ get ml prediction
 getting allocation with financial eval /  getting the allocation with ml  model
 
+#  **
+    HOW APP WORKS**
 
 ![1773897127656](image/README/1773897127656.png)
 
-![1773897972160](image/README/1773897972160.png)
+# 
+    CI/CD + MLOPS PIPELINE
 
-
+![1773975211338](image/README/1773975211338.png)
 
 ![1773817581242](image/README/1773817581242.png)
 
@@ -26,25 +29,9 @@ getting allocation with financial eval /  getting the allocation with ml  model
 
 ![1773817679343](image/README/1773817679343.png)
 
-
-
-
-
-
-
-
-
-
-
-
-
 ![1773817699473](image/README/1773817699473.png)
 
-
-
 ![1773894085089](image/README/1773894085089.png)
-
-
 
 ![1773894021178](image/README/1773894021178.png)
 
@@ -93,9 +80,9 @@ post -monitoring  with  yfinance
   Sentiment db model adds  the ticker and sentiment text to the db,
   if Sentiment.objects.count()%1000== 0
 
-# finds latest data version
+finds latest data version
 
-# updates version.txt in the cloud and triggers workflow to retrain the model with new data
+updates version.txt in the cloud and triggers workflow to retrain the model with new data
 
 sentiment model goes  to add_label_column where 5 latest dates cuttof are applied due
 y-finance holidays.   labeling and monitoring are done with  y-finance
@@ -267,7 +254,6 @@ https://www.youtube.com/watch?v=sqUuofLBfFw&t=893s
 ..Principles:
 BASE_DIR = “Where my project lives on disk, no matter where it’s deployed.”
 Local machine, Docker, Cloud Run — same code, correct paths.
--------------------------------------------------------------
 
 ALLOWED_HOSTS = [
     "invest-app-213061868662.asia-northeast3.run.app",
@@ -278,7 +264,6 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://invest-app-213061868662.asia-northeast3.run.app",
 ]
--
 
 WSGI_APPLICATION = 'config.wsgi.application'
 “When running under WSGI, load this Django app.”
