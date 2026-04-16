@@ -34,7 +34,7 @@ jobs:
           echo "This is a new file" > newfile.txt   
           cat newfile.txt
 
-          
+
 
 
       - name: Authenticate to GCP
@@ -50,10 +50,11 @@ jobs:
       - name: Verify auth
         run: |
           gcloud auth list
-          - name: Build and deploy to Cloud Run
+          gcloud config list project
+      - name: Build and deploy to Cloud Run
         env:
          THE_KEY: ${{ secrets.THE_KEY }}
-         run: |
+        run: |
               # Create Artifact Registry repo if it doesn't exist
               gcloud artifacts repositories create invest-repo \
                 --repository-format=docker \
