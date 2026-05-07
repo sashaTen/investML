@@ -112,7 +112,7 @@ def get_news_sentiment(ticker: str) -> str:
         stock = yf.Ticker(ticker)
         company_name = stock.info.get("longName", ticker)
         # Search for recent news via Tavily [6]
-        results = tavily.search(
+        results = tavily_client.search(
             query=f"{company_name} {ticker} stock news analysis 2025 2026",
             max_results=5,
             search_depth="advanced",
@@ -399,7 +399,7 @@ def research_stock(ticker: str, stream: bool = True) -> str:
     initial_state = {
         "messages": [
             HumanMessage(
-                content=f"Please research AAPL and produce a comprehensive "
+                content=f"Please research {ticker.upper()} and produce a comprehensive "
                         f"investment brief using all available research tools."
             )
         ],
