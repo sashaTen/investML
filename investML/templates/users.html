@@ -70,16 +70,23 @@
                         </span>
                     {% endif %}
                 </div>
+                 <div style="margin-top: 0.5rem; color: #9ca3af;">
+                    <a href="{% url 'research_ticker' ticker.ticker %}" style="color: #38bdf8; text-decoration: none;">
+                        Want deep research? Click here →
+                    </a>    
+                </div>
 
                 <form method="post" action="{% url 'delete_ticker' ticker.id %}" style="margin-top: 0.75rem;">
                 {% csrf_token %}
                 <button type="submit" style="font-size: 1.1rem; font-weight: 700;background: rgba(17, 24, 39, 0.9); color: #38bdf8;" title="Delete ticker">Delete</button>
                 </form>
                 
+              
+                
 
             </div>
         {% endfor %}
-    </div>
+
 {% else %}
     <div style="
         padding: 1.5rem;
@@ -93,6 +100,7 @@
             Add your first ticker →
         </a>
     </div>
+    
 {% endif %}
 
 {% endblock content %}

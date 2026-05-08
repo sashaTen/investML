@@ -16,7 +16,7 @@ import yfinance as yf
 from langchain_core.tools import tool
 from tavily import TavilyClient
 
-
+import re
 
 
 
@@ -437,6 +437,37 @@ def research_stock(ticker: str, stream: bool = True) -> str:
         result = graph.invoke(initial_state)
         final_brief = result["messages"][-1].content
     return final_brief
+
+def extract_stock_data(text):
+    # Mapping keys to specific Regex patterns
+    patterns = {
+        "ticker": r"Brief:\s*(\w+)",
+        "recommendation": r"Recommendation:\s*(\w+)",
+        "conviction": r"Conviction:\s*(\w+)",
+        "pe_ttm": r"P/E Ratio \(TTM\):\s*([\d.]+)",
+        "profit_margin": r"Profit Margin:\s*([\d.]+)",
+        "revenue_growth": r"Revenue Growth \(YoY\):\s*([\d.]+)",
+        "rsi": r"RSI \(14-day\):\s*([\d.]+)",
+        "sma50": r"SMA50 \(\$([\d.]+)\)",
+        "sma200": r"SMA200 \(\$([\d.]+)\)",
+        "price_target": r"mean price target is \$([\d.]+)",
+        "upside": r"upside of ([\d.]+)%",
+        "consensus": r"recommendation is \"([^\"]+)\""
+    }
+    
+    extracted_info = {}
+    
+    for key, pattern in patterns.items():
+        match = re.search(pattern, text)
+        extracted_info[key] = match.group(1) if match else None
+
+    # Logic for Verdict (usually the last sentence/paragraph)
+    verdict_match = re.search(r"### Final Verdict\n(.*)", text, re.DOTALL)
+    extracted_info["final_verdict"] = verdict_match.group(1).strip() if verdict_match else None
+    
+    return extracted_info
+
+
 
 if __name__ == "__main__":
     ticker = sys.argv[1] if len(sys.argv) > 1 else "RELIANCE.NS"
