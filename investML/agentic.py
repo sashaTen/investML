@@ -295,7 +295,7 @@ TOOLS = [
 
 # agent.py
 from langchain_core.messages import SystemMessage
-from langchain_openai import ChatOpenAI
+
 
 
 SYSTEM_PROMPT = """You are an expert financial research analyst with deep experience
