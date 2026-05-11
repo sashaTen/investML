@@ -33,30 +33,27 @@ jobs:
           touch newfile.txt
           echo "This is a new file" > newfile.txt   
           cat newfile.txt
-
-
-
-
-     - name: Authenticate to GCP
-       uses: google-github-actions/auth@v2
-       with:
+ 
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
          credentials_json: ${{ secrets.GSP_SA_KEY }}
 
 
-     - name: Setup gcloud
-       uses: google-github-actions/setup-gcloud@v2
-       with:
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
          project_id: investml-484904
 
 
-     - name: Verify auth
-       run: |
+      - name: Verify auth
+        run: |
          gcloud auth list
          gcloud config list project
-     - name: Build and deploy to Cloud Run
-       env:
+      - name: Build and deploy to Cloud Run
+        env:
         THE_KEY: ${{ secrets.THE_KEY }}
-       run: |
+        run: |
              # Create Artifact Registry repo if it doesn't exist
              gcloud artifacts repositories create invest-repo \
               --repository-format=docker \
