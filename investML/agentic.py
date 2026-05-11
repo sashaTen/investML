@@ -438,40 +438,96 @@ def research_stock(ticker: str, stream: bool = True) -> str:
         final_brief = result["messages"][-1].content
     return final_brief
 
-def extract_stock_data(text):
-    # Mapping keys to specific Regex patterns
+
+
+
+
+
+
+def extract_stock_data(response):
+
+    # Get the actual report text
+    text = response[0]["text"]
+
+    data = {}
+
     patterns = {
-        "ticker": r"Brief:\s*(\w+)",
-        "recommendation": r"Recommendation:\s*(\w+)",
-        "conviction": r"Conviction:\s*(\w+)",
-        "pe_ttm": r"P/E Ratio \(TTM\):\s*([\d.]+)",
-        "profit_margin": r"Profit Margin:\s*([\d.]+)",
-        "revenue_growth": r"Revenue Growth \(YoY\):\s*([\d.]+)",
-        "rsi": r"RSI \(14-day\):\s*([\d.]+)",
-        "sma50": r"SMA50 \(\$([\d.]+)\)",
-        "sma200": r"SMA200 \(\$([\d.]+)\)",
-        "price_target": r"mean price target is \$([\d.]+)",
-        "upside": r"upside of ([\d.]+)%",
-        "consensus": r"recommendation is \"([^\"]+)\""
+
+        # BASIC INFO
+        "company": r"Investment Brief:\s*\w+\s*-\s*(.+)",
+        "date": r"\*\*Date:\*\*\s*(.+)",
+        "recommendation": r"\*\*Recommendation:\*\*\s*(.+)",
+        "conviction": r"\*\*Conviction:\*\*\s*(.+)",
+
+        # FUNDAMENTALS
+        "pe_ttm": r"P/E Ratio \(TTM\):\*\*\s*([\d\.]+)",
+        "forward_pe": r"Forward P/E:\*\*\s*([\d\.]+)",
+        "revenue_growth": r"Revenue Growth \(YoY\):\*\*\s*([\d\.]+)",
+        "earnings_growth": r"Earnings Growth \(YoY\):\*\*\s*([\d\.]+)",
+        "profit_margin": r"Profit Margin:\*\*\s*([\d\.]+)",
+        "operating_margin": r"Operating Margin:\*\*\s*([\d\.]+)",
+        "debt_to_equity": r"Debt-to-Equity Ratio:\*\*\s*([\d\.]+)",
+
+        # TECHNICALS
+        "rsi": r"RSI \(14-day\):\*\*\s*([\d\.]+)",
+        "macd": r"MACD:\*\*\s*([\d\.]+)",
+        "signal_line": r"Signal Line:\*\*\s*([\d\.]+)",
+        "sma50": r"SMA50\s*\(\$([\d\.]+)\)",
+        "sma200": r"SMA200\s*\(\$([\d\.]+)\)",
+        "volume_today": r"Today's volume\s*\(([\d,]+)\)",
+        "volume_avg_30d": r"30-day average\s*\(([\d,]+)\)",
+
+        # NEWS / SENTIMENT
+        "news_sentiment": r"Overall news sentiment is\s*(\w+)",
+        "bullish_signals": r"\((\d+)\s*bullish",
+        "bearish_signals": r"bullish,\s*(\d+)\s*bearish",
+
+        # ANALYSTS
+        "analyst_buy": r"(\d+)\s*recommend \"Buy\"",
+        "analyst_strong_buy": r"(\d+)\s*recommend \"Strong Buy\"",
+        "analyst_hold": r"(\d+)\s*\"Hold\"",
+        "consensus": r"consensus recommendation is\s*\"(.+?)\"",
+        "price_target": r"mean price target is\s*\$([\d\.]+)",
+        "upside": r"upside of\s*([\d\.]+%)",
+        "current_price": r"current price of\s*\$([\d\.]+)",
+
+        # VERDICT
+        "final_recommendation": r"\*\*(BUY|SELL|HOLD|STRONG BUY|STRONG SELL)\*\* recommendation",
     }
-    
-    extracted_info = {}
-    
+
     for key, pattern in patterns.items():
-        match = re.search(pattern, text)
-        extracted_info[key] = match.group(1) if match else None
 
-    # Logic for Verdict (usually the last sentence/paragraph)
-    verdict_match = re.search(r"### Final Verdict\n(.*)", text, re.DOTALL)
-    extracted_info["final_verdict"] = verdict_match.group(1).strip() if verdict_match else None
-    
-    return extracted_info
+        match = re.search(pattern, text, re.IGNORECASE)
 
+        if match:
+            data[key] = match.group(1).strip()
 
+    # OPTIONAL FULL SECTIONS
+    bull_case = re.search(
+        r"### The Bull Case(.*?)### The Bear Case",
+        text,
+        re.DOTALL
+    )
 
-if __name__ == "__main__":
-    ticker = sys.argv[1] if len(sys.argv) > 1 else "RELIANCE.NS"
-    research_stock(ticker, stream=True)
+    if bull_case:
+        data["bull_case"] = bull_case.group(1).strip()
 
+    bear_case = re.search(
+        r"### The Bear Case(.*?)### Fundamental Snapshot",
+        text,
+        re.DOTALL
+    )
 
+    if bear_case:
+        data["bear_case"] = bear_case.group(1).strip()
 
+    final_verdict = re.search(
+        r"### Final Verdict(.*)",
+        text,
+        re.DOTALL
+    )
+
+    if final_verdict:
+        data["final_verdict"] = final_verdict.group(1).strip()
+
+    return data

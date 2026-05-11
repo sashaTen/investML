@@ -12,5 +12,5 @@ urlpatterns = [
     path("delete_portfolio/<int:portfolio_id>/", delete_portfolio, name="delete_portfolio"),
     path("get_prediction/<str:ticker_id>/", get_prediction, name="get_prediction"), 
     path("allocation/", allocation, name="allocation"),
-    path("research_ticker/<str:ticker>/", research_ticker, name="research_ticker"),
+    path("research_ticker/", research_ticker, name="research_ticker"),
 ]

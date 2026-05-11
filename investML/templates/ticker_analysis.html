@@ -3,148 +3,526 @@
 
 {% block title %}Ticker Analysis{% endblock %}
 
-{% block content %}<!DOCTYPE html>
-<html>
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<style>
-/* 🌑 Background */
-body {
-  margin: 0;
-  font-family: "Inter", Arial, sans-serif;
-  background: linear-gradient(135deg, #050b1a, #0a1633);
-  color: #e6f0ff;
-}
-
-/* 📦 Layout */
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 30px;
-}
-
-/* 🧊 Glass cards */
-.card {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(120, 170, 255, 0.15);
-  border-radius: 16px;
-  padding: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-/* 🧠 Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.ticker {
-  font-size: 28px;
-  font-weight: bold;
-  color: #7db3ff;
-}
-
-.verdict {
-  padding: 6px 12px;
-  border-radius: 10px;
-  color: #bcd6ff;
-  font-weight: bold;
-}
-
-/* 📊 Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-}
-
-/* ✨ Titles */
-h3 {
-  margin-bottom: 10px;
-  color: #9ec5ff;
-}
-
-/* 📈 Numbers */
-.value {
-  font-size: 18px;
-  font-weight: 600;
-  color: #eaf2ff;
-}
-
-/* 💙 Highlight card */
-.highlight {
-  border: 1px solid #3b82f6;
-  background: rgba(59, 130, 246, 0.12);
-}
-
-/* 📉 subtle text */
-.sub {
-  color: #a9b7d0;
-  font-size: 13px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ ticker }} Research Dashboard</title>
 </head>
 
-<body>
+<body style="
+    margin:0;
+    background:#020617;
+    color:white;
+    font-family:Arial,sans-serif;
+">
 
-<div class="container">
+<!-- PAGE WRAPPER -->
+<div style="
+    max-width:1450px;
+    margin:auto;
+    padding:2rem;
+">
 
-  <!-- HEADER -->
-  <div class="card header">
-    <div class="ticker">{{ data.ticker }}</div>
-    <div class="verdict">{{ data.final_verdict }}</div>
-  </div>
+    <!-- HERO -->
+    <div style="
+        background:
+            radial-gradient(circle at top right, rgba(56,189,248,0.12), transparent 30%),
+            linear-gradient(145deg,#0f172a,#111827);
 
-  <!-- GRID -->
-  <div class="grid">
+        border:1px solid #1e293b;
+        border-radius:28px;
+        padding:2.5rem;
+        margin-bottom:2rem;
 
-    <div class="card">
-      <h3>Recommendation</h3>
-      <div class="value">{{ data.recommendation }}</div>
-      <div class="sub">Conviction: {{ data.conviction }}</div>
+        box-shadow:
+            0 20px 40px rgba(0,0,0,0.45);
+    ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:2rem;
+        ">
+
+            <!-- LEFT -->
+            <div>
+
+                <div style="
+                    display:inline-flex;
+                    align-items:center;
+                    gap:0.5rem;
+                    background:rgba(56,189,248,0.12);
+                    border:1px solid rgba(56,189,248,0.18);
+                    color:#38bdf8;
+                    padding:0.5rem 1rem;
+                    border-radius:999px;
+                    font-size:0.85rem;
+                    font-weight:700;
+                    margin-bottom:1rem;
+                ">
+                    🤖 AI INVESTMENT RESEARCH ENGINE
+                </div>
+
+                <h1 style="
+                    margin:0;
+                    font-size:3.5rem;
+                    font-weight:900;
+                    color:white;
+                ">
+                    {{ ticker }}
+                </h1>
+
+                <div style="
+                    color:#94a3b8;
+                    margin-top:0.8rem;
+                    font-size:1.1rem;
+                ">
+                    {{ data.company }}
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div style="
+                text-align:right;
+            ">
+
+                <div style="
+                    font-size:0.9rem;
+                    color:#94a3b8;
+                    margin-bottom:0.6rem;
+                ">
+                    AI Recommendation
+                </div>
+
+                <div style="
+                    display:inline-block;
+                    background:#052e16;
+                    color:#4ade80;
+                    padding:0.8rem 1.4rem;
+                    border-radius:18px;
+                    font-weight:800;
+                    font-size:1.2rem;
+                    box-shadow:0 8px 20px rgba(34,197,94,0.2);
+                ">
+                    {{ data.recommendation }}
+                </div>
+
+                <div style="
+                    margin-top:0.8rem;
+                    color:#facc15;
+                    font-weight:700;
+                ">
+                    Conviction: {{ data.conviction }}
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="card">
-      <h3>Fundamentals</h3>
-      <div class="sub">P/E (TTM)</div>
-      <div class="value">{{ data.pe_ttm }}</div>
+    <!-- KPI GRID -->
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        gap:1rem;
+        margin-bottom:2rem;
+    ">
 
-      <div class="sub">Profit Margin</div>
-      <div class="value">{{ data.profit_margin }}%</div>
+        <!-- CARD -->
+        <div style="
+            background:#0f172a;
+            border:1px solid #1e293b;
+            border-radius:20px;
+            padding:1.4rem;
+        ">
+            <div style="color:#94a3b8;">Revenue Growth</div>
 
-      <div class="sub">Revenue Growth</div>
-      <div class="value">{{ data.revenue_growth }}%</div>
+            <div style="
+                margin-top:0.6rem;
+                font-size:2rem;
+                font-weight:800;
+                color:#4ade80;
+            ">
+                {{ data.revenue_growth }}
+            </div>
+        </div>
+
+        <div style="
+            background:#0f172a;
+            border:1px solid #1e293b;
+            border-radius:20px;
+            padding:1.4rem;
+        ">
+            <div style="color:#94a3b8;">Profit Margin</div>
+
+            <div style="
+                margin-top:0.6rem;
+                font-size:2rem;
+                font-weight:800;
+                color:#38bdf8;
+            ">
+                {{ data.profit_margin }}
+            </div>
+        </div>
+
+        <div style="
+            background:#0f172a;
+            border:1px solid #1e293b;
+            border-radius:20px;
+            padding:1.4rem;
+        ">
+            <div style="color:#94a3b8;">Forward P/E</div>
+
+            <div style="
+                margin-top:0.6rem;
+                font-size:2rem;
+                font-weight:800;
+                color:#facc15;
+            ">
+                {{ data.forward_pe }}
+            </div>
+        </div>
+
+        <div style="
+            background:#0f172a;
+            border:1px solid #1e293b;
+            border-radius:20px;
+            padding:1.4rem;
+        ">
+            <div style="color:#94a3b8;">Analyst Upside</div>
+
+            <div style="
+                margin-top:0.6rem;
+                font-size:2rem;
+                font-weight:800;
+                color:#4ade80;
+            ">
+                {{ data.upside }}
+            </div>
+        </div>
+
     </div>
 
-    <div class="card">
-      <h3>Technical</h3>
-      <div class="sub">RSI</div>
-      <div class="value">{{ data.rsi }}</div>
+    <!-- MAIN GRID -->
+    <div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:1.5rem;
+">
 
-      <div class="sub">SMA 50</div>
-      <div class="value">{{ data.sma50 }}</div>
+        <!-- LEFT -->
+        <div>
 
-      <div class="sub">SMA 200</div>
-      <div class="value">{{ data.sma200 }}</div>
+            <!-- BULL CASE -->
+            <div style="
+                background:linear-gradient(145deg,#052e16,#071d12);
+                border:1px solid #14532d;
+                border-radius:24px;
+                padding:1.7rem;
+                margin-bottom:1.5rem;
+            ">
+
+                <div style="
+                    color:#4ade80;
+                    font-size:1.3rem;
+                    font-weight:800;
+                    margin-bottom:1rem;
+                ">
+                    🟢 Bull Case
+                </div>
+
+                <div style="
+                    color:#d1fae5;
+                    line-height:1.8;
+                ">
+                    {{ data.bull_case }}
+                </div>
+
+            </div>
+
+            <!-- BEAR CASE -->
+            <div style="
+                background:linear-gradient(145deg,#3f0d0d,#1f0a0a);
+                border:1px solid #7f1d1d;
+                border-radius:24px;
+                padding:1.7rem;
+                margin-bottom:1.5rem;
+            ">
+
+                <div style="
+                    color:#f87171;
+                    font-size:1.3rem;
+                    font-weight:800;
+                    margin-bottom:1rem;
+                ">
+                    🔴 Bear Case
+                </div>
+
+                <div style="
+                    color:#fecaca;
+                    line-height:1.8;
+                ">
+                    {{ data.bear_case }}
+                </div>
+
+            </div>
+
+            <!-- FINAL VERDICT -->
+            <div style="
+                background:linear-gradient(145deg,#0f172a,#111827);
+                border:1px solid #1e293b;
+                border-radius:24px;
+                padding:2rem;
+                box-shadow:0 10px 30px rgba(0,0,0,0.35);
+            ">
+
+                <div style="
+                    color:#38bdf8;
+                    font-size:1.4rem;
+                    font-weight:800;
+                    margin-bottom:1rem;
+                ">
+                    🧠 AI Final Verdict
+                </div>
+
+                <div style="
+                    color:#cbd5e1;
+                    line-height:1.9;
+                    font-size:1rem;
+                ">
+                    {{ data.final_verdict }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div>
+
+            <!-- TECHNICALS -->
+            <div style="
+                background:#0f172a;
+                border:1px solid #1e293b;
+                border-radius:24px;
+                padding:1.7rem;
+                margin-bottom:1.5rem;
+            ">
+
+                <div style="
+                    color:#38bdf8;
+                    font-size:1.3rem;
+                    font-weight:800;
+                    margin-bottom:1.2rem;
+                ">
+                    📈 Technical Indicators
+                </div>
+
+                {% for key, value in data.items %}
+
+                    {% if key == "rsi" or key == "macd" or key == "signal_line" or key == "sma50" or key == "sma200" %}
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        padding:0.9rem 0;
+                        border-bottom:1px solid #1e293b;
+                    ">
+
+                        <span style="color:#94a3b8;">
+                            {{ key|title }}
+                        </span>
+
+                        <span style="
+                            color:white;
+                            font-weight:700;
+                        ">
+                            {{ value }}
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+            <!-- ANALYST CONSENSUS -->
+            <div style="
+                background:#0f172a;
+                border:1px solid #1e293b;
+                border-radius:24px;
+                padding:1.7rem;
+                margin-bottom:1.5rem;
+            ">
+
+                <div style="
+                    color:#facc15;
+                    font-size:1.3rem;
+                    font-weight:800;
+                    margin-bottom:1rem;
+                ">
+                    ⭐ Analyst Consensus
+                </div>
+
+                <div style="
+                    background:#111827;
+                    border-radius:16px;
+                    padding:1rem;
+                    margin-bottom:1rem;
+                ">
+
+                    <div style="color:#94a3b8;">
+                        Consensus
+                    </div>
+
+                    <div style="
+                        margin-top:0.5rem;
+                        color:#4ade80;
+                        font-size:1.5rem;
+                        font-weight:800;
+                    ">
+                        {{ data.consensus }}
+                    </div>
+
+                </div>
+
+                <div style="
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:1rem;
+                ">
+
+                    <div style="
+                        background:#111827;
+                        border-radius:16px;
+                        padding:1rem;
+                    ">
+                        <div style="color:#94a3b8;">Price Target</div>
+
+                        <div style="
+                            margin-top:0.5rem;
+                            font-size:1.4rem;
+                            font-weight:800;
+                            color:white;
+                        ">
+                            ${{ data.price_target }}
+                        </div>
+                    </div>
+
+                    <div style="
+                        background:#111827;
+                        border-radius:16px;
+                        padding:1rem;
+                    ">
+                        <div style="color:#94a3b8;">Current Price</div>
+
+                        <div style="
+                            margin-top:0.5rem;
+                            font-size:1.4rem;
+                            font-weight:800;
+                            color:white;
+                        ">
+                            ${{ data.current_price }}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- NEWS SENTIMENT -->
+            <div style="
+                background:#0f172a;
+                border:1px solid #1e293b;
+                border-radius:24px;
+                padding:1.7rem;
+            ">
+
+                <div style="
+                    color:#38bdf8;
+                    font-size:1.3rem;
+                    font-weight:800;
+                    margin-bottom:1rem;
+                ">
+                    📰 Market Sentiment
+                </div>
+
+                <div style="
+                    display:flex;
+                    gap:1rem;
+                    margin-bottom:1.2rem;
+                ">
+
+                    <div style="
+                        flex:1;
+                        background:#052e16;
+                        padding:1rem;
+                        border-radius:18px;
+                        text-align:center;
+                    ">
+
+                        <div style="
+                            color:#4ade80;
+                            font-size:2rem;
+                            font-weight:800;
+                        ">
+                            {{ data.bullish_signals }}
+                        </div>
+
+                        <div style="color:#bbf7d0;">
+                            Bullish Signals
+                        </div>
+
+                    </div>
+
+                    <div style="
+                        flex:1;
+                        background:#3f0d0d;
+                        padding:1rem;
+                        border-radius:18px;
+                        text-align:center;
+                    ">
+
+                        <div style="
+                            color:#f87171;
+                            font-size:2rem;
+                            font-weight:800;
+                        ">
+                            {{ data.bearish_signals }}
+                        </div>
+
+                        <div style="color:#fecaca;">
+                            Bearish Signals
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div style="
+                    color:#cbd5e1;
+                    line-height:1.7;
+                ">
+                    {{ data.news_sentiment }}
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="card highlight">
-      <h3>Price Target</h3>
-      <div class="value">{{ data.price_target }}</div>
-
-      <div class="sub">Upside</div>
-      <div class="value">{{ data.upside }}%</div>
-
-      <div class="sub">Consensus</div>
-      <div class="value">{{ data.consensus }}</div>
-    </div>
-
-  </div>
 </div>
 
 </body>
 </html>
-
 {% endblock content %}

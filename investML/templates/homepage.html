@@ -126,19 +126,504 @@ p , h1, h2, h3 {
 </style>  
 <div class="home-hero">
     <h1>InvestML</h1>
+    
     <p class="hero-subtitle">
         Smart investing powered by Machine Learning & risk-aware allocation
     </p>
 
-    <div class="hero-actions">
-        {% if user.is_authenticated %}
-            <a href="{% url 'dashboard' %}" class="btn-primary">Go to Dashboard</a>
-        {% else %}
-            <a href="{% url 'sign_up' %}" class="btn-primary">Get Started</a>
-            <a href="{% url 'login' %}" class="btn-secondary">Login</a>
-        {% endif %}
-    </div>
+   
 </div>
+
+
+
+
+    <!-- HEADER -->
+    <div style="margin-bottom:2rem;">
+
+        <h1 style="
+            margin:0;
+            font-size:2.4rem;
+            color:#38bdf8;
+        ">
+            AI Trading Dashboard
+        </h1>
+
+        <p style="
+            color:#94a3b8;
+            margin-top:0.5rem;
+            font-size:1rem;
+        ">
+            AI-powered financial intelligence & sentiment analysis
+        </p>
+
+    </div>
+
+    <!-- GRID -->
+    <div style="
+        display:grid;
+        grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+        gap:1.5rem;
+    ">
+
+    {% for card in cards %}
+
+    <!-- CARD -->
+    <div style="
+        background: linear-gradient(145deg,#0f172a,#111827);
+        border:1px solid #1e293b;
+        border-radius:20px;
+        padding:1.5rem;
+        box-shadow:0 10px 25px rgba(0,0,0,0.35);
+        transition:0.25s;
+    "
+    onmouseover="this.style.transform='translateY(-4px)'"
+    onmouseout="this.style.transform='translateY(0px)'"
+    >
+
+        <!-- TOP -->
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:1.2rem;
+        ">
+
+            <div>
+
+                <div style="
+                    color:#38bdf8;
+                    font-size:1.5rem;
+                    font-weight:700;
+                    letter-spacing:1px;
+                ">
+                    {{ card.ticker }}
+                </div>
+
+                <div style="
+                    color:#94a3b8;
+                    font-size:0.85rem;
+                    margin-top:0.2rem;
+                ">
+                    NASDAQ • Real-Time Monitoring
+                </div>
+
+            </div>
+
+            <div style="
+                background:#052e16;
+                color:#4ade80;
+                padding:0.35rem 0.7rem;
+                border-radius:999px;
+                font-size:0.8rem;
+                font-weight:600;
+            ">
+                LIVE
+            </div>
+
+        </div>
+
+        <!-- PREDICTION PANEL -->
+        <div id="prediction-{{ forloop.counter }}"
+             style="
+                display:none;
+                background:#0b1220;
+                border:1px solid #1e293b;
+                border-radius:14px;
+                padding:1rem;
+                margin-bottom:1rem;
+             ">
+
+            <!-- PRICE -->
+            <div style="
+                color:white;
+                font-size:2rem;
+                font-weight:700;
+            ">
+                ${{ forloop.counter }}{{ forloop.counter }}8.4{{ forloop.counter }}
+            </div>
+
+            <!-- DAILY CHANGE -->
+            {% if forloop.counter|divisibleby:2 %}
+
+                <div style="
+                    color:#22c55e;
+                    font-size:1rem;
+                    font-weight:600;
+                    margin-top:0.4rem;
+                ">
+                    ▲ +2.41%
+                </div>
+
+                <div style="
+                    margin-top:1rem;
+                    color:#22c55e;
+                    font-size:1.15rem;
+                    font-weight:700;
+                ">
+                    📈 RISE — 78% Confidence
+                </div>
+
+                <div style="
+                    margin-top:0.5rem;
+                    color:#94a3b8;
+                    line-height:1.6;
+                    font-size:0.92rem;
+                ">
+                    Momentum indicators remain bullish with increasing institutional accumulation.
+                </div>
+
+            {% else %}
+
+                <div style="
+                    color:#ef4444;
+                    font-size:1rem;
+                    font-weight:600;
+                    margin-top:0.4rem;
+                ">
+                    ▼ -1.17%
+                </div>
+
+                <div style="
+                    margin-top:1rem;
+                    color:#ef4444;
+                    font-size:1.15rem;
+                    font-weight:700;
+                ">
+                    📉 FALL — 64% Confidence
+                </div>
+
+                <div style="
+                    margin-top:0.5rem;
+                    color:#94a3b8;
+                    line-height:1.6;
+                    font-size:0.92rem;
+                ">
+                    Weak momentum and declining buying pressure suggest short-term downside risk.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <!-- SENTIMENT PANEL -->
+        <div id="sentiment-{{ forloop.counter }}"
+             style="
+                display:none;
+                background:#0b1220;
+                border:1px solid #1e293b;
+                border-radius:14px;
+                padding:1rem;
+                margin-bottom:1rem;
+             ">
+
+            <div style="
+                color:#38bdf8;
+                font-size:1rem;
+                font-weight:700;
+                margin-bottom:0.8rem;
+            ">
+                📰 Market Sentiment
+            </div>
+
+            <div style="
+                color:#cbd5e1;
+                line-height:1.7;
+                font-size:0.92rem;
+            ">
+                {{ card.news }}
+            </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div style="
+            display:flex;
+            gap:0.8rem;
+        ">
+
+            <!-- SENTIMENT BTN -->
+            <button
+                onclick="
+                    document.getElementById('sentiment-{{ forloop.counter }}').style.display='block';
+                    document.getElementById('prediction-{{ forloop.counter }}').style.display='none';
+                "
+                style="
+                    flex:1;
+                    background:#0284c7;
+                    border:none;
+                    color:white;
+                    padding:0.9rem;
+                    border-radius:12px;
+                    font-weight:700;
+                    cursor:pointer;
+                    transition:0.2s;
+                "
+                onmouseover="this.style.opacity='0.85'"
+                onmouseout="this.style.opacity='1'"
+            >
+                Get Sentiment
+            </button>
+
+            <!-- PREDICTION BTN -->
+            <button
+                onclick="
+                    document.getElementById('prediction-{{ forloop.counter }}').style.display='block';
+                    document.getElementById('sentiment-{{ forloop.counter }}').style.display='none';
+                "
+                style="
+                    flex:1;
+                    background:#16a34a;
+                    border:none;
+                    color:white;
+                    padding:0.9rem;
+                    border-radius:12px;
+                    font-weight:700;
+                    cursor:pointer;
+                    transition:0.2s;
+                "
+                onmouseover="this.style.opacity='0.85'"
+                onmouseout="this.style.opacity='1'"
+            >
+                Get Prediction
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    </div>
+
+
+
+  <form method="post"
+      action="{% url 'research_ticker' %}"
+      style="
+        margin-bottom:2.5rem;
+      ">
+
+    {% csrf_token %}
+
+    <div style="
+        position:relative;
+        overflow:hidden;
+        background:
+            radial-gradient(circle at top right, rgba(56,189,248,0.12), transparent 30%),
+            linear-gradient(145deg,#0f172a,#111827);
+        border:1px solid #1e293b;
+        border-radius:24px;
+        padding:2rem;
+        box-shadow:
+            0 12px 40px rgba(0,0,0,0.45),
+            inset 0 1px 0 rgba(255,255,255,0.03);
+    ">
+
+        <!-- GLOW -->
+        <div style="
+            position:absolute;
+            top:-80px;
+            right:-80px;
+            width:220px;
+            height:220px;
+            background:rgba(56,189,248,0.08);
+            border-radius:999px;
+            filter:blur(50px);
+        "></div>
+
+        <!-- HEADER -->
+        <div style="
+            position:relative;
+            z-index:2;
+            margin-bottom:1.5rem;
+        ">
+
+            <div style="
+                display:inline-flex;
+                align-items:center;
+                gap:0.5rem;
+                background:rgba(56,189,248,0.1);
+                border:1px solid rgba(56,189,248,0.2);
+                color:#38bdf8;
+                padding:0.45rem 0.9rem;
+                border-radius:999px;
+                font-size:0.82rem;
+                font-weight:700;
+                letter-spacing:0.5px;
+                margin-bottom:1rem;
+            ">
+                🤖 AGENTIC AI RESEARCH ENGINE
+            </div>
+
+            <h1 style="
+                margin:0;
+                font-size:2.3rem;
+                line-height:1.2;
+                color:white;
+                font-weight:800;
+                max-width:700px;
+            ">
+                Autonomous Financial Intelligence
+                <span style="
+                    background:linear-gradient(135deg,#38bdf8,#67e8f9);
+                    -webkit-background-clip:text;
+                    -webkit-text-fill-color:transparent;
+                ">
+                    for Modern Investors
+                </span>
+            </h1>
+
+            <p style="
+                color:#94a3b8;
+                margin-top:1rem;
+                max-width:760px;
+                line-height:1.7;
+                font-size:1rem;
+            ">
+                Multi-agent AI system performing autonomous market research,
+                sentiment analysis, technical reasoning, and investment thesis generation
+                in real time.
+            </p>
+
+        </div>
+
+        <!-- FEATURES -->
+        <div style="
+            display:flex;
+            gap:0.8rem;
+            flex-wrap:wrap;
+            margin-bottom:1.8rem;
+            position:relative;
+            z-index:2;
+        ">
+
+            <div style="
+                background:#0b1220;
+                border:1px solid #1e293b;
+                color:#cbd5e1;
+                padding:0.55rem 0.9rem;
+                border-radius:12px;
+                font-size:0.88rem;
+            ">
+                📊 Technical Analysis
+            </div>
+
+            <div style="
+                background:#0b1220;
+                border:1px solid #1e293b;
+                color:#cbd5e1;
+                padding:0.55rem 0.9rem;
+                border-radius:12px;
+                font-size:0.88rem;
+            ">
+                📰 Live News Sentiment
+            </div>
+
+            <div style="
+                background:#0b1220;
+                border:1px solid #1e293b;
+                color:#cbd5e1;
+                padding:0.55rem 0.9rem;
+                border-radius:12px;
+                font-size:0.88rem;
+            ">
+                🧠 LLM Investment Reasoning
+            </div>
+
+            <div style="
+                background:#0b1220;
+                border:1px solid #1e293b;
+                color:#cbd5e1;
+                padding:0.55rem 0.9rem;
+                border-radius:12px;
+                font-size:0.88rem;
+            ">
+                ⚡ Autonomous Research Agents
+            </div>
+
+        </div>
+
+        <!-- FORM -->
+        <div style="
+            display:flex;
+            gap:1rem;
+            flex-wrap:wrap;
+            align-items:center;
+            position:relative;
+            z-index:2;
+        ">
+
+            <!-- INPUT -->
+            <input
+                type="text"
+                name="ticker"
+                placeholder="Analyze a stock ticker... (AAPL, NVDA, TSLA, MSFT)"
+                required
+
+                style="
+                    flex:1;
+                    min-width:280px;
+                    padding:1rem 1.2rem;
+                    border-radius:16px;
+                    border:1px solid #334155;
+                    background:#020617;
+                    color:#e2e8f0;
+                    font-size:1rem;
+                    outline:none;
+                    transition:0.25s;
+                    box-shadow:
+                        inset 0 0 0 1px rgba(255,255,255,0.02),
+                        0 4px 14px rgba(0,0,0,0.25);
+                "
+
+                onfocus="
+                    this.style.border='1px solid #38bdf8';
+                    this.style.boxShadow='0 0 0 5px rgba(56,189,248,0.15)';
+                "
+
+                onblur="
+                    this.style.border='1px solid #334155';
+                    this.style.boxShadow='inset 0 0 0 1px rgba(255,255,255,0.02), 0 4px 14px rgba(0,0,0,0.25)';
+                "
+            >
+
+            <!-- BUTTON -->
+            <button
+                type="submit"
+
+                style="
+                    padding:1rem 1.6rem;
+                    border:none;
+                    border-radius:16px;
+                    background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+                    color:#020617;
+                    font-weight:800;
+                    font-size:1rem;
+                    cursor:pointer;
+                    transition:0.25s;
+                    box-shadow:
+                        0 10px 30px rgba(14,165,233,0.35);
+                    white-space:nowrap;
+                "
+
+                onmouseover="
+                    this.style.transform='translateY(-3px)';
+                    this.style.opacity='0.92';
+                "
+
+                onmouseout="
+                    this.style.transform='translateY(0)';
+                    this.style.opacity='1';
+                "
+            >
+                🚀 Launch AI Agents
+            </button>
+
+        </div>
+
+    </div>
+
+</form>
 
 <div class="steps-section">
     <h2>How InvestML Works</h2>

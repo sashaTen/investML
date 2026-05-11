@@ -41,6 +41,7 @@
                 border-radius: 14px;
                 padding: 1.2rem;
                 transition: transform 0.2s ease, box-shadow 0.2s ease;
+                box-shadow: 0 4px 14px rgba(0,0,0,0.25);
             "
             onmouseover="this.style.transform='translateY(-3px)'"
             onmouseout="this.style.transform='translateY(0)'"
@@ -50,19 +51,20 @@
                 </div>
 
                 <div style="margin-top: 0.5rem; color: #9ca3af;">
-                    <a href="{% url 'get_prediction' ticker.id %}" style="color: #38bdf8; text-decoration: none;">
-                        Want Ml prediction? Click here →
+                    <a href="{% url 'get_prediction' ticker.id %}" 
+                       style="color: #38bdf8; text-decoration: none;">
+                        Want ML prediction? Click here →
                     </a>
                 </div>
 
-               <div style="margin-top: 0.2rem; font-size: 1rem;">
+                <div style="margin-top: 0.5rem; font-size: 1rem;">
                     {% if ticker.prediction == 1 %}
                         <span style="color: #22c55e; font-weight: 600;">
                             📈 It will rise
                         </span>
                     {% elif ticker.prediction == 42.0 %}
-                      <span style="color: #22c55e; font-weight: 600;">
-                            📈 Prediction Needed
+                        <span style="color: #facc15; font-weight: 600;">
+                            ⏳ Prediction Needed
                         </span>
                     {% else %}
                         <span style="color: #ef4444; font-weight: 600;">
@@ -70,22 +72,110 @@
                         </span>
                     {% endif %}
                 </div>
-                 <div style="margin-top: 0.5rem; color: #9ca3af;">
-                    <a href="{% url 'research_ticker' ticker.ticker %}" style="color: #38bdf8; text-decoration: none;">
-                        Want deep research? Click here →
-                    </a>    
-                </div>
 
-                <form method="post" action="{% url 'delete_ticker' ticker.id %}" style="margin-top: 0.75rem;">
-                {% csrf_token %}
-                <button type="submit" style="font-size: 1.1rem; font-weight: 700;background: rgba(17, 24, 39, 0.9); color: #38bdf8;" title="Delete ticker">Delete</button>
+                <form method="post" action="{% url 'delete_ticker' ticker.id %}" style="margin-top: 1rem;">
+                    {% csrf_token %}
+                    <button type="submit"
+                        style="
+                            width: 100%;
+                            padding: 0.6rem;
+                            border: none;
+                            border-radius: 10px;
+                            background: #111827;
+                            color: #38bdf8;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: 0.2s;
+                        "
+                        onmouseover="this.style.background='#1e293b'"
+                        onmouseout="this.style.background='#111827'">
+                        Delete
+                    </button>
                 </form>
-                
-              
-                
-
             </div>
         {% endfor %}
+    </div>
+
+    <!-- DEEP RESEARCH SECTION -->
+    <div style="
+        margin-top: 3rem;
+        background: linear-gradient(135deg, rgba(15,23,42,1), rgba(17,24,39,0.95));
+        border: 1px solid #1e293b;
+        border-radius: 18px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    ">
+
+        <div style="margin-bottom: 1rem;">
+            <h3 style="
+                margin: 0;
+                color: #38bdf8;
+                font-size: 1.4rem;
+                font-weight: 700;
+            ">
+                🔎 Want Deep Research?
+            </h3>
+
+            <p style="
+                margin-top: 0.5rem;
+                color: #94a3b8;
+                line-height: 1.5;
+            ">
+                Enter any stock ticker and get a deeper AI-powered investment analysis,
+                fundamentals, market sentiment, and strategic outlook.
+            </p>
+        </div>
+
+        <form method="post" action="{% url 'research_ticker' %}"
+              style="
+                  display: flex;
+                  gap: 1rem;
+                  flex-wrap: wrap;
+                  align-items: center;
+              ">
+            {% csrf_token %}
+
+            <input
+                type="text"
+                name="ticker"
+                placeholder="e.g. AAPL, TSLA, NVDA, MSFT"
+                required
+                style="
+                    flex: 1;
+                    min-width: 260px;
+                    padding: 0.9rem 1rem;
+                    border-radius: 12px;
+                    border: 1px solid #334155;
+                    background: #0f172a;
+                    color: #e2e8f0;
+                    font-size: 1rem;
+                    outline: none;
+                    transition: border 0.2s ease, box-shadow 0.2s ease;
+                    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+                "
+                onfocus="this.style.border='1px solid #38bdf8'; this.style.boxShadow='0 0 0 4px rgba(56,189,248,0.15)'"
+                onblur="this.style.border='1px solid #334155'; this.style.boxShadow='none'"
+            >
+
+            <button type="submit"
+                style="
+                    padding: 0.9rem 1.4rem;
+                    border: none;
+                    border-radius: 12px;
+                    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+                    color: #020617;
+                    font-weight: 700;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    transition: transform 0.2s ease, opacity 0.2s ease;
+                    box-shadow: 0 6px 18px rgba(14,165,233,0.35);
+                "
+                onmouseover="this.style.transform='translateY(-2px)'; this.style.opacity='0.92'"
+                onmouseout="this.style.transform='translateY(0)'; this.style.opacity='1'">
+                🚀 Start Research
+            </button>
+        </form>
+    </div>
 
 {% else %}
     <div style="
@@ -100,7 +190,6 @@
             Add your first ticker →
         </a>
     </div>
-    
 {% endif %}
 
 {% endblock content %}
