@@ -21,13 +21,15 @@ import re
 def index(request):
 
     tickers = ["AAPL", "GOOGL", "AMZN"]
+    articles = [ 'AAPL rose after strong earnings and continued growth in Services revenue. Investors are watching Apple’s AI roadmap closely, especially after delays around advanced Siri AI features' , 'GOOGL gained momentum from booming AI and cloud business growth. Google Cloud reportedly surpassed a massive annual run rate milestone, while Alphabet’s AI partnerships and custom chips continue attracting investor attention' , 'AMZN remains a major AI infrastructure player through AWS. Markets are optimistic about accelerating cloud growth, though investors are also cautious about the company’s huge AI-related capital spending plans']
 
     cards = []
 
     for ticker in tickers:
         cards.append({
             "ticker": ticker,
-            "news": get_ticker_news(ticker)
+            
+            "news": articles[tickers.index(ticker)]
         })
 
     return render(
