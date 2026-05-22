@@ -33,5 +33,4 @@ jobs:
         run: |
           touch newfile.txt
           echo "This is a new file" > newfile.txt
-          
           cat newfile.txt
