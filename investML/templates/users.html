@@ -97,85 +97,73 @@
     </div>
 
     <!-- DEEP RESEARCH SECTION -->
-    <div style="
-        margin-top: 3rem;
-        background: linear-gradient(135deg, rgba(15,23,42,1), rgba(17,24,39,0.95));
-        border: 1px solid #1e293b;
-        border-radius: 18px;
-        padding: 2rem;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-    ">
+ <div class="risk-assessment-container" style="max-width: 700px; margin: 0 auto; padding: 20px;">
+    <h2>Equity Portfolio Risk Assessment</h2>
+    <p class="text-muted">Please answer honestly. This diagnostic maps out your true tolerance parameters to structure an automated stock allocation framework.</p>
+    <hr>
 
-        <div style="margin-bottom: 1rem;">
-            <h3 style="
-                margin: 0;
-                color: #38bdf8;
-                font-size: 1.4rem;
-                font-weight: 700;
-            ">
-                🔎 Want Deep Research?
-            </h3>
+    <form method="POST" class="risk-form">
+        {% csrf_token %}
+        
+        {# Handle explicitvalidation errors cleanly at the top #}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
 
-            <p style="
-                margin-top: 0.5rem;
-                color: #94a3b8;
-                line-height: 1.5;
-            ">
-                Enter any stock ticker and get a deeper AI-powered investment analysis,
-                fundamentals, market sentiment, and strategic outlook.
-            </p>
+        {# 1. Numerical Input Field for Horizon #}
+        <div class="form-group mb-4">
+            <label for="{{ form.time_horizon_years.id_for_label }}" class="font-weight-bold">
+                {{ form.time_horizon_years.label }}
+            </label>
+            <div class="help-text text-muted small mb-2">{{ form.time_horizon_years.help_text }}</div>
+            {{ form.time_horizon_years }}
+            {% if form.time_horizon_years.errors %}
+                <div class="text-danger small">{{ form.time_horizon_years.errors.0 }}</div>
+            {% endif %}
         </div>
 
-        <form method="post" action="{% url 'research_ticker' %}"
-              style="
-                  display: flex;
-                  gap: 1rem;
-                  flex-wrap: wrap;
-                  align-items: center;
-              ">
-            {% csrf_token %}
+        <hr>
 
-            <input
-                type="text"
-                name="ticker"
-                placeholder="e.g. AAPL, TSLA, NVDA, MSFT"
-                required
-                style="
-                    flex: 1;
-                    min-width: 260px;
-                    padding: 0.9rem 1rem;
-                    border-radius: 12px;
-                    border: 1px solid #334155;
-                    background: #0f172a;
-                    color: #e2e8f0;
-                    font-size: 1rem;
-                    outline: none;
-                    transition: border 0.2s ease, box-shadow 0.2s ease;
-                    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
-                "
-                onfocus="this.style.border='1px solid #38bdf8'; this.style.boxShadow='0 0 0 4px rgba(56,189,248,0.15)'"
-                onblur="this.style.border='1px solid #334155'; this.style.boxShadow='none'"
-            >
+        {# 2. Loop Through All Radio Choice Fields Dynamically #}
+        {% for field in form %}
+            {% if field.name != 'time_horizon_years' %}
+                <div class="form-group mb-4">
+                    <label class="font-weight-bold" style="display: block; font-size: 1.1rem; margin-bottom: 5px;">
+                        {{ field.label }}
+                    </label>
+                    <div class="help-text text-muted small mb-3">{{ field.help_text }}</div>
+                    
+                    {# Render individual custom styled radio buttons #}
+                    <div class="radio-options-wrapper" style="display: flex; flex-direction: column; gap: 10px;">
+                        {% for radio in field %}
+                            <label class="radio-label-card" style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px;">
+                                <div style="margin-top: 3px;">
+                                    {{ radio.tag }}
+                                </div>
+                                <div>
+                                    {{ radio.choice_label }}
+                                </div>
+                            </label>
+                        {% endfor %}
+                    </div>
 
-            <button type="submit"
-                style="
-                    padding: 0.9rem 1.4rem;
-                    border: none;
-                    border-radius: 12px;
-                    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-                    color: #020617;
-                    font-weight: 700;
-                    font-size: 1rem;
-                    cursor: pointer;
-                    transition: transform 0.2s ease, opacity 0.2s ease;
-                    box-shadow: 0 6px 18px rgba(14,165,233,0.35);
-                "
-                onmouseover="this.style.transform='translateY(-2px)'; this.style.opacity='0.92'"
-                onmouseout="this.style.transform='translateY(0)'; this.style.opacity='1'">
-                🚀 Start Research
+                    {% if field.errors %}
+                        <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <hr>
+            {% endif %}
+        {% endfor %}
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary btn-block" style="width: 100%; padding: 12px; font-size: 1.1rem;">
+                Generate Allocation Strategy
             </button>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>
 
 {% else %}
     <div style="

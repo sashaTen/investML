@@ -6,7 +6,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from .forms import PortfolioCreateForm, TickerForm
+from .forms import PortfolioCreateForm, TickerForm , RiskToleranceForm
 from django.contrib.auth.decorators import login_required
 from .scripts import (
     
@@ -14,7 +14,7 @@ from .scripts import (
     PortfolioAllocation,
     MlPortfolioAllocation, get_ticker_news
 )
-from .models import Portfolio, Tickers ,Sentiment
+from .models import Portfolio, Tickers 
 from .agentic import research_stock  , extract_stock_data
 import re 
 
@@ -51,19 +51,75 @@ def sign_up(request):
     return render(request, "sign_up.html", {"form": form})
 
 
+
+
+
+
+
 def dashboard(request):
+
+    # Anonymous user
     if request.user.is_anonymous:
-        context = {"tickers": []}
+        return render(request, "users.html", {
+            "tickers": [],
+            "form": None,
+        })
+
+    # Logged-in user
+    tickers = Tickers.objects.filter(user=request.user)
+
+    # Get or create risk profile form
+    profile = getattr(request.user, 'risk_profile', None)
+  
+    if request.method == 'POST':
+
+        form = RiskToleranceForm(
+            request.POST,
+            instance=profile
+        )
+
+        if form.is_valid():
+
+            risk_instance = form.save(commit=False)
+            risk_instance.user = request.user
+            risk_instance.save()
+
+            return redirect('portfolio_dashboard')
+
     else:
-        tickers = Tickers.objects.filter(user=request.user)
-        context = {"tickers": tickers}
-        try:
-            portfolio = Portfolio.objects.get(user=request.user)
-            portfolio.tickers.add(*tickers)
-        except Portfolio.DoesNotExist:
-            return redirect("create_portfolio")
+        form = RiskToleranceForm(instance=profile)
+
+    # Portfolio check
+    try:
+        portfolio = Portfolio.objects.get(user=request.user)
+
+        # Add tickers safely
+        existing_ids = portfolio.tickers.values_list(
+            "id",
+            flat=True
+        )
+
+        new_tickers = tickers.exclude(id__in=existing_ids)
+
+        if new_tickers.exists():
+            portfolio.tickers.add(*new_tickers)
+
+    except Portfolio.DoesNotExist:
+        return redirect("create_portfolio")
+
+    context = {
+        "tickers": tickers,
+        "form": form,
+        "portfolio": portfolio,
+        "risk_profile": profile,
+    }
+
     return render(request, "users.html", context)
 
+
+
+def agenticDashboard(request):
+    return render(request, "portfolio_dashboard.html")
 
 @login_required
 def create_portfolio(request):
