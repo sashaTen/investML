@@ -71,4 +71,4 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --port 8080 \
-            - --set-env-vars THE_KEY=$THE_KEY,KEY_GITHUB=$KEY_GITHUB,GOOGLE_API_KEY=$GOOGLE_API_KEY,DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
+            --set-env-vars THE_KEY=$THE_KEY,KEY_GITHUB=$KEY_GITHUB,GOOGLE_API_KEY=$GOOGLE_API_KEY,DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
