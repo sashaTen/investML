@@ -71,4 +71,4 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --port 8080 \
-            --set-env-vars THE_KEY=$THE_KEY,KEY_GITHUB=${{ secrets.KEY_GITHUB }}
+            --set-env-vars SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }},THE_KEY=$THE_KEY,KEY_GITHUB=${{ secrets.KEY_GITHUB }}
