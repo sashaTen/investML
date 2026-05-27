@@ -1,3 +1,4 @@
+
 name: Django CI
 
 on:
@@ -29,7 +30,7 @@ jobs:
         run: |
           echo "hello world"
 
-      - name: Create file
+      - name: create file
         run: |
           touch newfile.txt
           echo "This is a new file" > newfile.txt
@@ -53,6 +54,10 @@ jobs:
       - name: Build and deploy to Cloud Run
         env:
           THE_KEY: ${{ secrets.THE_KEY }}
+          KEY_GITHUB: ${{ secrets.KEY_GITHUB }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+
         run: |
           # Create Artifact Registry repo if it doesn't exist
           gcloud artifacts repositories create invest-repo \
