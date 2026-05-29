@@ -96,74 +96,7 @@
         {% endfor %}
     </div>
 
-    <!-- DEEP RESEARCH SECTION -->
- <div class="risk-assessment-container" style="max-width: 700px; margin: 0 auto; padding: 20px;">
-    <h2>Equity Portfolio Risk Assessment</h2>
-    <p class="text-muted">Please answer honestly. This diagnostic maps out your true tolerance parameters to structure an automated stock allocation framework.</p>
-    <hr>
-
-    <form method="POST" class="risk-form">
-        {% csrf_token %}
-        
-        {# Handle explicitvalidation errors cleanly at the top #}
-        {% if form.non_field_errors %}
-            <div class="alert alert-danger">
-                {{ form.non_field_errors }}
-            </div>
-        {% endif %}
-
-        {# 1. Numerical Input Field for Horizon #}
-        <div class="form-group mb-4">
-            <label for="{{ form.time_horizon_years.id_for_label }}" class="font-weight-bold">
-                {{ form.time_horizon_years.label }}
-            </label>
-            <div class="help-text text-muted small mb-2">{{ form.time_horizon_years.help_text }}</div>
-            {{ form.time_horizon_years }}
-            {% if form.time_horizon_years.errors %}
-                <div class="text-danger small">{{ form.time_horizon_years.errors.0 }}</div>
-            {% endif %}
-        </div>
-
-        <hr>
-
-        {# 2. Loop Through All Radio Choice Fields Dynamically #}
-        {% for field in form %}
-            {% if field.name != 'time_horizon_years' %}
-                <div class="form-group mb-4">
-                    <label class="font-weight-bold" style="display: block; font-size: 1.1rem; margin-bottom: 5px;">
-                        {{ field.label }}
-                    </label>
-                    <div class="help-text text-muted small mb-3">{{ field.help_text }}</div>
-                    
-                    {# Render individual custom styled radio buttons #}
-                    <div class="radio-options-wrapper" style="display: flex; flex-direction: column; gap: 10px;">
-                        {% for radio in field %}
-                            <label class="radio-label-card" style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px;">
-                                <div style="margin-top: 3px;">
-                                    {{ radio.tag }}
-                                </div>
-                                <div>
-                                    {{ radio.choice_label }}
-                                </div>
-                            </label>
-                        {% endfor %}
-                    </div>
-
-                    {% if field.errors %}
-                        <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
-                    {% endif %}
-                </div>
-                <hr>
-            {% endif %}
-        {% endfor %}
-
-        <div class="mt-4">
-            <button type="submit" class="btn btn-primary btn-block" style="width: 100%; padding: 12px; font-size: 1.1rem;">
-                Generate Allocation Strategy
-            </button>
-        </div>
-    </form>
-</div>
+ 
 
 {% else %}
     <div style="

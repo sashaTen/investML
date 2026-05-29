@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import index, agenticDashboard,   dashboard , sign_up ,   create_portfolio , portfolio_list , choose_tickers , delete_ticker , delete_portfolio, get_prediction , allocation   , research_ticker
+from .views import index,   dashboard , sign_up ,   create_portfolio , portfolio_list , choose_tickers , delete_ticker , delete_portfolio, get_prediction , allocation   , research_ticker
 
 urlpatterns = [
     path("", index, name="index"),
-    path("agentic-dashboard/", agenticDashboard, name="portfolio_dashboard"),
     path("dashboard/", dashboard, name="dashboard"),
     path("sign_up/", sign_up, name="sign_up"),
     path("create_portfolio/", create_portfolio, name="create_portfolio"),

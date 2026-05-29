@@ -6,7 +6,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from .forms import PortfolioCreateForm, TickerForm , RiskToleranceForm
+from .forms import PortfolioCreateForm, TickerForm 
 from django.contrib.auth.decorators import login_required
 from .scripts import (
     
@@ -69,26 +69,6 @@ def dashboard(request):
     tickers = Tickers.objects.filter(user=request.user)
 
     # Get or create risk profile form
-    profile = getattr(request.user, 'risk_profile', None)
-  
-    if request.method == 'POST':
-
-        form = RiskToleranceForm(
-            request.POST,
-            instance=profile
-        )
-
-        if form.is_valid():
-
-            risk_instance = form.save(commit=False)
-            risk_instance.user = request.user
-            risk_instance.save()
-
-            return redirect('portfolio_dashboard')
-
-    else:
-        form = RiskToleranceForm(instance=profile)
-
     # Portfolio check
     try:
         portfolio = Portfolio.objects.get(user=request.user)
@@ -109,17 +89,11 @@ def dashboard(request):
 
     context = {
         "tickers": tickers,
-        "form": form,
-        "portfolio": portfolio,
-        "risk_profile": profile,
     }
 
     return render(request, "users.html", context)
 
 
-
-def agenticDashboard(request):
-    return render(request, "portfolio_dashboard.html")
 
 @login_required
 def create_portfolio(request):
