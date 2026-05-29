@@ -1,7 +1,7 @@
 name: Django CI
 #
 on:
-push:
+ push:
   branches: [ "main" ]
 
 jobs:
