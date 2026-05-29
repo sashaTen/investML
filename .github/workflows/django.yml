@@ -1,19 +1,34 @@
 name: Django CI
-#
+
+
+
+
 on:
  push:
   branches: [ "main" ]
 
+
+
 jobs:
-test:
+ test:
   runs-on: ubuntu-latest
+
+
+
+
   steps:
     - uses: actions/checkout@v4
+
+
+
 
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: "3.12"
+
+
+
 
     - name: Install dependencies
       run: |
@@ -30,6 +45,9 @@ test:
         touch newfile.txt
         echo "This is a new file" > newfile.txt 
         cat newfile.txt
+
+
+
 
     - name: Authenticate to GCP
       uses: google-github-actions/auth@v2
@@ -78,3 +96,5 @@ test:
           --allow-unauthenticated \
           --port 8080 \
         --set-env-vars THE_KEY=$THE_KEY,KEY_GITHUB=$KEY_GITHUB,GOOGLE_API_KEY=$GOOGLE_API_KEY,DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
+
+
